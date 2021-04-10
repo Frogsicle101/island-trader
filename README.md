@@ -1,3 +1,3 @@
 # Island Trader
 
-SENG201 - Group 61 - Andrew Hall, Frederik Maxwell
+SENG201 - Group 61 - Andrew Hall, Frederik Markwell
