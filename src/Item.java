@@ -6,10 +6,10 @@
 public abstract class Item {
 	public static final Item[] ALL_ITEMS = {};
 	
-	private String name;
-	private int baseValue;
-	private int purchasedPrice;
-	private String purchasedFrom;
+	protected String name;
+	protected int baseValue;
+	protected int purchasedPrice;
+	protected String purchasedFrom;
 	
 	/**
 	 * The basic constructor of an item. Likely the version used in shops.

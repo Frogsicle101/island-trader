@@ -1,12 +1,11 @@
-
+/**
+ * Represents all the different types of tradable goods.
+ * @author Andrew Hall
+ */
 public enum TradeTypes {
 	FOOD,
 	TOOL,
 	ARTIFACT,
 	LUXURY,
-	MATERIAL;
-	
-	public int cheese() {
-		return 1;
-	}
+	MATERIAL
 }
