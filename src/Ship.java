@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+import javax.naming.OperationNotSupportedException;
+
 /**
  * The superclass of all ship types.
  * 
@@ -67,6 +69,20 @@ public abstract class Ship {
 	}
 	
 	/**
+	 * TODO: Implement once cannons etc. are implemented
+	 * @return The bonus given to rolls in combat
+	 */
+	public int getCombatBonus() {
+		int bonus = 0;
+		for (Item item: cargo) {
+			if (item instanceof Cannon)
+				bonus += Cannon.FIGHT_BUFF;
+		}
+		
+		return bonus;
+	}
+	
+	/**
 	 * Constructor, allowing the ship subclasses to specify what's unique about them
 	 * @param speed        	The time a route takes is divided by speed e.g. 10 days / 2 speed = 5 days 
 	 * @param shipType     	The ship's name e.g. "War Ship"...                                         
@@ -105,20 +121,11 @@ public abstract class Ship {
 	 */
 	public Item popItem(String itemName) throws ItemNotFoundException {
 		for (Item item: cargo) {
-			if (item.getName().equals(itemName)) {
+			if (item.getName().equals(itemName))
 				return item;
-			}
 		}
 		
 		throw new ItemNotFoundException("Item "+itemName+" not found in cargo");
 	}
-	
-	/**
-	 * TODO: IMPLEMENT
-	 */
-	public void resetUpgrades() {
-		throw new UnsupportedOperationException();
-	}
-	
 	
 }
