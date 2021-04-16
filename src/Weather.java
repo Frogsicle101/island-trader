@@ -2,11 +2,11 @@ import java.util.Random;
 public class Weather extends RandomEvent {
 	
 	
-	private int damage;
-	private final double DAMAGE_SCALE = 1.0;
+	private float damage;
+	private final float DAMAGE_SCALE = 1.0f;
 	
 	public Weather(float probability) {
 		super(probability);
-		damage = (int)(new Random().nextDouble());
+		damage = new Random().nextFloat() * DAMAGE_SCALE;
 	}
 }

@@ -1,7 +1,7 @@
 /**
- * @author fma107
  * An abstract base class for random events that players can encounter
  * when moving between islands.
+ * @author fma107
  *
  */
 public abstract class RandomEvent {

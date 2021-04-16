@@ -1,5 +1,8 @@
 /**
  * The superclass of all item types.
+ * 
+ * An item is an object stored in a ship's cargo, or a shop's inventory.
+ * It can be either an upgrade (cannons...), or a tradable item
  * @author Andrew
  *
  */
