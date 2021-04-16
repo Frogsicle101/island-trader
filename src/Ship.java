@@ -1,9 +1,10 @@
 import java.util.ArrayList;
 
-import javax.naming.OperationNotSupportedException;
-
 /**
  * The superclass of all ship types.
+ * 
+ * A ship is a vessel for holding items, while simultaneously acting as "The Player".
+ * Each ship type has a number of unique statistics that can change how the game plays
  * 
  * @author Andrew Hall
  * 
@@ -11,24 +12,41 @@ import javax.naming.OperationNotSupportedException;
 public abstract class Ship {
 	public static final float DAILY_WAGE = 1.0f;
 	
-	// Each ship have these unique stats
-	protected float speed;		// The time a route takes is divided by speed e.g. 10 days / 2 speed = 5 days
+	// Each ship has these unique stats
 	protected String shipType;	// The ship's name e.g. "War Ship"...
+	protected float speed;		// The time a route takes is divided by speed e.g. 10 days / 2 speed = 5 days
 	protected int crew;			// Number of crew on the ship
-	protected int cargoCapacity;// How many item weight can be carried
 	protected float repairCost;	// Every 1.0 damage taken costs this much to fix
 	protected int startingMoney;// Better ships start you off with less money
+	protected int cargoCapacity;// How many item weight can be carried
 	
 	private float damage;		// Random events (rocks, pirates...) can damage a ship
 								// Note that a ship can't be destroyed if too badly damaged
 	private ArrayList<Item> cargo;	// Here's your cargo
-	
-	
-	public float getDamage() {
-		return damage;
-	}
+
+
 	/**
-	 * 
+	 * Constructor, allowing the ship subclasses to specify what's unique about them
+	 * @param speed        	The time a route takes is divided by speed e.g. 10 days / 2 speed = 5 days 
+	 * @param shipType     	The ship's name e.g. "War Ship"...                                         
+	 * @param crew         	Number of crew on the ship                                                 
+	 * @param cargoCapacity	How many item weight can be carried                                        
+	 * @param repairCost   	Every 1.0 damage taken costs this much to fix                              
+	 * @param startingMoney	Better ships start you off with less money                                 
+	 */
+	public Ship(float speed, String shipType, int crew, int cargoCapacity, float repairCost, int startingMoney) {
+		this.speed = speed;
+		this.shipType = shipType;
+		this.crew = crew;
+		this.cargoCapacity = cargoCapacity;
+		this.repairCost = repairCost;
+		this.startingMoney = startingMoney;
+		
+		cargo = new ArrayList<Item>(cargoCapacity);
+	}
+	
+	/**
+	 * Ships are damaged through random events (pirates, rocks...) and damage must be repaired
 	 * @param damage 	The amount of damage to deal
 	 * @throws IllegalArgumentException if the given damage is negative
 	 */
@@ -37,7 +55,10 @@ public abstract class Ship {
 			throw new IllegalArgumentException("A ship can't take negative damage ("+damage+")");
 		this.damage += damage;
 	}
-	
+
+	public float getDamage() {
+		return damage;
+	}
 	public float getSpeed() {
 		return speed;
 	}
@@ -69,7 +90,7 @@ public abstract class Ship {
 	}
 	
 	/**
-	 * TODO: Implement once cannons etc. are implemented
+	 * Calculates the bonus received in combat, based on any upgrades in cargo
 	 * @return The bonus given to rolls in combat
 	 */
 	public int getCombatBonus() {
@@ -80,26 +101,6 @@ public abstract class Ship {
 		}
 		
 		return bonus;
-	}
-	
-	/**
-	 * Constructor, allowing the ship subclasses to specify what's unique about them
-	 * @param speed        	The time a route takes is divided by speed e.g. 10 days / 2 speed = 5 days 
-	 * @param shipType     	The ship's name e.g. "War Ship"...                                         
-	 * @param crew         	Number of crew on the ship                                                 
-	 * @param cargoCapacity	How many item weight can be carried                                        
-	 * @param repairCost   	Every 1.0 damage taken costs this much to fix                              
-	 * @param startingMoney	Better ships start you off with less money                                 
-	 */
-	public Ship(float speed, String shipType, int crew, int cargoCapacity, float repairCost, int startingMoney) {
-		this.speed = speed;
-		this.shipType = shipType;
-		this.crew = crew;
-		this.cargoCapacity = cargoCapacity;
-		this.repairCost = repairCost;
-		this.startingMoney = startingMoney;
-		
-		cargo = new ArrayList<Item>(cargoCapacity);
 	}
 	
 	/**
@@ -114,15 +115,19 @@ public abstract class Ship {
 	}
 	
 	/**
-	 * Searches the cargo hold by name and deletes any 
-	 * @param itemName
-	 * @return
-	 * @throws ItemNotFoundException If the 
+	 * Searches the cargo hold by name, deletes it from cargo, and returns it
+	 * @param itemName	The text name of the item
+	 * @return The item in question
+	 * @throws ItemNotFoundException	If the given itemName doesn't match anything in cargo
 	 */
 	public Item popItem(String itemName) throws ItemNotFoundException {
-		for (Item item: cargo) {
-			if (item.getName().equals(itemName))
-				return item;
+		Item wantedItem;
+		for (int i = 0; i < cargo.size(); i++) {
+			if (cargo.get(i).getName().equals(itemName)) {
+				wantedItem = cargo.get(i);
+				cargo.remove(i);
+				return wantedItem;
+			}
 		}
 		
 		throw new ItemNotFoundException("Item "+itemName+" not found in cargo");
