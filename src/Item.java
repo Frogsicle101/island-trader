@@ -55,4 +55,26 @@ public abstract class Item {
 	public String getPurchasedFrom() {
 		return purchasedFrom;
 	}
+	
+	/**
+	 * Creates a new copy of this item.
+	 * Useful when moving items from the list of all items, to cargo etc.
+	 * @param <T> Required because subclasses are annoying
+	 * @return A new copy of this class
+	 */
+	public abstract <T extends Item> T copy();
+	
+	/**
+	 * Fills out an existing item's `purchased...` fields
+	 * @param <T> Required because subclasses are annoying
+	 * @param purchasedPrice	How much it was bought for
+	 * @param purchasedFrom		The name of the island it was bought from
+	 * @return this (For chaining)
+	 */
+	@SuppressWarnings("unchecked")
+	public <T extends Item> T makeBought(int purchasedPrice, String purchasedFrom) {
+		this.purchasedPrice = purchasedPrice;
+		this.purchasedFrom = purchasedFrom;
+		return (T)this;
+	}
 }
