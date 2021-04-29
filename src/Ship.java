@@ -13,12 +13,12 @@ public abstract class Ship {
 	public static final float DAILY_WAGE = 1.0f;
 	
 	// Each ship has these unique stats
-	protected String shipType;	// The ship's name e.g. "War Ship"...
-	protected float speed;		// The time a route takes is divided by speed e.g. 10 days / 2 speed = 5 days
-	protected int crew;			// Number of crew on the ship
-	protected float repairCost;	// Every 1.0 damage taken costs this much to fix
-	protected int startingMoney;// Better ships start you off with less money
-	protected int cargoCapacity;// How many item weight can be carried
+	private String shipType;	// The ship's name e.g. "War Ship"...
+	private float speed;		// The time a route takes is divided by speed e.g. 10 days / 2 speed = 5 days
+	private int crew;			// Number of crew on the ship
+	private float repairCost;	// Every 1.0 damage taken costs this much to fix
+	private int startingMoney;// Better ships start you off with less money
+	private int cargoCapacity;// How many item weight can be carried
 	
 	private float damage;		// Random events (rocks, pirates...) can damage a ship
 								// Note that a ship can't be destroyed if too badly damaged
