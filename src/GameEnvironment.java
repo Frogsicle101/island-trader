@@ -1,4 +1,3 @@
-import com.sun.jdi.InvalidStackFrameException;
 
 /**
  * The main controller of the game.
@@ -21,6 +20,16 @@ public class GameEnvironment {
 	private Island currentIsland;
 	private Island destination;
 	
+	
+	public GameEnvironment() {
+		resetGame();
+		generateIslands();
+	}
+	
+	private void generateIslands() {
+		// TODO: Plan out what the islands are gonna be
+	}
+	
 	public int getGameLength() {
 		return gameLength;
 	}
@@ -29,7 +38,7 @@ public class GameEnvironment {
 	 * Required State: SETUP
 	 * @throws InvalidState
 	 */
-	public void setGameLength(int gameLength) throws InvalidState {
+	public void setGameLength(int gameLength) {
 		if (state != GameState.SETUP)
 			throw new InvalidState();
 		this.gameLength = gameLength;
@@ -43,7 +52,7 @@ public class GameEnvironment {
 	 * Required State: SETUP
 	 * @throws InvalidState
 	 */
-	public void setName(String name) throws InvalidState {
+	public void setName(String name) {
 		if (state != GameState.SETUP)
 			throw new InvalidState();
 		this.name = name;
@@ -56,7 +65,7 @@ public class GameEnvironment {
 	 * Required State: SETUP
 	 * @throws InvalidState
 	 */
-	public void setShip(Ship ship) throws InvalidState {
+	public void setShip(Ship ship) {
 		if (state != GameState.SETUP)
 			throw new InvalidState();
 		this.ship = ship;
@@ -75,7 +84,6 @@ public class GameEnvironment {
 		money = 0;
 		totalProfit = 0;
 		gameTime = 0;
-		islands = null;
 		currentIsland = null;
 		destination = null;
 	}
