@@ -11,9 +11,11 @@ import java.util.HashMap;
  * @author Andrew Hall
  */
 public class Store {
+	private String shopName;
 	private HashMap<TradeTypes, Float> itemPrices;
 	private ArrayList<Upgrade> upgrades;		// TODO: Work out upgrades
-	private String shopName;
+	
+	private final static Store DEFAULT_STORE = new Store("Default store", new HashMap<TradeTypes, Float>());
 	
 	/**
 	 * Creates a new island that values each trade type accordingly
@@ -21,7 +23,7 @@ public class Store {
 	 * e.g. a $50 item with a 0.8 multiplier is worth $40 at this store
 	 * @param shopName The name of this shop, usually bound to any bought items
 	 */
-	public Store(HashMap<TradeTypes, Float> itemPrices, String shopName) {
+	public Store(String shopName, HashMap<TradeTypes, Float> itemPrices) {
 		this.itemPrices = itemPrices;
 		this.shopName = shopName;
 		this.upgrades = new ArrayList<>();
@@ -33,6 +35,14 @@ public class Store {
 	
 	public String getShopName() {
 		return shopName;
+	}
+	
+	/**
+	 * Gets the default store, an islandless store with no item preferences
+	 * @return The default store
+	 */
+	public static Store getDefaultStore() {
+		return DEFAULT_STORE;
 	}
 	
 	/**
