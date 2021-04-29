@@ -15,7 +15,8 @@ public abstract class Upgrade extends Item {
 	}
 	/**
 	 * A more detailed constructor, used for purchased items.
-	 * Gives info on how much it cost, and where it was purchased.
+	 * Gives info on how much it cost, and where it was purchased.<br>
+	 * Probably used by copiers
 	 * 
 	 * @param name				The item's name (Food, wool...)
 	 * @param baseValue			The item's base value

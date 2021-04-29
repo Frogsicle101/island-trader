@@ -10,11 +10,16 @@ public class Cannon extends Upgrade {
 	
 	public static final int FIGHT_BUFF = 1;
 	
-	public Cannon(String name, int baseValue) {
-		super(name, baseValue);
+	/**
+	 * Creates a new cannon object
+	 */
+	public Cannon() {
+		super("Cannon",		// name
+				40			// baseValue
+		);
 	}
 
-	public Cannon(String name, int baseValue, int purchasedPrice, String purchasedFrom) {
+	private Cannon(String name, int baseValue, int purchasedPrice, String purchasedFrom) {
 		super(name, baseValue, purchasedPrice, purchasedFrom);
 	}
 
