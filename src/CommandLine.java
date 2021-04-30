@@ -94,7 +94,11 @@ public class CommandLine {
 		displayBanner();
 		
 		String name = getValidName();
+		System.out.println();
 		int duration = getValidDuration();
+		System.out.println();
+		
+		
 	}
 
 }
