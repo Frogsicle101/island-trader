@@ -48,6 +48,32 @@ public class CommandLine {
 		return name;
 	}
 	
+	
+	public static int getValidDuration() {
+		Scanner keyboard = new Scanner(System.in);
+		
+		int duration;
+		
+		boolean valid_duration = false;
+		do {
+			System.out.println("How long would you like the game to last [20-50 days]:");
+			duration = keyboard.nextInt();
+					
+			
+			if (duration < 20 || duration > 50) {
+				System.out.println("The duration should be between 20 and 50 days.");
+			} else {
+				valid_duration = true;
+			}
+			
+			
+		} while (!valid_duration);
+		
+		keyboard.close();
+		
+		return duration;
+		
+	}
 
 	
 	
@@ -60,6 +86,7 @@ public class CommandLine {
 		displayBanner();
 		
 		String name = getValidName();
+		int duration = getValidDuration();
 	}
 
 }
