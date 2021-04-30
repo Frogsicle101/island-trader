@@ -17,18 +17,16 @@ public class WarShip extends Ship {
 				5f,			// repairCost
 				50			// startingMoney
 		);
-		try {
-			Store anonStore = Store.getDefaultStore();
-			for (int i=0; i<N_CANNONS; i++)
+		Store anonStore = Store.getDefaultStore();
+		for (int i=0; i<N_CANNONS; i++)
+			try {
 				storeItem(anonStore.buyItem("Cannon"));
-			
-		} catch (CargoFullException e) {
-			e.printStackTrace();
-			System.out.println("It shouldn't be possible to trigger this");
-		} catch (ItemNotFoundException e) {
-			e.printStackTrace();
-			System.out.println("It shouldn't be possible to trigger this");
-		}
+			} catch (CargoFullException | ItemNotFoundException e) {
+				e.printStackTrace();
+				System.out.println("Fatal error in WarShip class constructor");
+				System.exit(1);
+			}
+
 	}
 
 }

@@ -16,7 +16,8 @@ public class GameEnvironment {
 	private int totalProfit;
 	// private object[] allSales TODO: Figure this out eventually
 	private int gameTime;
-	private Island[] islands;
+	private Island[] allIslands;
+	private Route[] allRoutes;
 	private Island currentIsland;
 	private Island destination;
 	
