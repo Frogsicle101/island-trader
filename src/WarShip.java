@@ -17,11 +17,10 @@ public class WarShip extends Ship {
 				5f,			// repairCost
 				50			// startingMoney
 		);
-		Store anonStore = Store.getDefaultStore();
 		for (int i=0; i<N_CANNONS; i++)
 			try {
-				storeItem(anonStore.buyItem("Cannon"));
-			} catch (CargoFullException | ItemNotFoundException e) {
+				storeItem(new Cannon());
+			} catch (CargoFullException e) {
 				e.printStackTrace();
 				System.out.println("Fatal error in WarShip class constructor");
 				System.exit(1);
