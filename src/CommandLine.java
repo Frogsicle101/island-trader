@@ -136,7 +136,7 @@ public class CommandLine {
 		
 		System.out.println("To be a captain, you need a ship! The local shipyard has several available:");
 		
-		for (int i=0; i<possibleShips.length; i++) {
+		for (int i=0; i<possibleShips.length; i++) { 	// Prints all ships in the format [num] shipType
 			System.out.println("[%d] %s".formatted(i, possibleShips[i].getShipType()));
 			
 		}
