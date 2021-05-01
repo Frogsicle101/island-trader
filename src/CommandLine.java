@@ -78,6 +78,40 @@ public class CommandLine {
 		return duration;
 		
 	}
+	
+	
+	public static int getValidShipChoice(Scanner keyboard, int numShips) {
+		
+		int choice = 0;
+		
+		boolean validChoice = false;
+		do {
+			System.out.println("To select a ship, input the number next to your choice");
+			
+			String input = keyboard.nextLine();
+			
+					
+			if (!input.matches("[0-9]*")) {
+				System.out.println("Input was not a valid number");
+				continue;
+			}
+			
+			choice = Integer.parseInt(input);
+			if (choice < 0 || choice > numShips - 1) {
+				System.out.println("Your choice must be between 0 and " + (numShips - 1));
+			} else {
+				validChoice = true;
+			}
+			
+			
+			
+			
+		} while (!validChoice);
+		
+		return choice;
+		
+	}
+	
 
 	
 	
@@ -104,7 +138,12 @@ public class CommandLine {
 		
 		for (int i=0; i<possibleShips.length; i++) {
 			System.out.println("[%d] %s".formatted(i, possibleShips[i].getShipType()));
+			
 		}
+		
+		Ship chosenShip = possibleShips[getValidShipChoice(keyboard, possibleShips.length)];
+		
+		
 		
 		
 		
