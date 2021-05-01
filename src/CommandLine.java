@@ -22,25 +22,25 @@ public class CommandLine {
 		
 		String name;
 		
-		boolean valid_name = false;
+		boolean validName = false;
 		do {
 			System.out.println("Please enter your name:");
 			name = keyboard.nextLine();
-			valid_name = true;		// Assume the input is valid
+			validName = true;		// Assume the input is valid
 			
 			
 			if (name.length() < 3 || name.length() > 15) {
 				System.out.println("Name should be between 3 and 15 characters.");
-				valid_name = false;
+				validName = false;
 			}
 			
 			if (!name.matches("[a-zA-Z ]*")) {
 				System.out.println("Name should not contain numbers or special characters.");
-				valid_name = false;
+				validName = false;
 			}
 			
 			
-		} while (!valid_name);
+		} while (!validName);
 		
 		
 		return name;
@@ -51,7 +51,7 @@ public class CommandLine {
 		
 		int duration = -1;
 		
-		boolean valid_duration = false;
+		boolean validDuration = false;
 		do {
 			System.out.println("How long would you like the game to last [20-50 days]:");
 			
@@ -67,13 +67,13 @@ public class CommandLine {
 			if (duration < 20 || duration > 50) {
 				System.out.println("The duration should be between 20 and 50 days.");
 			} else {
-				valid_duration = true;
+				validDuration = true;
 			}
 			
 			
 			
 			
-		} while (!valid_duration);
+		} while (!validDuration);
 		
 		return duration;
 		
@@ -86,7 +86,7 @@ public class CommandLine {
 		
 		boolean validChoice = false;
 		do {
-			System.out.println("To select a ship, input the number next to your choice");
+			System.out.println("To select a ship, input the number next to your choice:");
 			
 			String input = keyboard.nextLine();
 			
