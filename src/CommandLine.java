@@ -127,9 +127,14 @@ public class CommandLine {
 		
 		
 		Scanner keyboard = new Scanner(System.in);
+		
+		
 		String name = getValidName(keyboard);
+		environment.setName(name);
 		System.out.println();
+		
 		int duration = getValidDuration(keyboard);
+		environment.setGameLength(duration);
 		System.out.println();
 		
 		Ship[] possibleShips = environment.getPossibleShips();
@@ -142,10 +147,9 @@ public class CommandLine {
 		}
 		
 		Ship chosenShip = possibleShips[getValidShipChoice(keyboard, possibleShips.length)];
+		environment.setShip(chosenShip);
 		
-		
-		
-		
+		environment.startGame();
 		
 		keyboard.close();
 		
