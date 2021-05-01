@@ -18,8 +18,7 @@ public class CommandLine {
 	}
 	
 	
-	public static String getValidName() {
-		Scanner keyboard = new Scanner(System.in);
+	public static String getValidName(Scanner keyboard) {
 		
 		String name;
 		
@@ -48,8 +47,7 @@ public class CommandLine {
 	}
 	
 	
-	public static int getValidDuration() {
-		Scanner keyboard = new Scanner(System.in);
+	public static int getValidDuration(Scanner keyboard) {
 		
 		int duration = -1;
 		
@@ -77,8 +75,6 @@ public class CommandLine {
 			
 		} while (!valid_duration);
 		
-		keyboard.close();
-		
 		return duration;
 		
 	}
@@ -95,9 +91,11 @@ public class CommandLine {
 		
 		displayBanner();
 		
-		String name = getValidName();
+		
+		Scanner keyboard = new Scanner(System.in);
+		String name = getValidName(keyboard);
 		System.out.println();
-		int duration = getValidDuration();
+		int duration = getValidDuration(keyboard);
 		System.out.println();
 		
 		Ship[] possibleShips = environment.getPossibleShips();
@@ -107,6 +105,10 @@ public class CommandLine {
 		for (int i=0; i<possibleShips.length; i++) {
 			System.out.println("[%d] %s".formatted(i, possibleShips[i].getShipType()));
 		}
+		
+		
+		
+		keyboard.close();
 		
 		
 		
