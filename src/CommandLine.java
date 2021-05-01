@@ -91,12 +91,24 @@ public class CommandLine {
 	 */
 	public static void main(String[] args) {
 		
+		GameEnvironment environment = new GameEnvironment();
+		
 		displayBanner();
 		
 		String name = getValidName();
 		System.out.println();
 		int duration = getValidDuration();
 		System.out.println();
+		
+		Ship[] possibleShips = environment.getPossibleShips();
+		
+		System.out.println("To be a captain, you need a ship! The local shipyard has several available:");
+		
+		for (int i=0; i<possibleShips.length; i++) {
+			System.out.println("[%d] %s".formatted(i, possibleShips[i]));
+		}
+		
+		
 		
 		
 	}

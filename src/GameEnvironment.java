@@ -31,6 +31,11 @@ public class GameEnvironment {
 		// TODO: Plan out what the islands are gonna be
 	}
 	
+	public Ship[] getPossibleShips() {
+		Ship[] ships = {new WarShip()};
+		return ships;
+	}
+	
 	public int getGameLength() {
 		return gameLength;
 	}
