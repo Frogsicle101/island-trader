@@ -1,3 +1,4 @@
+import java.util.HashMap;
 
 /**
  * The main controller of the game.
@@ -112,7 +113,18 @@ public class GameEnvironment {
 			return false;
 		
 		state = GameState.ON_ISLAND;
-		// TODO - GET THE USER ONTO AN ISLAND
+		
+		HashMap<TradeTypes, Float> prices = new HashMap<TradeTypes, Float>();
+		prices.put(TradeTypes.FOOD, 1f);
+		prices.put(TradeTypes.TOOL, 1f);
+		prices.put(TradeTypes.ARTIFACT, 1f);
+		prices.put(TradeTypes.LUXURY, 1f);
+		prices.put(TradeTypes.MATERIAL, 1f);
+		
+		
+		Store tempStore = new Store("Default", prices);
+		
+		currentIsland = new Island(tempStore, "Default", "description"); 
 		return true;
 	}
 
