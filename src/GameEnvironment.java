@@ -11,6 +11,21 @@ public class GameEnvironment {
 	private Ship ship;
 	private int gameLength;
 	
+	/**
+	 * @return the currentIsland
+	 */
+	public Island getCurrentIsland() {
+		return currentIsland;
+	}
+
+	/**
+	 * @param currentIsland the currentIsland to set
+	 */
+	public void setCurrentIsland(Island currentIsland) {
+		this.currentIsland = currentIsland;
+	}
+
+
 	// Tracking progress
 	private GameState state;
 	private int money;
