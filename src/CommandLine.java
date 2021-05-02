@@ -10,10 +10,14 @@ import java.util.Scanner;
 public class CommandLine {
 	
 	
+	private static void printDashes() {
+		System.out.println("---------------------");
+	}
+	
 	public static void displayBanner() {
-		System.out.println("---------------------");
+		printDashes();
 		System.out.println("ISLAND TRADER");
-		System.out.println("---------------------");
+		printDashes();
 		System.out.println();
 	}
 	
@@ -113,22 +117,7 @@ public class CommandLine {
 	}
 	
 
-	
-	
-	/**
-	 * The main method
-	 * 
-	 */
-	public static void main(String[] args) {
-		
-		GameEnvironment environment = new GameEnvironment();
-		
-		displayBanner();
-		
-		
-		Scanner keyboard = new Scanner(System.in);
-		
-		
+	private static void setUp(Scanner keyboard, GameEnvironment environment) {
 		String name = getValidName(keyboard);
 		environment.setName(name);
 		System.out.println();
@@ -150,6 +139,51 @@ public class CommandLine {
 		environment.setShip(chosenShip);
 		
 		environment.startGame();
+	}
+	
+	/**
+	 * The main method
+	 * 
+	 */
+	public static void main(String[] args) {
+		
+		GameEnvironment environment = new GameEnvironment();
+		
+		displayBanner();
+		
+		
+		Scanner keyboard = new Scanner(System.in);
+		
+		setUp(keyboard, environment);
+		
+		
+		// The main game loop
+		
+		boolean stillPlaying = true;
+		do {
+			printDashes();
+			System.out.println("Current location: " + environment.getCurrentIsland().getName());
+			System.out.println(environment.getCurrentIsland().getDescription());
+			printDashes();
+			System.out.println("[0] Visit the store");
+			System.out.println("[1] Set sail");
+			System.out.println("[2] Quit game");
+			System.out.println("Enter your choice:");
+			
+			int choice = keyboard.nextInt();	//TODO: Add validation on this input
+			if (choice == 2) {
+				stillPlaying = false;
+			} else {
+				System.out.println("Invalid Input");
+			}
+			
+			
+			
+			
+			
+			
+		} while (stillPlaying);
+		
 		
 		keyboard.close();
 		
