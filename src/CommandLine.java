@@ -142,7 +142,18 @@ public class CommandLine {
 	}
 	
 	
-	private static void visitStore(Scanner keyboard, Store store) {
+	private static void visitStore(Scanner keyboard, GameEnvironment environment) {
+		Store store = environment.getCurrentIsland().getStore();
+		
+		printDashes();
+		
+		System.out.println("Welcome to " + store.getShopName() + "");
+		System.out.println("Here's what we've got for sale:");
+		
+		for (int i=0; i<TradeGood.ALL_GOODS.length; i++) {
+			System.out.println("[" + (i + 1) + "] " + TradeGood.ALL_GOODS[i].getName());
+		}
+		
 		
 	}
 	
@@ -180,7 +191,7 @@ public class CommandLine {
 			
 			switch (choice) {
 				case 0: {
-					visitStore(keyboard, environment.getCurrentIsland().getStore());
+					visitStore(keyboard, environment);
 					break;
 				}
 				
