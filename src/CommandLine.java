@@ -141,6 +141,12 @@ public class CommandLine {
 		environment.startGame();
 	}
 	
+	
+	private static void visitStore(Scanner keyboard, Store store) {
+		
+	}
+	
+	
 	/**
 	 * The main method
 	 * 
@@ -171,16 +177,21 @@ public class CommandLine {
 			System.out.println("Enter your choice:");
 			
 			int choice = keyboard.nextInt();	//TODO: Add validation on this input
-			if (choice == 2) {
-				stillPlaying = false;
-			} else {
-				System.out.println("Invalid Input");
+			
+			switch (choice) {
+				case 0: {
+					visitStore(keyboard, environment.getCurrentIsland().getStore());
+					break;
+				}
+				
+				case 2: {
+					stillPlaying = false;
+					break;
+				}
+				default:
+					System.out.println("Invalid Input");
 			}
-			
-			
-			
-			
-			
+					
 			
 		} while (stillPlaying);
 		
