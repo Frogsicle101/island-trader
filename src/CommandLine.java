@@ -9,6 +9,9 @@ import java.util.Scanner;
  */
 public class CommandLine {
 	
+	static GameEnvironment environment;
+	static Scanner keyboard;
+	static boolean stillPlaying;
 	
 	private static void printDashes() {
 		System.out.println("---------------------");
@@ -22,7 +25,7 @@ public class CommandLine {
 	}
 	
 	
-	public static String getValidName(Scanner keyboard) {
+	public static String getValidName() {
 		
 		String name;
 		
@@ -51,7 +54,7 @@ public class CommandLine {
 	}
 	
 	
-	public static int getValidDuration(Scanner keyboard) {
+	public static int getValidDuration() {
 		
 		int duration = -1;
 		
@@ -84,7 +87,7 @@ public class CommandLine {
 	}
 	
 	
-	public static int getValidShipChoice(Scanner keyboard, int numShips) {
+	public static int getValidShipChoice(int numShips) {
 		
 		int choice = 0;
 		
@@ -116,13 +119,14 @@ public class CommandLine {
 		
 	}
 	
+	// ----- Island States -----
 
-	private static void setUp(Scanner keyboard, GameEnvironment environment) {
-		String name = getValidName(keyboard);
+	private static void s_setUp() {
+		String name = getValidName();
 		environment.setName(name);
 		System.out.println();
 		
-		int duration = getValidDuration(keyboard);
+		int duration = getValidDuration();
 		environment.setGameLength(duration);
 		System.out.println();
 		
@@ -135,27 +139,78 @@ public class CommandLine {
 			
 		}
 		
-		Ship chosenShip = possibleShips[getValidShipChoice(keyboard, possibleShips.length)];
+		Ship chosenShip = possibleShips[getValidShipChoice(possibleShips.length)];
 		environment.setShip(chosenShip);
 		
 		environment.startGame();
 	}
 	
+	private static void s_onIsland() {
+		printDashes();
+		System.out.println("Current location: " + environment.getCurrentIsland().getName());
+		System.out.println(environment.getCurrentIsland().getDescription());
+		printDashes();
+		System.out.println("[0] Visit the store");
+		System.out.println("[1] Set sail");
+		System.out.println("[2] Quit game");
+		System.out.print("Enter your choice: ");
+		
+		int choice = keyboard.nextInt();	//TODO: Add validation on this input
+		
+		switch (choice) {
+			case 0: {
+				s_visitStore();
+				break;
+			}
+			
+			case 2: {
+				stillPlaying = false;
+				break;
+			}
+			default:
+				System.out.println("Invalid Input");
+		}
+				
+	}
 	
-	private static void visitStore(Scanner keyboard, GameEnvironment environment) {
+
+	private static void s_visitStore() {
 		Store store = environment.getCurrentIsland().getStore();
 		
 		printDashes();
 		
 		System.out.println("Welcome to " + store.getShopName() + "");
-		System.out.println("Here's what we've got for sale:");
-		
-		for (int i=0; i<TradeGood.ALL_GOODS.length; i++) {
-			System.out.println("[" + (i + 1) + "] " + TradeGood.ALL_GOODS[i].getName());
+		System.out.println("Do you wish to buy or sell?\n"
+						+ "[1] Buy\n"
+						+ "[2] Sell");
+		int choice = keyboard.nextInt(); // TODO: We should probably create some helper functions for this
+		switch (choice) {
+		case 1:	// Buy
+			s_wantToBuy(store);
+			break;
+		case 2: // Sell
+			s_wantToSell(store);
+			break;
 		}
+	}
+	
+	private static void s_wantToBuy(Store store) {
+		boolean stillHere = true;
 		
+		while (stillHere) {
+			System.out.println("Here's what we've got for sale:");
+			int i = 1;
+			for (TradeGood item: TradeGood.ALL_GOODS) {
+				int price = store.getPrice(item);
+				System.out.println("[" + (i++) + "] " + item.getName() + " | " + price);
+			}
+		}
+	}
+	
+	private static void s_wantToSell(Store store) {
 		
 	}
+	
 	
 	
 	/**
@@ -164,45 +219,30 @@ public class CommandLine {
 	 */
 	public static void main(String[] args) {
 		
-		GameEnvironment environment = new GameEnvironment();
+		environment = new GameEnvironment();
+		keyboard = new Scanner(System.in);
+		stillPlaying = true;
 		
 		displayBanner();
-		
-		
-		Scanner keyboard = new Scanner(System.in);
-		
-		setUp(keyboard, environment);
-		
+
 		
 		// The main game loop
 		
-		boolean stillPlaying = true;
 		do {
-			printDashes();
-			System.out.println("Current location: " + environment.getCurrentIsland().getName());
-			System.out.println(environment.getCurrentIsland().getDescription());
-			printDashes();
-			System.out.println("[0] Visit the store");
-			System.out.println("[1] Set sail");
-			System.out.println("[2] Quit game");
-			System.out.println("Enter your choice:");
-			
-			int choice = keyboard.nextInt();	//TODO: Add validation on this input
-			
-			switch (choice) {
-				case 0: {
-					visitStore(keyboard, environment);
-					break;
-				}
-				
-				case 2: {
-					stillPlaying = false;
-					break;
-				}
-				default:
-					System.out.println("Invalid Input");
+			switch (environment.getState()) {
+			case SETUP:
+				s_setUp();
+				break;
+			case ON_ISLAND:
+				s_onIsland();
+				break;
+			case FIGHTING:
+				break;
+			case GAME_OVER:
+				break;
+			case SAILING:
+				break;
 			}
-					
 			
 		} while (stillPlaying);
 		
