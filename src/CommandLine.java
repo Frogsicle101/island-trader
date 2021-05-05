@@ -224,21 +224,48 @@ public class CommandLine {
 		}
 	}
 	
+	/**
+	 * !!! TODO: COMPLETE !!!
+	 * @param store The current island's store
+	 */
 	private static void s_wantToBuy(Store store) {
 		boolean stillHere = true;
 		
 		while (stillHere) {
+			int capacity = environment.getShip().getSpareCapacity();
+			int playerGold = environment.getMoney();
+			// 1. List the items
+			System.out.println(String.format("You have: %d gold, and %d spare cargo capacity.", playerGold, capacity));
 			System.out.println("Here's what we've got for sale:");
 			int i = 0;
 			for (TradeGood item: TradeGood.ALL_GOODS) {
+				String name = item.getName();
 				int price = store.getPrice(item);
-				System.out.println("[" + (++i) + "] " + item.getName() + " | " + price);
+				System.out.println(String.format("[%d] %s | %d gold", ++i, name, price));
 			}
-			System.out.println("What item would you like to buy? (Enter '0' to go back)");
-			int wantToBuy = nextInt(getValidName(), 0, i) - 1;
-			if (wantToBuy == -1) {
-				printDashes();
+			// -- Exit condition : No spare cargo space --
+			if (capacity == 0) {
+				System.out.println("Sorry, you have no spare cargo capacity");
 				stillHere = false;
+				break;
+			}
+			// 2. Pick the item to buy
+			System.out.println("What item would you like to buy? (Enter '0' to go back)");
+			int buyIdx = nextInt("> ", 0, i) - 1;
+			// -- Exit Condition : Doesn't wanna buy --
+			if (buyIdx == -1) {
+				stillHere = false;
+				break;
+			}
+			// 3. Buy it if you can afford it
+			TradeGood item = TradeGood.ALL_GOODS[buyIdx];
+			int price = store.getPrice(item);
+			if (price > environment.getMoney()) {
+				System.out.println("Sorry, you can not afford that");
+			} else {
+				environment.removeMoney(price);
+				item = item.makeBought(price, store.getShopName());
+				environment.getShip().storeItem(item);
 			}
 		}
 	}

@@ -3,7 +3,7 @@
  * @author Andrew Hall
  *
  */
-public class CargoFullException extends Exception {
+public class CargoFullException extends RuntimeException {
 	private static final long serialVersionUID = -1284102267997105190L;
 
 	public CargoFullException() {
