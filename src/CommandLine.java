@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -24,6 +25,35 @@ public class CommandLine {
 		System.out.println();
 	}
 	
+	// ----- Input/Output Helper Functions -----
+	
+	/**
+	 * Repeatedly prints `message` until the input is an integer between minRange and maxRange
+	 * @param message The message which gets displayed
+	 * @param minRange The smallest valid number inclusive
+	 * @param maxRange The biggest valid number inclusive
+	 * @return The user's number
+	 */
+	private static int nextInt(String message, int minRange, int maxRange) {
+		boolean validInput = false;
+		int userNum = -1;
+		do {
+			try {
+				System.out.println(message);
+				userNum = keyboard.nextInt();
+				if (userNum < minRange || userNum > maxRange)
+					System.out.println(String.format("Invalid Range - Must be between %d and %d", minRange, maxRange));
+				else
+					validInput = true;
+			} catch (InputMismatchException _e) {
+				System.out.println("Input must be an integer");
+			}
+		} while (!validInput);
+		
+		return userNum;
+	}
+	
+	// -----
 	
 	public static String getValidName() {
 		
@@ -199,10 +229,16 @@ public class CommandLine {
 		
 		while (stillHere) {
 			System.out.println("Here's what we've got for sale:");
-			int i = 1;
+			int i = 0;
 			for (TradeGood item: TradeGood.ALL_GOODS) {
 				int price = store.getPrice(item);
-				System.out.println("[" + (i++) + "] " + item.getName() + " | " + price);
+				System.out.println("[" + (++i) + "] " + item.getName() + " | " + price);
+			}
+			System.out.println("What item would you like to buy? (Enter '0' to go back)");
+			int wantToBuy = nextInt(getValidName(), 0, i) - 1;
+			if (wantToBuy == -1) {
+				printDashes();
+				stillHere = false;
 			}
 		}
 	}

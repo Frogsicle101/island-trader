@@ -45,6 +45,8 @@ public class GameEnvironment {
 	
 	private void generateIslands() {
 		// TODO: Plan out what the islands are gonna be
+		///////////// allIslands = new Island[] {new Pratum(), /*Add more as necessary*/};
+		// TODO: Generate the routes
 	}
 	
 	public Ship[] getPossibleShips() {
