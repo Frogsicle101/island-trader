@@ -3,7 +3,7 @@ import java.util.HashMap;
 /**
  * The main controller of the game.
  * All interactions with the game should be through this class.
- * @author Andrew Hall
+ * @author Andrew Hall & fma107
  */
 public class GameEnvironment {
 	// Settings - Variables the user changes
@@ -93,8 +93,63 @@ public class GameEnvironment {
 		this.ship = ship;
 	}
 	
+	
+	
 	// ------------
 	
+	public int getMoney() {
+		return money;
+	}
+	
+	/**
+	 * Add money to the player's purse
+	 * @param added The amount of money to add
+	 * @return The player's current balance
+	 */
+	public int addMoney(int added) {
+		this.money += added;
+		this.totalProfit += added;
+		return this.money;
+	}
+	
+	/**
+	 * Deduct money from the balance. For buying, wages, etc.
+	 * @param deducted The amount of money to remove
+	 * @return The player's current balance
+	 */
+	public int removeMoney(int deducted) {
+		this.money -= deducted;
+		return this.money;
+	}
+
+	public Island getDestination() {
+		return destination;
+	}
+
+	public void setDestination(Island destination) {
+		this.destination = destination;
+	}
+
+	public GameState getState() {
+		return state;
+	}
+
+	public int getTotalProfit() {
+		return totalProfit;
+	}
+
+	public int getGameTime() {
+		return gameTime;
+	}
+
+	public Island[] getAllIslands() {
+		return allIslands;
+	}
+
+	public Route[] getAllRoutes() {
+		return allRoutes;
+	}
+
 	/**
 	 * Resets the game's variables & state back to the set-up phase
 	 */
