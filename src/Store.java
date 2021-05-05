@@ -62,12 +62,10 @@ public class Store {
 	
 	/**
 	 * Gives an item's price at this store
-	 * @param name The item's name to search for
-	 * @return The item's price
-	 * @throws ItemNotFoundException The given name doesn't match any items
+	 * @param item The trade good whose adjusted price we want
+	 * @return The good's price at this store
 	 */
-	public int getPrice(String name) throws ItemNotFoundException {
-		TradeGood item = getItem(name);
+	public int getPrice(TradeGood item) {
 		Float valueMult = itemPrices.get(item.getType());
 		if (valueMult == null)
 			valueMult = 1f;
@@ -76,14 +74,12 @@ public class Store {
 	}
 	
 	/**
-	 * 
-	 * @param name The item's name to search for
+	 * Takes an item (usually an "unbought" item from a store), and fills out all 
+	 * @param item The trade god we want
 	 * @return The requested item, with the purchasedPrice/From fields filled
-	 * @throws ItemNotFoundException The given name doesn't match any items
 	 */
-	public TradeGood buyItem(String name) throws ItemNotFoundException {
-		TradeGood item = getItem(name);
-		int price = getPrice(name);
+	public TradeGood buyItem(TradeGood item) {
+		int price = getPrice(item);
 		return item.copy().makeBought(price, shopName);
 	}	
 }
