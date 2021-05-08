@@ -120,17 +120,10 @@ public abstract class Ship {
 	 * @return The item in question
 	 * @throws ItemNotFoundException	If the given itemName doesn't match anything in cargo
 	 */
-	public Item popItem(String itemName) throws ItemNotFoundException {
-		Item wantedItem;
-		for (int i = 0; i < cargo.size(); i++) {
-			if (cargo.get(i).getName().equals(itemName)) {
-				wantedItem = cargo.get(i);
-				cargo.remove(i);
-				return wantedItem;
-			}
-		}
-		
-		throw new ItemNotFoundException("Item "+itemName+" not found in cargo");
+	public Item popItem(int cargoIdx) {
+		Item wantedItem = cargo.get(cargoIdx);
+		cargo.remove(cargoIdx);
+		return wantedItem;
 	}
 	
 }

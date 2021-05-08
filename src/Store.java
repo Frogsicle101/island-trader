@@ -62,14 +62,20 @@ public class Store {
 	
 	/**
 	 * Gives an item's price at this store
-	 * @param item The trade good whose adjusted price we want
+	 * @param item The item whose price we ant
 	 * @return The good's price at this store
 	 */
-	public int getPrice(TradeGood item) {
-		Float valueMult = itemPrices.get(item.getType());
-		if (valueMult == null)
-			valueMult = 1f;
-		int price = (int) (item.getBaseValue() * valueMult);
+	public int getPrice(Item item) {
+		int price;
+		
+		if (item instanceof TradeGood) {
+			Float valueMult = itemPrices.get(((TradeGood)item).getType());
+			if (valueMult == null)
+				valueMult = 1f;
+			price = (int) (item.getBaseValue() * valueMult);
+		} else {
+			price = item.getBaseValue();
+		}
 		return price;
 	}
 	
