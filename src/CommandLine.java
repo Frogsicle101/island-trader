@@ -39,7 +39,7 @@ public class CommandLine {
 		int userNum = -1;
 		do {
 			try {
-				System.out.println(message);
+				System.out.print(message);
 				userNum = keyboard.nextInt();
 				if (userNum < minRange || userNum > maxRange)
 					System.out.println(String.format("Invalid Range - Must be between %d and %d", minRange, maxRange));
@@ -47,6 +47,7 @@ public class CommandLine {
 					validInput = true;
 			} catch (InputMismatchException _e) {
 				System.out.println("Input must be an integer");
+				keyboard.next();
 			}
 		} while (!validInput);
 		
@@ -180,20 +181,24 @@ public class CommandLine {
 		System.out.println("Current location: " + environment.getCurrentIsland().getName());
 		System.out.println(environment.getCurrentIsland().getDescription());
 		printDashes();
-		System.out.println("[0] Visit the store");
 		System.out.println("[1] Set sail");
-		System.out.println("[2] Quit game");
-		System.out.print("Enter your choice: ");
+		System.out.println("[2] Visit the store");
+		System.out.println("[0] Quit game");
+		System.out.println("Enter your choice");
 		
-		int choice = keyboard.nextInt();	//TODO: Add validation on this input
+		int choice = nextInt("> ", 0, 2);
 		
 		switch (choice) {
-			case 0: {
+			case 1: {
+				// s_setSail();
+				break;
+			}	
+			case 2: {
 				s_visitStore();
 				break;
 			}
 			
-			case 2: {
+			case 0: {
 				stillPlaying = false;
 				break;
 			}
@@ -210,11 +215,16 @@ public class CommandLine {
 		printDashes();
 		
 		System.out.println("Welcome to " + store.getShopName() + "");
+		System.out.println(String.format("You have: %d gold, and %d spare cargo capacity.",
+									environment.getMoney(), environment.getShip().getSpareCapacity()));
 		System.out.println("Do you wish to buy or sell?\n"
 						+ "[1] Buy\n"
-						+ "[2] Sell");
-		int choice = keyboard.nextInt(); // TODO: We should probably create some helper functions for this
+						+ "[2] Sell\n"
+						+ "[0] Back");
+		int choice = nextInt("> ", 0, 2);
 		switch (choice) {
+		case 0:	// 
+			break;
 		case 1:	// Buy
 			s_wantToBuy(store);
 			break;
@@ -224,10 +234,7 @@ public class CommandLine {
 		}
 	}
 	
-	/**
-	 * !!! TODO: COMPLETE !!!
-	 * @param store The current island's store
-	 */
+	
 	private static void s_wantToBuy(Store store) {
 		boolean stillHere = true;
 		
@@ -235,7 +242,6 @@ public class CommandLine {
 			int capacity = environment.getShip().getSpareCapacity();
 			int playerGold = environment.getMoney();
 			// 1. List the items
-			System.out.println(String.format("You have: %d gold, and %d spare cargo capacity.", playerGold, capacity));
 			System.out.println("Here's what we've got for sale:");
 			int i = 0;
 			for (TradeGood item: TradeGood.ALL_GOODS) {
@@ -260,7 +266,7 @@ public class CommandLine {
 			// 3. Buy it if you can afford it
 			TradeGood item = TradeGood.ALL_GOODS[buyIdx];
 			int price = store.getPrice(item);
-			if (price > environment.getMoney()) {
+			if (price > playerGold) {
 				System.out.println("Sorry, you can not afford that");
 			} else {
 				environment.removeMoney(price);
@@ -270,8 +276,46 @@ public class CommandLine {
 		}
 	}
 	
+	
+	/**
+	 * !!! INCOMPLETE !!!
+	 * @param store
+	 */
 	private static void s_wantToSell(Store store) {
-		
+		boolean stillHere = true;
+		Ship ship = environment.getShip();
+		while (stillHere) {
+			// -- Exit condition : No cargo to sell --
+			if (ship.getCargo().isEmpty()) {
+				System.out.println("You have no cargo to sell.");
+				stillHere = false;
+				break;
+			}
+			
+			// 1. List the cargo
+			System.out.println("Here's your cargo items:");
+			int i = 0;
+			for (Item item: ship.getCargo()) {
+				String name = item.getName();
+				int price = store.getPrice(item);
+				int priceDiff = price - item.getPurchasedPrice();
+				System.out.println(String.format("[%d] %s | %d (%s%d) gold", ++i, name, price, (priceDiff >= 0 ? "+" : ""), priceDiff));
+			}
+			// 2. Pick the item to sell
+			System.out.println("What item would you like to sell? (Enter '0' to do back)");
+			int sellIdx = nextInt("> ", 0, i) - 1;
+			// -- Exit Condition : Doesn't wanna sell --
+			if (sellIdx == -1) {
+				stillHere = false;
+				break;
+			}
+			Item item = ship.popItem(sellIdx);
+			int price = store.getPrice(item);
+			int priceDiff = price - item.getPurchasedPrice();
+			environment.addMoney(price);
+			System.out.println(String.format("Sold %s for %d gold (%d %s)", item.getName(), price, Math.abs(priceDiff), (priceDiff < 0 ? "loss" : "profit")));
+			
+		}
 	}
 	
 	
