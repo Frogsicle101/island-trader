@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 /**
  * This class links two islands together. 
@@ -24,6 +25,26 @@ public class Route {
 		this.distance = distance;
 		this.randomEvents = randomEvents;
 	}
+	
+	/**
+	 * Filter function.<br>
+	 * Takes a list of routes & an island, returns given routes that contain the island.
+	 * @param allRoutes List of all routes you want to check. Recommend just checking every route
+	 * @param currIsland Island that's getting checked for
+	 * @return An array of every route that connects to/from the given island
+	 */
+	public static ArrayList<Route> availableRoutes(Route[] allRoutes, Island currIsland) {
+		ArrayList<Route> validRoutes = new ArrayList<>();
+		for (Route route : allRoutes) {
+			if (route.connectsIsland(currIsland)) {
+				validRoutes.add(route);
+			}
+		}
+		
+		return validRoutes;
+		
+	}
+	
 	
 	/**
 	 * Every route connects 2 islands, this gets those islands
