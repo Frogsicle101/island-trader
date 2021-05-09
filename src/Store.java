@@ -45,6 +45,20 @@ public class Store {
 		return DEFAULT_STORE;
 	}
 	
+	
+	/**
+	 * Creates a pricing map of every type, initialized to 1 (base value)
+	 * @return The default pricing
+	 */
+	public static HashMap<TradeTypes, Float> getDefaultPrices() {
+		HashMap<TradeTypes, Float> prices = new HashMap<>();
+		for (TradeTypes type : TradeTypes.values()) {
+			prices.put(type, 1f);
+		}
+		return prices;
+	}
+
+	
 	/**
 	 * Gets the item with that name as defined in TradeGood.ALL_GOODS
 	 * @param name The item's name to search for

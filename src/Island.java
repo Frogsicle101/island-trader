@@ -9,10 +9,12 @@ import java.util.ArrayList;
  */
 public class Island {
 	
-	private Store store;
-	private String name;
-	private String description;
+	protected Store store;
+	protected String name;
+	protected String description;
 	
+	
+	public Island() {}
 	
 	/**
 	 * @param store A store object. 

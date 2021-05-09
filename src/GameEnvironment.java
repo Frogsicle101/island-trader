@@ -11,21 +11,6 @@ public class GameEnvironment {
 	private Ship ship;
 	private int gameLength;
 	
-	/**
-	 * @return the currentIsland
-	 */
-	public Island getCurrentIsland() {
-		return currentIsland;
-	}
-
-	/**
-	 * @param currentIsland the currentIsland to set
-	 */
-	public void setCurrentIsland(Island currentIsland) {
-		this.currentIsland = currentIsland;
-	}
-
-
 	// Tracking progress
 	private GameState state;
 	private int money;
@@ -43,10 +28,26 @@ public class GameEnvironment {
 		generateIslands();
 	}
 	
+	
+	
 	private void generateIslands() {
 		// TODO: Plan out what the islands are gonna be
-		///////////// allIslands = new Island[] {new Pratum(), /*Add more as necessary*/};
+		allIslands = new Island[] {new Pratum(), /*Add more as necessary*/};
 		// TODO: Generate the routes
+	}
+	
+	/**
+	 * @return the currentIsland
+	 */
+	public Island getCurrentIsland() {
+		return currentIsland;
+	}
+
+	/**
+	 * @param currentIsland the currentIsland to set
+	 */
+	public void setCurrentIsland(Island currentIsland) {
+		this.currentIsland = currentIsland;
 	}
 	
 	public Ship[] getPossibleShips() {
@@ -186,17 +187,7 @@ public class GameEnvironment {
 		
 		state = GameState.ON_ISLAND;
 		
-		HashMap<TradeTypes, Float> prices = new HashMap<TradeTypes, Float>();
-		prices.put(TradeTypes.FOOD, 1f);
-		prices.put(TradeTypes.TOOL, 1f);
-		prices.put(TradeTypes.ARTIFACT, 1f);
-		prices.put(TradeTypes.LUXURY, 1f);
-		prices.put(TradeTypes.MATERIAL, 1f);
-		
-		
-		Store tempStore = new Store("Default", prices);
-		
-		currentIsland = new Island(tempStore, "Default", "description"); 
+		currentIsland = allIslands[0];
 		return true;
 	}
 

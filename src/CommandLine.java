@@ -278,7 +278,6 @@ public class CommandLine {
 	
 	
 	/**
-	 * !!! INCOMPLETE !!!
 	 * @param store
 	 */
 	private static void s_wantToSell(Store store) {
