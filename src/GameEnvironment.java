@@ -29,11 +29,32 @@ public class GameEnvironment {
 	}
 	
 	
-	
+	/**
+	 * Generates the islands, and all the routes between the islands
+	 */
 	private void generateIslands() {
-		// TODO: Plan out what the islands are gonna be
-		allIslands = new Island[] {new Pratum(), /*Add more as necessary*/};
+		Island pratum = new Pratum();
+		Island fordina = new Fodina();
+		Island tempetas = new Tempestas();
+		Island terminus = new Terminus();
+		Island officina = new Officina();
+		allIslands = new Island[] {pratum, fordina, officina, tempetas, terminus};
+		
 		// TODO: Generate the routes
+		// TODO: Figure out the random events, for now this is a placeholder
+		RandomEvent[] re = {};
+		allRoutes = new Route[] {
+				new Route(pratum, fordina, 5, re),
+				new Route(pratum, officina, 5, re),
+				new Route(pratum, tempetas, 5, re),
+				new Route(pratum, terminus, 3, re),
+				new Route(fordina, officina, 5, re),
+				new Route(fordina, tempetas, 5, re),
+				new Route(fordina, terminus, 3, re),
+				new Route(officina, tempetas, 5, re),
+				new Route(officina, terminus, 3, re),
+				new Route(tempetas, terminus, 3, re),
+		};
 	}
 	
 	/**
