@@ -118,59 +118,39 @@ public class CommandLine {
 	}
 	
 	
-	public static int getValidShipChoice(int numShips) {
-		
+	public static int getValidShipChoice(Ship[] possibleShips) {
 		int choice = 0;
 		
-		boolean validChoice = false;
-		do {
-			System.out.println("To select a ship, input the number next to your choice:");
-			
-			String input = keyboard.nextLine();
-			
-					
-			if (!input.matches("[0-9]*")) {
-				System.out.println("Input was not a valid number");
-				continue;
-			}
-			
-			choice = Integer.parseInt(input);
-			if (choice < 0 || choice > numShips - 1) {
-				System.out.println("Your choice must be between 0 and " + (numShips - 1));
-			} else {
-				validChoice = true;
-			}
-			
-			
-			
-			
-		} while (!validChoice);
+		System.out.println("To be a captain, you need a ship! The local shipyard has several available:");
 		
-		return choice;
+		for (int i=0; i<possibleShips.length; i++) { 	// Prints all ships in the format [num] shipType
+			System.out.println("[%d] %s".formatted(i+1, possibleShips[i].getShipType()));
+			
+		}
+		
+		System.out.println("To select a ship, input the number next to your choice:");
+		choice = nextInt(">", 1, possibleShips.length);
+		return choice - 1;
 		
 	}
 	
 	// ----- Island States -----
 
 	private static void s_setUp() {
+		// Get name
 		String name = getValidName();
 		environment.setName(name);
 		System.out.println();
 		
+		// Get duration
 		int duration = getValidDuration();
 		environment.setGameLength(duration);
 		System.out.println();
 		
+		// Get ship type
 		Ship[] possibleShips = environment.getPossibleShips();
-		
-		System.out.println("To be a captain, you need a ship! The local shipyard has several available:");
-		
-		for (int i=0; i<possibleShips.length; i++) { 	// Prints all ships in the format [num] shipType
-			System.out.println("[%d] %s".formatted(i, possibleShips[i].getShipType()));
-			
-		}
-		
-		Ship chosenShip = possibleShips[getValidShipChoice(possibleShips.length)];
+		int shipChoice = getValidShipChoice(possibleShips)
+		Ship chosenShip = possibleShips[shipChoice];
 		environment.setShip(chosenShip);
 		
 		environment.startGame();
@@ -189,19 +169,15 @@ public class CommandLine {
 		int choice = nextInt("> ", 0, 2);
 		
 		switch (choice) {
-			case 1: {
+			case 1:
 				// s_setSail();
 				break;
-			}	
-			case 2: {
+			case 2: 
 				s_visitStore();
 				break;
-			}
-			
-			case 0: {
+			case 0:
 				stillPlaying = false;
 				break;
-			}
 			default:
 				System.out.println("Invalid Input");
 		}
