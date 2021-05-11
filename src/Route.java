@@ -78,6 +78,16 @@ public class Route {
 		return randomEvents;
 	}
 	
+	/**
+	 * Since routes are two-way, gets the other island this connects to.
+	 * e.g. Routes connect Cheese <-> Bread, if your island is Bread, returns Cheese, and vice versa. 
+	 * @param thisIsland Your island
+	 * @return The other island
+	 */
+	public Island getOtherIsland(Island thisIsland) {
+		return thisIsland == islands[0] ? islands[1] : islands[0];
+	}
+	
 	
 	
 	

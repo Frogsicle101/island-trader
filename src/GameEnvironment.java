@@ -20,7 +20,10 @@ public class GameEnvironment {
 	private Island[] allIslands;
 	private Route[] allRoutes;
 	private Island currentIsland;
+	// Sailing Specifics
 	private Island destination;
+	private Route route;
+	private int arrivalTime;
 	
 	
 	public GameEnvironment() {
@@ -42,18 +45,21 @@ public class GameEnvironment {
 		
 		// TODO: Generate the routes
 		// TODO: Figure out the random events, for now this is a placeholder
-		RandomEvent[] re = {};
+		RandomEvent[] none = new RandomEvent[] {};		// Route with no random events
+		RandomEvent[] low = new RandomEvent[] {};		// Low risk random events
+		RandomEvent[] med = new RandomEvent[] {};		// Medium risk random events
+		RandomEvent[] high = new RandomEvent[] {};		// High risk random events
 		allRoutes = new Route[] {
-				new Route(pratum, fordina, 5, re),
-				new Route(pratum, officina, 5, re),
-				new Route(pratum, tempetas, 5, re),
-				new Route(pratum, terminus, 3, re),
-				new Route(fordina, officina, 5, re),
-				new Route(fordina, tempetas, 5, re),
-				new Route(fordina, terminus, 3, re),
-				new Route(officina, tempetas, 5, re),
-				new Route(officina, terminus, 3, re),
-				new Route(tempetas, terminus, 3, re),
+				new Route(pratum, fordina, 5, none),
+				new Route(pratum, officina, 5, none),
+				new Route(pratum, tempetas, 5, none),
+				new Route(pratum, terminus, 3, none),
+				new Route(fordina, officina, 5, none),
+				new Route(fordina, tempetas, 5, none),
+				new Route(fordina, terminus, 3, none),
+				new Route(officina, tempetas, 5, none),
+				new Route(officina, terminus, 3, none),
+				new Route(tempetas, terminus, 3, none),
 		};
 	}
 	
@@ -210,6 +216,19 @@ public class GameEnvironment {
 		
 		currentIsland = allIslands[0];
 		return true;
+	}
+
+
+	/**
+	 * Transitions the game into 
+	 * @param route The route we're sailing along
+	 */
+	public void setSail(Route route) {
+		this.route = route;
+		int sailLength = (int)(route.getDistance() / this.getShip().getSpeed());
+		this.arrivalTime = getGameTime() + sailLength;
+		
+		this.state = GameState.SAILING;
 	}
 
 }

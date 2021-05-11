@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -149,12 +150,13 @@ public class CommandLine {
 		
 		// Get ship type
 		Ship[] possibleShips = environment.getPossibleShips();
-		int shipChoice = getValidShipChoice(possibleShips)
+		int shipChoice = getValidShipChoice(possibleShips);
 		Ship chosenShip = possibleShips[shipChoice];
 		environment.setShip(chosenShip);
 		
 		environment.startGame();
 	}
+	
 	
 	private static void s_onIsland() {
 		printDashes();
@@ -170,7 +172,7 @@ public class CommandLine {
 		
 		switch (choice) {
 			case 1:
-				// s_setSail();
+				s_setSail();
 				break;
 			case 2: 
 				s_visitStore();
@@ -253,9 +255,6 @@ public class CommandLine {
 	}
 	
 	
-	/**
-	 * @param store
-	 */
 	private static void s_wantToSell(Store store) {
 		boolean stillHere = true;
 		Ship ship = environment.getShip();
@@ -294,6 +293,30 @@ public class CommandLine {
 	}
 	
 	
+	private static void s_setSail() {
+		Island currentIsland = environment.getCurrentIsland();
+		Island destination;
+		float shipSpeed = environment.getShip().getSpeed();
+		ArrayList<Route> validRoutes = Route.availableRoutes(environment.getAllRoutes(), currentIsland);
+		int i = 0;
+		for (Route route : validRoutes) {
+			String name = route.getOtherIsland(currentIsland).getName();
+			int days = (int) (route.getDistance() / shipSpeed);
+			System.out.println("[%d] %s: %d days, %s risk".formatted(++i, name, days, "RANDOM_EVENTS_INCOMPLETE"));
+		}
+		System.out.println("Where would you like to sail? (Enter '0' to go back)");
+		int choice = nextInt(">", 0, i);
+		// -- Breaking condition --
+		if (choice == 0)
+			return;
+		// --------
+		// We have a destination, set sail!
+		Route route = validRoutes.get(choice - 1);
+		destination = route.getOtherIsland(currentIsland);
+		environment.setDestination(destination);
+		environment.setSail(route);
+		
+	}
 	
 	/**
 	 * The main method
