@@ -45,21 +45,18 @@ public class GameEnvironment {
 		
 		// TODO: Generate the routes
 		// TODO: Figure out the random events, for now this is a placeholder
-		RandomEvent[] none = new RandomEvent[] {};		// Route with no random events
-		RandomEvent[] low = new RandomEvent[] {};		// Low risk random events
-		RandomEvent[] med = new RandomEvent[] {};		// Medium risk random events
-		RandomEvent[] high = new RandomEvent[] {};		// High risk random events
+
 		allRoutes = new Route[] {
-				new Route(pratum, fordina, 5, none),
-				new Route(pratum, officina, 5, none),
-				new Route(pratum, tempetas, 5, none),
-				new Route(pratum, terminus, 3, none),
-				new Route(fordina, officina, 5, none),
-				new Route(fordina, tempetas, 5, none),
-				new Route(fordina, terminus, 3, none),
-				new Route(officina, tempetas, 5, none),
-				new Route(officina, terminus, 3, none),
-				new Route(tempetas, terminus, 3, none),
+				new Route(pratum, fordina, 5, "none"),
+				new Route(pratum, officina, 5, "low"),
+				new Route(pratum, tempetas, 5, "low),
+				new Route(pratum, terminus, 3, "low),
+				new Route(fordina, officina, 5, "low),
+				new Route(fordina, tempetas, 5, "low),
+				new Route(fordina, terminus, 3, "low),
+				new Route(officina, tempetas, 5, "low),
+				new Route(officina, terminus, 3, "low),
+				new Route(tempetas, terminus, 3, "low),
 		};
 	}
 	
@@ -121,6 +118,7 @@ public class GameEnvironment {
 		if (state != GameState.SETUP)
 			throw new InvalidState();
 		this.ship = ship;
+		this.money = ship.getStartingMoney();
 	}
 	
 	
@@ -220,7 +218,7 @@ public class GameEnvironment {
 
 
 	/**
-	 * Transitions the game into 
+	 * Transitions the game into a sailing state
 	 * @param route The route we're sailing along
 	 */
 	public void setSail(Route route) {
@@ -229,6 +227,17 @@ public class GameEnvironment {
 		this.arrivalTime = getGameTime() + sailLength;
 		
 		this.state = GameState.SAILING;
+	}
+	
+	public void passDay() {
+		Ship ship = getShip();
+		// Pay crew wages
+		int wages = (int) (Ship.DAILY_WAGE * ship.getCrew());
+		removeMoney(wages);
+		// Check the random events
+		for (RandomEvent event : route.getRandomEvents()) {
+			float prob = event.getProbability();
+		}
 	}
 
 }

@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * 
  */
 public abstract class Ship {
-	public static final float DAILY_WAGE = 1.0f;
+	public static final float DAILY_WAGE = .2f;
 	
 	// Each ship has these unique stats
 	private String shipType;	// The ship's name e.g. "War Ship"...

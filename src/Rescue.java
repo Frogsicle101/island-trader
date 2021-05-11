@@ -10,7 +10,7 @@ import java.util.Random;
  */
 public class Rescue extends RandomEvent {
 	private int numSailors;
-	private final int REWARD_PER_SAILOR  = 1;
+	private final int REWARD_PER_SAILOR  = 2;
 	
 	public Rescue(float probability) {
 		super(probability);
