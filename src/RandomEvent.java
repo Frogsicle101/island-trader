@@ -24,7 +24,7 @@ public abstract class RandomEvent {
 		} else if (type.equals("medium")) {
 			events = new RandomEvent[] {new Rescue(0.15f), new Weather(0.2f)};
 		} else if (type.equals("high")) {
-			events = new RandomEvent[] {};
+			events = new RandomEvent[] {new Rescue(0.2f), new Weather(0.2f)};
 		} else {
 			throw new IllegalArgumentException("`type` must be either low, medium, high, or none");
 		}

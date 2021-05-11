@@ -49,14 +49,14 @@ public class GameEnvironment {
 		allRoutes = new Route[] {
 				new Route(pratum, fordina, 5, "none"),
 				new Route(pratum, officina, 5, "low"),
-				new Route(pratum, tempetas, 5, "low),
-				new Route(pratum, terminus, 3, "low),
-				new Route(fordina, officina, 5, "low),
-				new Route(fordina, tempetas, 5, "low),
-				new Route(fordina, terminus, 3, "low),
-				new Route(officina, tempetas, 5, "low),
-				new Route(officina, terminus, 3, "low),
-				new Route(tempetas, terminus, 3, "low),
+				new Route(pratum, tempetas, 5, "low"),
+				new Route(pratum, terminus, 3, "low"),
+				new Route(fordina, officina, 5, "low"),
+				new Route(fordina, tempetas, 5, "low"),
+				new Route(fordina, terminus, 3, "low"),
+				new Route(officina, tempetas, 5, "low"),
+				new Route(officina, terminus, 3, "low"),
+				new Route(tempetas, terminus, 3, "low"),
 		};
 	}
 	
