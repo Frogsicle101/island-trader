@@ -45,6 +45,9 @@ public class Route {
 		
 	}
 	
+	public String getRisk() {
+		return randomEventRisk;
+	}
 	
 	/**
 	 * Every route connects 2 islands, this gets those islands
@@ -64,14 +67,12 @@ public class Route {
 	}
 	
 	
-	/**
-	 * @return the distance
-	 */
 	public int getDistance() {
 		return distance;
 	}
 	
 	/**
+	 * Generates a list of random events given this route's risk
 	 * @return the randomEvents
 	 */
 	public RandomEvent[] getRandomEvents() {

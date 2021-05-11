@@ -135,7 +135,7 @@ public class CommandLine {
 		
 	}
 	
-	// ----- Island States -----
+	// ----- States -----
 
 	private static void s_setUp() {
 		// Get name
@@ -157,6 +157,7 @@ public class CommandLine {
 		environment.startGame();
 	}
 	
+	// ----- Island States -----
 	
 	private static void s_onIsland() {
 		printDashes();
@@ -172,7 +173,7 @@ public class CommandLine {
 		
 		switch (choice) {
 			case 1:
-				s_setSail();
+				s_disembark();
 				break;
 			case 2: 
 				s_visitStore();
@@ -293,7 +294,8 @@ public class CommandLine {
 	}
 	
 	
-	private static void s_setSail() {
+	private static void s_disembark() {
+		printDashes();
 		Island currentIsland = environment.getCurrentIsland();
 		Island destination;
 		float shipSpeed = environment.getShip().getSpeed();
@@ -302,7 +304,7 @@ public class CommandLine {
 		for (Route route : validRoutes) {
 			String name = route.getOtherIsland(currentIsland).getName();
 			int days = (int) (route.getDistance() / shipSpeed);
-			System.out.println("[%d] %s: %d days, %s risk".formatted(++i, name, days, "RANDOM_EVENTS_INCOMPLETE"));
+			System.out.println("[%d] %s: %d days, %s risk".formatted(++i, name, days, route.getRisk()));
 		}
 		System.out.println("Where would you like to sail? (Enter '0' to go back)");
 		int choice = nextInt(">", 0, i);
@@ -315,7 +317,38 @@ public class CommandLine {
 		destination = route.getOtherIsland(currentIsland);
 		environment.setDestination(destination);
 		environment.setSail(route);
-		
+	}
+	
+	// ----- Sailing States -----
+	
+	private static void s_sailing() {
+		Ship ship = environment.getShip();
+		RandomEvent event = environment.passDay();
+		// Nice things to print
+		int wagesPaid = (int) (Ship.DAILY_WAGE * ship.getCrew());
+		System.out.println("Day %d: Paid %d gold in crew wages".formatted(environment.getGameTime(), wagesPaid));
+		// Handle random events
+		if (event == null)
+			return;
+		printDashes();
+		// Ship's damaged in a storm
+		if (event instanceof Weather) {
+			Weather storm = (Weather) event;
+			float damage = storm.getDamage();
+			System.out.println("!!! RANDOM EVENT !!!");
+			System.out.println("!!!     STORM    !!!");
+			System.out.println("Took %f damage".formatted(damage));
+			ship.damageShip(damage);
+		} else if (event instanceof Rescue) {
+			Rescue rescue = (Rescue) event;
+			System.out.println("!!! RANDOM EVENT !!!");
+			System.out.println("!!!    RESCUE    !!!");
+			System.out.println("Rescued %d sailors.".formatted(rescue.getNumSailors()));
+			System.out.println("They thank you with %d gold.".formatted(rescue.getReward()));
+			environment.addMoney(rescue.getReward());
+		}
+		System.out.println("NOTE: PIRATES NOT YET IMPLEMENTED");
+		printDashes();
 	}
 	
 	/**
@@ -341,11 +374,12 @@ public class CommandLine {
 			case ON_ISLAND:
 				s_onIsland();
 				break;
+			case SAILING:
+				s_sailing();
+				break;
 			case FIGHTING:
 				break;
 			case GAME_OVER:
-				break;
-			case SAILING:
 				break;
 			}
 			

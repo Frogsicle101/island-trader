@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Random;
 
 /**
  * The main controller of the game.
@@ -195,7 +196,6 @@ public class GameEnvironment {
 	
 	
 	/**
-	 * !!! INCOMPLETE !!!
 	 * Starts the game if setup has been completed,
 	 * placing the player onto the starter island
 	 * <br>
@@ -229,15 +229,35 @@ public class GameEnvironment {
 		this.state = GameState.SAILING;
 	}
 	
-	public void passDay() {
-		Ship ship = getShip();
+	/**
+	 * Pass a day on the open ocean, paying crew wages and checking for random events
+	 * @return Any random events that occur, or null
+	 */
+	public RandomEvent passDay() {
+		this.gameTime++;
 		// Pay crew wages
+		Ship ship = getShip();
 		int wages = (int) (Ship.DAILY_WAGE * ship.getCrew());
 		removeMoney(wages);
-		// Check the random events
-		for (RandomEvent event : route.getRandomEvents()) {
-			float prob = event.getProbability();
+		// Check if we've made it to shore yet
+		// If so, stop sailing
+		if (getGameTime() >= arrivalTime) {
+			setCurrentIsland(getDestination());
+			state = GameState.ON_ISLAND;
+			return null;
 		}
+		// Check the random events
+		RandomEvent triggeredEvent = null;
+		for (RandomEvent event : route.getRandomEvents()) {
+			float prob = new Random().nextFloat();
+			float eventProb = event.getProbability();
+			if (prob <= eventProb) {
+				triggeredEvent = event;
+				break;
+			}
+		}
+		return triggeredEvent;
+		
 	}
 
 }

@@ -14,14 +14,14 @@ public class Rescue extends RandomEvent {
 	
 	public Rescue(float probability) {
 		super(probability);
-		numSailors = new Random().nextInt(10); 
+		numSailors = new Random().nextInt(10) + 2;	// Minimum of 2 sailors saved 
 	}
 	
 	public int getNumSailors() {
 		return numSailors;
 	}
 	
-	public int get_reward() {
+	public int getReward() {
 		return REWARD_PER_SAILOR * numSailors;
 	}
 	
