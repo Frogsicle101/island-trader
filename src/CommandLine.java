@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -320,7 +321,11 @@ public class CommandLine {
 	}
 	
 	// ----- Sailing State -----
-	
+	/**
+	 * Storms are random events that occur while sailing.<br>
+	 * They deal damage to your ship, which must be healed at the nearest island
+	 * @param storm The random event
+	 */
 	private static void ev_storm(Weather storm) {
 		float damage = storm.getDamage();
 		System.out.println("!!! RANDOM EVENT !!!");
@@ -329,6 +334,11 @@ public class CommandLine {
 		environment.getShip().damageShip(damage);
 	}
 	
+	/**
+	 * Rescues are random events that occur while sailing.<br>
+	 * You rescue x amount of sailors, who give a cash reward for saving them
+	 * @param rescue The random event
+	 */
 	private static void ev_rescue(Rescue rescue) {
 		System.out.println("!!! RANDOM EVENT !!!");
 		System.out.println("!!!    RESCUE    !!!");
@@ -337,8 +347,38 @@ public class CommandLine {
 		environment.addMoney(rescue.getReward());
 	}
 	
+	/**
+	 * Pirate attacks are random events that occur while sailing.<br>
+	 * The player must roll a D6
+	 * @param pirate
+	 */
 	private static void ev_pirate(PirateAttack pirate) {
-		System.out.println("NOTE: PIRATES NOT YET IMPLEMENTED");
+		Ship ship = environment.getShip();
+		System.out.println("!!! RANDOM EVENT !!!");
+		System.out.println("!!!    PIRATES   !!!");
+		int bonus = ship.getCombatBonus();
+		System.out.println("Upgrades: Combat bonus +"+bonus);
+		// If you wanted to create more options, this is where you'd do it
+		// -- ROLL TO SAVE YOUR LIFE --
+		System.out.println("[1] Roll dice (1-6)");
+		nextInt(">", 1, 1);
+		int roll = new Random().nextInt(6) + 1; // Between 1-6 inclusive
+		System.out.println("Rolled a %d (+%d)".formatted(roll, bonus));
+		PirateOutcome outcome = pirate.outcome(roll + bonus);
+		switch (outcome) {
+		case WIN:
+			System.out.println("Success! The pirate ship sinks without you taking a scratch");
+			break;
+		case DAMAGED:
+			float damage = pirate.getDamageDealt();
+			System.out.println("The pirates have been repelled, however %f damage has been taken"
+							.formatted(damage));
+			ship.damageShip(damage);
+			break;
+		case LOSS:
+			// TODO: Create a GameEnv or Ship method to remove cargo, or signal a Game Over if there's no cargo
+			break;
+		}
 	}
 	
 	private static void s_sailing() {
@@ -357,6 +397,8 @@ public class CommandLine {
 			ev_rescue((Rescue) event);
 		} else if (event instanceof PirateAttack) {
 			ev_pirate((PirateAttack) event);
+		} else {
+			System.out.println("Error: Can't handle RandomEvent of type " + event.getClass().getTypeName());
 		}
 		
 		printDashes();

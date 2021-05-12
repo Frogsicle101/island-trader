@@ -1,3 +1,5 @@
+import java.util.Random;
+
 /**
  * Random event representing a pirate attack.
  * When drawn, the player rolls a D6 (+ any bonuses) to determine the outcome.<br>
@@ -8,9 +10,16 @@
  *
  */
 public class PirateAttack extends RandomEvent {
-
+	
+	private float damageDealt;	// The amount of damage dealt if the outcome is DAMAGED
+	private final float DAMAGE_SCALE = 2f;
 	public PirateAttack(float probability) {
 		super(probability);
+		damageDealt = new Random().nextFloat() * DAMAGE_SCALE;
+	}
+	
+	public float getDamageDealt() {
+		return damageDealt;
 	}
 	
 	/**
