@@ -227,6 +227,14 @@ public class GameEnvironment {
 		this.state = GameState.SAILING;
 	}
 	
+	
+	public int repairDamage() {
+		int cost = (int)(ship.getDamage() * ship.getRepairCost());
+		removeMoney(cost);
+		return cost;
+	}
+	
+	
 	/**
 	 * Pass a day on the open ocean, paying crew wages and checking for random events
 	 * @return Any random events that occur, or null
@@ -242,6 +250,10 @@ public class GameEnvironment {
 		if (getGameTime() >= arrivalTime) {
 			setCurrentIsland(getDestination());
 			state = GameState.ON_ISLAND;
+			
+			
+			
+			
 			return null;
 		}
 		// Check the random events

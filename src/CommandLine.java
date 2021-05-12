@@ -161,7 +161,15 @@ public class CommandLine {
 	// ----- Island States -----
 	
 	private static void s_onIsland() {
+		
+		if (environment.getShip().getDamage() > 0) {
+			int cost = environment.repairDamage();
+			System.out.println("You pay " + cost + " gold to repair your ship.");
+		}
+		
+		
 		printDashes();
+		
 		System.out.println("Current location: " + environment.getCurrentIsland().getName());
 		System.out.println(environment.getCurrentIsland().getDescription());
 		
