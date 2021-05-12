@@ -164,6 +164,10 @@ public class CommandLine {
 		printDashes();
 		System.out.println("Current location: " + environment.getCurrentIsland().getName());
 		System.out.println(environment.getCurrentIsland().getDescription());
+		
+		System.out.println(String.format("You have: %d gold, and %d spare cargo capacity.",
+				environment.getMoney(), environment.getShip().getSpareCapacity()));
+		
 		printDashes();
 		System.out.println("[1] Set sail");
 		System.out.println("[2] Visit the store");
