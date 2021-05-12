@@ -9,24 +9,41 @@ public abstract class RandomEvent {
 	private float probability;
 	
 	/**
+	 * Converts the string representation of a risk into a probability
+	 * Used in getEvents
+	 * @param risk A string in {low, medium, high, none}
+	 * @return
+	 */
+	private static float getProbability(String risk) {
+		switch (risk) {
+			case "none":
+				return 0f;
+			case "low":
+				return 0.2f;
+			case "medium":
+				return 0.4f;
+			case "high":
+				return 0.6f;
+			default:
+				throw new IllegalArgumentException("`type` must be either low, medium, high, or none");
+		}
+	}
+	
+	
+	/**
 	 * Gets an array of random events from the given preset.<br>
 	 * {low, medium, high, none}
-	 * @param risk The "risk" of a route
+	 * @param risks A String[] corresponding to the risks of Pirates, Weather, and Rescue (in that order)
 	 * @return An array of random events corresponding to the given risk
 	 */
-	public static RandomEvent[] getEvents(String risk) {
-		RandomEvent[] events;
-		if (risk.equals("none")) {
-			events = new RandomEvent[] {};
-		} else if (risk.equals("low")) {
-			events = new RandomEvent[] {new Rescue(0.2f), new Weather(0.1f)};
-		} else if (risk.equals("medium")) {
-			events = new RandomEvent[] {new Rescue(0.15f), new Weather(0.2f)};
-		} else if (risk.equals("high")) {
-			events = new RandomEvent[] {new Rescue(0.3f), new Weather(0.2f)};
-		} else {
-			throw new IllegalArgumentException("`type` must be either low, medium, high, or none");
-		}
+	public static RandomEvent[] getEvents(String[] risks) {
+		RandomEvent[] events = {
+				new PirateAttack(getProbability(risks[0])),
+				new Weather(getProbability(risks[1])),
+				new Rescue(getProbability(risks[2]))
+		};
+		
+		
 		return events;
 	}
 	

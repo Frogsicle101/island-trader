@@ -178,7 +178,7 @@ public class CommandLine {
 		
 		switch (choice) {
 			case 1:
-				s_disembark();
+				s_embark();
 				break;
 			case 2: 
 				s_visitStore();
@@ -299,7 +299,7 @@ public class CommandLine {
 	}
 	
 	
-	private static void s_disembark() {
+	private static void s_embark() {
 		printDashes();
 		Island currentIsland = environment.getCurrentIsland();
 		Island destination;
@@ -309,7 +309,9 @@ public class CommandLine {
 		for (Route route : validRoutes) {
 			String name = route.getOtherIsland(currentIsland).getName();
 			int days = (int) (route.getDistance() / shipSpeed);
-			System.out.println("[%d] %s: %d days, %s risk".formatted(++i, name, days, route.getRisk()));
+			String[] risks = route.getRisk();
+			System.out.println("[%d] %s: %d days \t(Pirates: %s | Weather: %s | Rescue: %s)"
+					.formatted(++i, name, days, risks[0], risks[1], risks[2]));
 		}
 		System.out.println("Where would you like to sail? (Enter '0' to go back)");
 		int choice = nextInt(">", 0, i);

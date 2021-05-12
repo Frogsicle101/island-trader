@@ -14,13 +14,13 @@ public class Route {
 	
 	private Island[] islands;			// 2-len of the islands it connects
 	private int distance;				// Higher distance routes take longer to finish
-	private String randomEventRisk;		// Category of risk, low medium high
+	private String[] randomEventRisk;		// Category of risk, low medium high
 	
 	/**
 	 * @param distance How long the route is
 	 * @param randomEvents The list of random events
 	 */
-	public Route(Island island1, Island island2, int distance, String randomEventRisk) {
+	public Route(Island island1, Island island2, int distance, String[] randomEventRisk) {
 		this.islands = new Island[]{island1, island2};
 		this.distance = distance;
 		this.randomEventRisk = randomEventRisk;
@@ -45,7 +45,7 @@ public class Route {
 		
 	}
 	
-	public String getRisk() {
+	public String[] getRisk() {
 		return randomEventRisk;
 	}
 	

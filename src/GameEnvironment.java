@@ -44,20 +44,18 @@ public class GameEnvironment {
 		Island officina = new Officina();
 		allIslands = new Island[] {pratum, fordina, officina, tempetas, terminus};
 		
-		// TODO: Generate the routes
-		// TODO: Figure out the random events, for now this is a placeholder
-
+		//TODO: Maybe add multiple ways of getting between the same islands?
 		allRoutes = new Route[] {
-				new Route(pratum, fordina, 5, "none"),
-				new Route(pratum, officina, 5, "low"),
-				new Route(pratum, tempetas, 5, "low"),
-				new Route(pratum, terminus, 3, "low"),
-				new Route(fordina, officina, 5, "low"),
-				new Route(fordina, tempetas, 5, "low"),
-				new Route(fordina, terminus, 3, "low"),
-				new Route(officina, tempetas, 5, "low"),
-				new Route(officina, terminus, 3, "low"),
-				new Route(tempetas, terminus, 3, "low"),
+				new Route(pratum, fordina, 2, new String[]{"none", "low", "low"}),
+				new Route(pratum, officina, 3, new String[]{"low", "none", "low"}),
+				new Route(pratum, tempetas, 3, new String[]{"none", "high", "medium"}),
+				new Route(pratum, terminus, 7, new String[]{"high", "low", "medium"}),
+				new Route(fordina, officina, 5, new String[]{"none", "low", "low"}),
+				new Route(fordina, tempetas, 5, new String[]{"none", "high", "medium"}),
+				new Route(fordina, terminus, 5, new String[]{"high", "low", "medium"}),
+				new Route(officina, tempetas, 2, new String[]{"none", "high", "medium"}),
+				new Route(officina, terminus, 9, new String[]{"high", "low", "medium"}),
+				new Route(tempetas, terminus, 10, new String[]{"high", "high", "high"}),
 		};
 	}
 	
