@@ -7,8 +7,19 @@
  */
 public class TradeGood extends Item {
 	
-	public static final TradeGood[] ALL_GOODS = {};
+	public static final TradeGood[] ALL_GOODS = getAllGoods();
 	protected TradeTypes type;
+	
+	
+	private static TradeGood[] getAllGoods() {
+		TradeTypes[] types = TradeTypes.values();
+		TradeGood[] goods = new TradeGood[types.length];
+		for (int i=0; i < types.length; i++) {
+			goods[i] = new TradeGood(types[i].toString(), 10, types[i]);
+		}
+		return goods;
+			
+	}
 	
 	/**
 	 * The basic constructor of an item. Likely the version used in shops.
