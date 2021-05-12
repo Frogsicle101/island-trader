@@ -319,7 +319,27 @@ public class CommandLine {
 		environment.setSail(route);
 	}
 	
-	// ----- Sailing States -----
+	// ----- Sailing State -----
+	
+	private static void ev_storm(Weather storm) {
+		float damage = storm.getDamage();
+		System.out.println("!!! RANDOM EVENT !!!");
+		System.out.println("!!!     STORM    !!!");
+		System.out.println("Took %f damage".formatted(damage));
+		environment.getShip().damageShip(damage);
+	}
+	
+	private static void ev_rescue(Rescue rescue) {
+		System.out.println("!!! RANDOM EVENT !!!");
+		System.out.println("!!!    RESCUE    !!!");
+		System.out.println("Rescued %d sailors.".formatted(rescue.getNumSailors()));
+		System.out.println("They thank you with %d gold.".formatted(rescue.getReward()));
+		environment.addMoney(rescue.getReward());
+	}
+	
+	private static void ev_pirate(PirateAttack pirate) {
+		System.out.println("NOTE: PIRATES NOT YET IMPLEMENTED");
+	}
 	
 	private static void s_sailing() {
 		Ship ship = environment.getShip();
@@ -331,23 +351,14 @@ public class CommandLine {
 		if (event == null)
 			return;
 		printDashes();
-		// Ship's damaged in a storm
 		if (event instanceof Weather) {
-			Weather storm = (Weather) event;
-			float damage = storm.getDamage();
-			System.out.println("!!! RANDOM EVENT !!!");
-			System.out.println("!!!     STORM    !!!");
-			System.out.println("Took %f damage".formatted(damage));
-			ship.damageShip(damage);
+			ev_storm((Weather) event);
 		} else if (event instanceof Rescue) {
-			Rescue rescue = (Rescue) event;
-			System.out.println("!!! RANDOM EVENT !!!");
-			System.out.println("!!!    RESCUE    !!!");
-			System.out.println("Rescued %d sailors.".formatted(rescue.getNumSailors()));
-			System.out.println("They thank you with %d gold.".formatted(rescue.getReward()));
-			environment.addMoney(rescue.getReward());
+			ev_rescue((Rescue) event);
+		} else if (event instanceof PirateAttack) {
+			ev_pirate((PirateAttack) event);
 		}
-		System.out.println("NOTE: PIRATES NOT YET IMPLEMENTED");
+		
 		printDashes();
 	}
 	
