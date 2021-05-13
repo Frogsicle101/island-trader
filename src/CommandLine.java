@@ -169,7 +169,7 @@ public class CommandLine {
 		
 		
 		printDashes();
-		
+		System.out.println("Day " + environment.getGameTime());
 		System.out.println("Current location: " + environment.getCurrentIsland().getName());
 		System.out.println(environment.getCurrentIsland().getDescription());
 		
@@ -314,7 +314,7 @@ public class CommandLine {
 		int money = environment.getMoney();
 		if (money < 0) {
 			System.out.println("!!! HALT - You're not allowed to leave while %d gold in debt".formatted(-money));
-			System.out.println("!!! Sell your cargo at the store to get yourself back in the red");
+			System.out.println("!!! Sell your cargo at the store to get yourself back in the black");
 			return;
 		}
 		// List all available routes
@@ -418,7 +418,7 @@ public class CommandLine {
 				System.out.println("They sail away with all your cargo");
 			} else {
 				System.out.println("The pirates aren't satisfied with the measly contents of your cargo hold!");
-				System.out.println("Out of anger, they make you and your entire crew walk the plank.2");
+				System.out.println("Out of anger, they make you and your entire crew walk the plank.");
 			}
 			break;
 		}
