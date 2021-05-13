@@ -4,7 +4,8 @@ public class Tempestas extends Island {
 
 	public Tempestas() {
 		this.name = "Tempestas";
-		this.description = "Surrounded by storms, not many traders brave these waters. The rain is good for growing crops though";
+		this.description = "Surrounded by storms, not many traders brave these waters.\n"
+							+"The rain is good for growing crops though";
 		// ----- Generate the store prices -----
 		HashMap<TradeTypes, Float> prices = Store.getDefaultPrices();
 		// Food is very cheap

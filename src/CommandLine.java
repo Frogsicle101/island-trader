@@ -309,6 +309,7 @@ public class CommandLine {
 	
 	
 	private static void s_embark() {
+		// -- Breaking condition --
 		// Debt Check: Can't sail if the player's in debt
 		int money = environment.getMoney();
 		if (money < 0) {
@@ -316,6 +317,7 @@ public class CommandLine {
 			System.out.println("!!! Sell your cargo at the store to get yourself back in the red");
 			return;
 		}
+		// List all available routes
 		printDashes();
 		Island currentIsland = environment.getCurrentIsland();
 		Island destination;

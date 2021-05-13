@@ -4,7 +4,7 @@ public class Fodina extends Island {
 
 	public Fodina() {
 		this.name = "Fodina";
-		this.description = "The main town on Fodina is almost entirely underground. "
+		this.description = "The main town on Fodina is almost entirely underground.\n"
 				+ "Its expansive natural cave network gives the miners here easy access to its mineral riches.";
 		// ----- Generate the store prices -----
 		HashMap<TradeTypes, Float> prices = Store.getDefaultPrices();
