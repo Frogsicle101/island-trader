@@ -17,7 +17,7 @@ public class GameEnvironment {
 	private GameState state;
 	private int money;
 	private int totalProfit;
-	// private object[] allSales TODO: Figure this out eventually
+	private ArrayList<Item> allSold = new ArrayList<Item>();
 	private int gameTime;
 	private Island[] allIslands;
 	private Route[] allRoutes;
@@ -58,6 +58,11 @@ public class GameEnvironment {
 				new Route(officina, terminus, 9, new String[]{"high", "low", "medium"}),
 				new Route(tempetas, terminus, 10, new String[]{"high", "high", "high"}),
 		};
+	}
+	
+	
+	public ArrayList<Item> getAllSold() {
+		return allSold;
 	}
 	
 	/**
@@ -153,6 +158,20 @@ public class GameEnvironment {
 		this.money -= deducted;
 		return this.money;
 	}
+	
+	/**
+	 * Adds an item to the player cargo hold and keeps track of it in the ledger
+	 * @param item
+	 * @param price
+	 */
+	public void buyItem(Item item, int price) {
+		
+		removeMoney(price);
+		item = item.makeBought(price, getCurrentIsland().getStore().getShopName());
+		allSold.add(item);
+		getShip().storeItem(item);
+	}
+	
 
 	public Island getDestination() {
 		return destination;

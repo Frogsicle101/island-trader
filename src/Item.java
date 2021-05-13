@@ -13,7 +13,20 @@ public abstract class Item {
 	protected int baseValue;
 	protected int purchasedPrice;
 	protected String purchasedFrom;
+	protected int salePrice;
 	
+	/**
+	 * @return the salePrice
+	 */
+	public int getSalePrice() {
+		return salePrice;
+	}
+	/**
+	 * @param salePrice the salePrice to set
+	 */
+	public void setSalePrice(int salePrice) {
+		this.salePrice = salePrice;
+	}
 	/**
 	 * The basic constructor of an item. Likely the version used in shops.
 	 * 
@@ -38,6 +51,7 @@ public abstract class Item {
 		this.baseValue = baseValue;
 		this.purchasedPrice = purchasedPrice;
 		this.purchasedFrom = purchasedFrom;
+		this.salePrice = 0;
 	}
 	
 	public String getName() {

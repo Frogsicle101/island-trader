@@ -179,10 +179,11 @@ public class CommandLine {
 		printDashes();
 		System.out.println("[1] Set sail");
 		System.out.println("[2] Visit the store");
+		System.out.println("[3] View the ledger");
 		System.out.println("[0] Quit game");
 		System.out.println("Enter your choice");
 		
-		int choice = nextInt("> ", 0, 2);
+		int choice = nextInt("> ", 0, 3);
 		
 		switch (choice) {
 			case 1:
@@ -191,6 +192,9 @@ public class CommandLine {
 			case 2: 
 				s_visitStore();
 				break;
+			case 3:
+				s_viewLedger();
+				break;
 			case 0:
 				stillPlaying = false;
 				break;
@@ -198,6 +202,21 @@ public class CommandLine {
 				System.out.println("Invalid Input");
 		}
 				
+	}
+	
+	
+	private static void s_viewLedger() {
+		printDashes();
+		System.out.println("LEDGER");
+		System.out.println("Name\tOrigin\tCost\tSale Value");
+		for (Item item: environment.getAllSold()) {
+			String salePrice = (item.getSalePrice() == 0) ? "-" : String.valueOf(item.getSalePrice());
+			
+			System.out.println(item.getName() + "\t" + 
+							item.getPurchasedFrom() + "\t" +
+							item.getPurchasedPrice() + "\t" +
+							salePrice);
+		}
 	}
 	
 
@@ -262,9 +281,7 @@ public class CommandLine {
 			if (price > playerGold) {
 				System.out.println("Sorry, you can not afford that");
 			} else {
-				environment.removeMoney(price);
-				item = item.makeBought(price, store.getShopName());
-				environment.getShip().storeItem(item);
+				environment.buyItem(item, price);
 			}
 		}
 	}
@@ -300,6 +317,7 @@ public class CommandLine {
 			}
 			Item item = ship.popItem(sellIdx);
 			int price = store.getPrice(item);
+			item.setSalePrice(price); //So the sale price is visible in the ledger
 			int priceDiff = price - item.getPurchasedPrice();
 			environment.addMoney(price);
 			System.out.println(String.format("Sold %s for %d gold (%d %s)", item.getName(), price, Math.abs(priceDiff), (priceDiff < 0 ? "loss" : "profit")));
