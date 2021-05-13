@@ -75,7 +75,11 @@ public class GameEnvironment {
 	}
 	
 	public Ship[] getPossibleShips() {
-		Ship[] ships = {new WarShip()};
+		Ship[] ships = {new TallShip(),
+						new WarShip(),
+						new Clipper(),
+						new Barge(),
+						};
 		return ships;
 	}
 	
