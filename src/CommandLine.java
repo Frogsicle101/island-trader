@@ -233,6 +233,7 @@ public class CommandLine {
 		while (stillHere) {
 			int capacity = environment.getShip().getSpareCapacity();
 			int playerGold = environment.getMoney();
+			System.out.println("You have: %d gold, and %d spare cargo capacity.".formatted(playerGold, capacity));
 			// 1. List the items
 			System.out.println("Here's what we've got for sale:");
 			int i = 0;
@@ -308,6 +309,13 @@ public class CommandLine {
 	
 	
 	private static void s_embark() {
+		// Debt Check: Can't sail if the player's in debt
+		int money = environment.getMoney();
+		if (money < 0) {
+			System.out.println("!!! HALT - You're not allowed to leave while %d gold in debt".formatted(-money));
+			System.out.println("!!! Sell your cargo at the store to get yourself back in the red");
+			return;
+		}
 		printDashes();
 		Island currentIsland = environment.getCurrentIsland();
 		Island destination;
@@ -379,6 +387,7 @@ public class CommandLine {
 		int roll = new Random().nextInt(6) + 1; // Between 1-6 inclusive
 		System.out.println("Rolled a %d (+%d)".formatted(roll, bonus));
 		PirateOutcome outcome = pirate.outcome(roll + bonus);
+		System.out.println(outcome.toString());
 		switch (outcome) {
 		case WIN:
 			System.out.println("Success! The pirate ship sinks without you taking a scratch");

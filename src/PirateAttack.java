@@ -12,10 +12,10 @@ import java.util.Random;
 public class PirateAttack extends RandomEvent {
 	
 	private float damageDealt;	// The amount of damage dealt if the outcome is DAMAGED
-	private final float DAMAGE_SCALE = 2f;
+	private final float DAMAGE_SCALE = 9f;
 	public PirateAttack(float probability) {
 		super(probability);
-		damageDealt = new Random().nextFloat() * DAMAGE_SCALE;
+		damageDealt = 1 + new Random().nextFloat() * DAMAGE_SCALE;	// Between 1-10
 	}
 	
 	public float getDamageDealt() {

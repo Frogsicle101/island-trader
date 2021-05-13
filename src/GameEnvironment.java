@@ -227,9 +227,12 @@ public class GameEnvironment {
 		this.state = GameState.SAILING;
 	}
 	
-	
+	/**
+	 * Deducts the player's money after taking damage
+	 * @return The cost of repairing the ship
+	 */
 	public int repairDamage() {
-		int cost = (int)(ship.getDamage() * ship.getRepairCost());
+		int cost = ship.repairShip();
 		removeMoney(cost);
 		return cost;
 	}
@@ -250,10 +253,6 @@ public class GameEnvironment {
 		if (getGameTime() >= arrivalTime) {
 			setCurrentIsland(getDestination());
 			state = GameState.ON_ISLAND;
-			
-			
-			
-			
 			return null;
 		}
 		// Check the random events

@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * 
  */
 public abstract class Ship {
-	public static final float DAILY_WAGE = .2f;
+	public static final float DAILY_WAGE = 0.1f;
 	
 	// Each ship has these unique stats
 	private String shipType;	// The ship's name e.g. "War Ship"...
@@ -124,6 +124,16 @@ public abstract class Ship {
 		Item wantedItem = cargo.get(cargoIdx);
 		cargo.remove(cargoIdx);
 		return wantedItem;
+	}
+	
+	/**
+	 * Removes all damage to the ship, calculating what the repairs cost
+	 * @return The cost of repairing the ship
+	 */
+	public int repairShip() {
+		int cost = (int) Math.ceil(getDamage() * getRepairCost());	// Round up so repairs don't cost 0
+		damage = 0f;
+		return cost;
 	}
 	
 }
