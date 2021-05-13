@@ -374,7 +374,7 @@ public class CommandLine {
 	/**
 	 * Pirate attacks are random events that occur while sailing.<br>
 	 * The player must roll a D6
-	 * @param pirate
+	 * @param pirate The random event
 	 */
 	private static void ev_pirate(PirateAttack pirate) {
 		Ship ship = environment.getShip();
@@ -389,6 +389,7 @@ public class CommandLine {
 		int roll = new Random().nextInt(6) + 1; // Between 1-6 inclusive
 		System.out.println("Rolled a %d (+%d)".formatted(roll, bonus));
 		PirateOutcome outcome = pirate.outcome(roll + bonus);
+		// Determine the outcome
 		System.out.println(outcome.toString());
 		switch (outcome) {
 		case WIN:
@@ -396,12 +397,29 @@ public class CommandLine {
 			break;
 		case DAMAGED:
 			float damage = pirate.getDamageDealt();
-			System.out.println("The pirates have been repelled, however %f damage has been taken"
-							.formatted(damage));
+			System.out.println("The pirates have been repelled, however "+damage+" damage has been taken");
 			ship.damageShip(damage);
 			break;
 		case LOSS:
-			// TODO: Create a GameEnv or Ship method to remove cargo, or signal a Game Over if there's no cargo
+			System.out.println("The pirates board your ship and take all your cargo!");
+			// Catalog all the stolen items
+			ArrayList<Item> lostCargo = ship.getCargo();
+			printDashes();
+			System.out.println("Cargo lost:");
+			int valueLost = 0;
+			for (Item item : lostCargo) {
+				valueLost += item.getPurchasedPrice();
+				System.out.println("- %s | %d gold".formatted(item.getName(), item.getPurchasedPrice()));
+			}
+			System.out.println("Lost "+valueLost+" gold worth of items");
+			// Did you have enough cargo to satisfy the pirates?
+			boolean satisfied = environment.piratesTakeCargo();
+			if (satisfied) {
+				System.out.println("They sail away with all your cargo");
+			} else {
+				System.out.println("The pirates aren't satisfied with the measly contents of your cargo hold!");
+				System.out.println("Out of anger, they make you and your entire crew walk the plank.2");
+			}
 			break;
 		}
 	}
@@ -458,6 +476,9 @@ public class CommandLine {
 			case FIGHTING:
 				break;
 			case GAME_OVER:
+				System.out.println("GAME OVER");
+				System.out.println("TODO: Implement a high score table, and transition back into a SETUP state");
+				System.exit(1);
 				break;
 			}
 			

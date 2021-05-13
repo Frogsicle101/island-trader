@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -232,7 +233,7 @@ public class GameEnvironment {
 	 * @return The cost of repairing the ship
 	 */
 	public int repairDamage() {
-		int cost = ship.repairShip();
+		int cost = getShip().repairShip();
 		removeMoney(cost);
 		return cost;
 	}
@@ -266,6 +267,23 @@ public class GameEnvironment {
 			}
 		}
 		return triggeredEvent;
+	}
+	
+	/**
+	 * Pirates steal all your cargo.<br>
+	 * If they're not satisfied with what they find, transition into a GAME OVER state.
+	 * @return True if the pirates are satisfied with your cargo (game continues)<br>
+	 * False if the pirates aren't satisfied (walk the plank, game over)
+	 */
+	public boolean piratesTakeCargo() {
+		ArrayList<Item> stolenCargo = getShip().removeAllCargo();
+		// Pirates are satisfied if they steal at least 2 pieces of cargo
+		if (stolenCargo.size() >= 2) {
+			return true;
+		} else {
+			state = GameState.GAME_OVER;
+			return false;
+		}
 		
 	}
 

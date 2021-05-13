@@ -118,12 +118,24 @@ public abstract class Ship {
 	 * Searches the cargo hold by name, deletes it from cargo, and returns it
 	 * @param itemName	The text name of the item
 	 * @return The item in question
-	 * @throws ItemNotFoundException	If the given itemName doesn't match anything in cargo
+	 * @throws IndexOutOfBoundsException	If the given itemName doesn't match anything in cargo
 	 */
-	public Item popItem(int cargoIdx) {
+	public Item popItem(int cargoIdx) throws IndexOutOfBoundsException {
 		Item wantedItem = cargo.get(cargoIdx);
 		cargo.remove(cargoIdx);
 		return wantedItem;
+	}
+	
+	/**
+	 * Removes all the cargo from the ship, and returning it.
+	 * @return The ship's (former) cargo.
+	 */
+	public ArrayList<Item> removeAllCargo() {
+		@SuppressWarnings("unchecked")
+		ArrayList<Item> stolenCargo = (ArrayList<Item>) cargo.clone();
+		cargo.clear();
+		return stolenCargo;
+		
 	}
 	
 	/**
