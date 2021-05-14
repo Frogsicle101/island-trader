@@ -167,7 +167,7 @@ public class GameEnvironment {
 	public void buyItem(Item item, int price) {
 		
 		removeMoney(price);
-		item = item.makeBought(price, getCurrentIsland().getStore().getShopName());
+		item = item.copy().makeBought(price, getCurrentIsland().getStore().getShopName());
 		allSold.add(item);
 		getShip().storeItem(item);
 	}
@@ -211,7 +211,7 @@ public class GameEnvironment {
 		gameLength = -1;
 		money = 0;
 		totalProfit = 0;
-		gameTime = 0;
+		gameTime = 1;
 		currentIsland = null;
 		destination = null;
 	}

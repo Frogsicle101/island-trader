@@ -54,6 +54,8 @@ public class TradeGood extends Item {
 	@SuppressWarnings("unchecked")
 	@Override
 	public TradeGood copy() {
-		return new TradeGood(name, baseValue, purchasedPrice, purchasedFrom, type);
+		TradeGood copied = new TradeGood(name, baseValue, purchasedPrice, purchasedFrom, type);
+		copied.salePrice = getSalePrice();
+		return copied;
 	}
 }

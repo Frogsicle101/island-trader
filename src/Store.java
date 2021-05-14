@@ -26,7 +26,8 @@ public class Store {
 	public Store(String shopName, HashMap<TradeTypes, Float> itemPrices) {
 		this.itemPrices = itemPrices;
 		this.shopName = shopName;
-		this.upgrades = new ArrayList<>();
+		this.upgrades = new ArrayList<Upgrade>();
+		this.upgrades.add(new Cannon());
 	}
 
 	public HashMap<TradeTypes, Float> getItemPrices() {
@@ -35,6 +36,10 @@ public class Store {
 	
 	public String getShopName() {
 		return shopName;
+	}
+	
+	public ArrayList<Upgrade> getUpgrades() {
+		return upgrades;
 	}
 	
 	/**
@@ -93,12 +98,24 @@ public class Store {
 	}
 	
 	/**
-	 * Takes an item (usually an "unbought" item from a store), and fills out all 
+	 * Takes an item (usually an "unbought" item from a store), and fills out all the
+	 * fields about where/how much it was bought for
 	 * @param item The trade god we want
 	 * @return The requested item, with the purchasedPrice/From fields filled
 	 */
 	public TradeGood buyItem(TradeGood item) {
 		int price = getPrice(item);
 		return item.copy().makeBought(price, shopName);
-	}	
+	}
+	
+	
+	public void addUpgrade(Upgrade upgrade) {
+		upgrades.add(upgrade);
+	}
+	
+	
+	public int sellUpgrade(Upgrade upgrade) {
+		addUpgrade(upgrade);
+		return getPrice(upgrade);
+	}
 }

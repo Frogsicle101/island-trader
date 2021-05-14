@@ -224,24 +224,31 @@ public class CommandLine {
 		Store store = environment.getCurrentIsland().getStore();
 		
 		printDashes();
-		
+		boolean stayInStore = true;
 		System.out.println("Welcome to " + store.getShopName() + "");
 		System.out.println(String.format("You have: %d gold, and %d spare cargo capacity.",
 									environment.getMoney(), environment.getShip().getSpareCapacity()));
-		System.out.println("Do you wish to buy or sell?\n"
-						+ "[1] Buy\n"
-						+ "[2] Sell\n"
-						+ "[0] Back");
-		int choice = nextInt("> ", 0, 2);
-		switch (choice) {
-		case 0:	// 
-			break;
-		case 1:	// Buy
-			s_wantToBuy(store);
-			break;
-		case 2: // Sell
-			s_wantToSell(store);
-			break;
+		while (stayInStore) {
+			System.out.println("Do you wish to buy or sell?\n"
+							+ "[1] Buy\n"
+							+ "[2] Buy upgrades\n"
+							+ "[3] Sell\n"
+							+ "[0] Back");
+			int choice = nextInt("> ", 0, 3);
+			switch (choice) {
+			case 0:	// Back 
+				stayInStore = false;
+				break;
+			case 1:	// Buy
+				s_wantToBuy(store);
+				break;
+			case 2:
+				s_wantToBuyUpgrades(store);
+				break;
+			case 3: // Sell
+				s_wantToSell(store);
+				break;
+			}
 		}
 	}
 	
@@ -268,7 +275,8 @@ public class CommandLine {
 				break;
 			}
 			// 2. Pick the item to buy
-			System.out.println("What item would you like to buy? (Enter '0' to go back)");
+			System.out.println("[0] Back");
+			System.out.println("What item would you like to buy?");
 			int buyIdx = nextInt("> ", 0, i) - 1;
 			// -- Exit Condition : Doesn't wanna buy --
 			if (buyIdx == -1) {
@@ -277,6 +285,48 @@ public class CommandLine {
 			}
 			// 3. Buy it if you can afford it
 			TradeGood item = TradeGood.ALL_GOODS[buyIdx];
+			int price = store.getPrice(item);
+			if (price > playerGold) {
+				System.out.println("Sorry, you can not afford that");
+			} else {
+				environment.buyItem(item, price);
+			}
+		}
+	}
+	
+	
+	private static void s_wantToBuyUpgrades(Store store) {
+		boolean stillHere = true;
+		
+		while (stillHere) {
+			int capacity = environment.getShip().getSpareCapacity();
+			int playerGold = environment.getMoney();
+			System.out.println("You have: %d gold, and %d spare cargo capacity.".formatted(playerGold, capacity));
+			// 1. List the items
+			System.out.println("Here's what we've got for sale:");
+			int i = 0;
+			for (Upgrade item: store.getUpgrades()) {
+				String name = item.getName();
+				int price = store.getPrice(item);
+				System.out.println(String.format("[%d] %s | %d gold", ++i, name, price));
+			}
+			// -- Exit condition : No spare cargo space --
+			if (capacity == 0) {
+				System.out.println("Sorry, you have no spare cargo capacity");
+				stillHere = false;
+				break;
+			}
+			// 2. Pick the item to buy
+			System.out.println("[0] Back");
+			System.out.println("What item would you like to buy?");
+			int buyIdx = nextInt("> ", 0, i) - 1;
+			// -- Exit Condition : Doesn't wanna buy --
+			if (buyIdx == -1) {
+				stillHere = false;
+				break;
+			}
+			// 3. Buy it if you can afford it
+			Item item = store.getUpgrades().get(buyIdx);
 			int price = store.getPrice(item);
 			if (price > playerGold) {
 				System.out.println("Sorry, you can not afford that");
@@ -308,7 +358,8 @@ public class CommandLine {
 				System.out.println(String.format("[%d] %s | %d (%s%d) gold", ++i, name, price, (priceDiff >= 0 ? "+" : ""), priceDiff));
 			}
 			// 2. Pick the item to sell
-			System.out.println("What item would you like to sell? (Enter '0' to do back)");
+			System.out.println("[0] Back");
+			System.out.println("What item would you like to sell?");
 			int sellIdx = nextInt("> ", 0, i) - 1;
 			// -- Exit Condition : Doesn't wanna sell --
 			if (sellIdx == -1) {
@@ -349,7 +400,8 @@ public class CommandLine {
 			System.out.println("[%d] %s: %d days \t(Pirates: %s | Weather: %s | Rescue: %s)"
 					.formatted(++i, name, days, risks[0], risks[1], risks[2]));
 		}
-		System.out.println("Where would you like to sail? (Enter '0' to go back)");
+		System.out.println("[0] Back");
+		System.out.println("Where would you like to sail?");
 		int choice = nextInt(">", 0, i);
 		// -- Breaking condition --
 		if (choice == 0)
@@ -476,8 +528,7 @@ public class CommandLine {
 		stillPlaying = true;
 		
 		displayBanner();
-
-		
+				
 		// The main game loop
 		
 		do {
