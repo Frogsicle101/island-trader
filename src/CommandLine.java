@@ -115,7 +115,7 @@ public class CommandLine {
 			// Describe the ship
 			System.out.println("Name: "+chosenShip.getShipType());
 			System.out.println(chosenShip.getDescription());
-			System.out.println("Do you wish to use ship?\n"
+			System.out.println("Do you wish to use this ship?\n"
 							+ "[1] Yes\n"
 							+ "[0] No");
 			choiceIdx = nextInt(">", 0, 1);
