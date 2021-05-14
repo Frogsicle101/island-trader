@@ -8,8 +8,9 @@ public class Clipper extends Ship {
 		super(
 				2f,		// speed
 				"Clipper", // shipType
+				"The Clipper is lightning fast, but can't hold much cargo", // Description
 				25,		// crew
-				5,			// cargoCapacity
+				6,			// cargoCapacity
 				3f,			// repairCost
 				65			// startingMoney
 		);

@@ -14,11 +14,12 @@ public abstract class Ship {
 	
 	// Each ship has these unique stats
 	private String shipType;	// The ship's name e.g. "War Ship"...
+	private String description; // An overview of the ship
 	private float speed;		// The time a route takes is divided by speed e.g. 10 days / 2 speed = 5 days
 	private int crew;			// Number of crew on the ship
 	private float repairCost;	// Every 1.0 damage taken costs this much to fix
-	private int startingMoney;// Better ships start you off with less money
-	private int cargoCapacity;// How many item weight can be carried
+	private int startingMoney;	// Better ships start you off with less money
+	private int cargoCapacity;	// How many item weight can be carried
 	
 	private float damage;		// Random events (rocks, pirates...) can damage a ship
 								// Note that a ship can't be destroyed if too badly damaged
@@ -28,15 +29,17 @@ public abstract class Ship {
 	/**
 	 * Constructor, allowing the ship subclasses to specify what's unique about them
 	 * @param speed        	The time a route takes is divided by speed e.g. 10 days / 2 speed = 5 days 
-	 * @param shipType     	The ship's name e.g. "War Ship"...                                         
+	 * @param shipType     	The ship's name e.g. "War Ship...
+	 * @param description 	An overview of the ship
 	 * @param crew         	Number of crew on the ship                                                 
 	 * @param cargoCapacity	How many item weight can be carried                                        
 	 * @param repairCost   	Every 1.0 damage taken costs this much to fix                              
 	 * @param startingMoney	Better ships start you off with less money                                 
 	 */
-	public Ship(float speed, String shipType, int crew, int cargoCapacity, float repairCost, int startingMoney) {
+	public Ship(float speed, String shipType, String description, int crew, int cargoCapacity, float repairCost, int startingMoney) {
 		this.speed = speed;
 		this.shipType = shipType;
+		this.description = description;
 		this.crew = crew;
 		this.cargoCapacity = cargoCapacity;
 		this.repairCost = repairCost;
@@ -64,6 +67,9 @@ public abstract class Ship {
 	}
 	public String getShipType() {
 		return shipType;
+	}
+	public String getDescription() {
+		return description;
 	}
 	public int getCrew() {
 		return crew;

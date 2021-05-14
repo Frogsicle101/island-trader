@@ -1,21 +1,22 @@
 /**
  * The war ship is a combat ready ship, good at dealing with pirates.<br>
- * It has above-average speed, and comes pre-equipped with cannons, however
+ * It has below-average speed, and comes pre-equipped with cannons, however
  * its cargo hold is small, it's expensive to repair, and 
  * 
  * @author Andrew Hall
  *
  */
 public class WarShip extends Ship {
-	private final int N_CANNONS = 3;	// Number of cannons the ship has by default
+	private final static int N_CANNONS = 3;	// Number of cannons the ship has by default
 	public WarShip() {
 		super(
-				1.2f,		// speed
+				0.8f,		// speed
 				"War Ship", // shipType
+				"This Navy relic is expensive to maintain, slow, and comes with a tiny cargo hold. But its "+N_CANNONS+" cannons will keep pirates at bay.",
 				100,		// crew
-				8,			// cargoCapacity
+				5,			// cargoCapacity
 				5f,			// repairCost
-				50			// startingMoney
+				10			// startingMoney
 		);
 		for (int i=0; i<N_CANNONS; i++)
 			try {

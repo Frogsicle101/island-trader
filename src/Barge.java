@@ -8,6 +8,7 @@ public class Barge extends Ship {
 		super(
 				0.6f,		// speed
 				"Barge", // shipType
+				"The Barge is a slow ship with a large cargo hold",	// Description
 				50,		// crew
 				14,			// cargoCapacity
 				3f,			// repairCost

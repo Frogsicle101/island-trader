@@ -8,6 +8,7 @@ public class TallShip extends Ship {
 		super(
 				1f,		// speed
 				"Tall Ship", // shipType
+				"The Tall Ship is a ship with balanced stats all around.",	// Description
 				40,		// crew
 				8,			// cargoCapacity
 				3f,			// repairCost

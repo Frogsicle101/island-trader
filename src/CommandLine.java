@@ -89,50 +89,41 @@ public class CommandLine {
 	
 	public static int getValidDuration() {
 		
-		int duration = -1;
+		int duration;
 		
-		boolean validDuration = false;
-		do {
-			System.out.println("How long would you like the game to last [20-50 days]:");
-			
-			String input = keyboard.nextLine();
-			
-					
-			if (!input.matches("[0-9]*")) {
-				System.out.println("Input was not a valid number");
-				continue;
-			}
-			
-			duration = Integer.parseInt(input);
-			if (duration < 20 || duration > 50) {
-				System.out.println("The duration should be between 20 and 50 days.");
-			} else {
-				validDuration = true;
-			}
-			
-			
-			
-			
-		} while (!validDuration);
-		
+		System.out.println("How long would you like the game to last [20-50 days]:");
+		duration = nextInt(">", 20, 50);
+	
 		return duration;
 		
 	}
 	
 	
-	public static int getValidShipChoice(Ship[] possibleShips) {
-		int choice = 0;
-		
+	public static Ship getValidShipChoice(Ship[] possibleShips) {
+		int choiceIdx = 0;
+		boolean hasChosen = false;
+		Ship chosenShip;
 		System.out.println("To be a captain, you need a ship! The local shipyard has several available:");
-		
-		for (int i=0; i<possibleShips.length; i++) { 	// Prints all ships in the format [num] shipType
-			System.out.println("[%d] %s".formatted(i+1, possibleShips[i].getShipType()));
+		do {
+			for (int i=0; i<possibleShips.length; i++) { 	// Prints all ships in the format [num] shipType
+				System.out.println("[%d] %s".formatted(i+1, possibleShips[i].getShipType()));
+			}
 			
-		}
-		
-		System.out.println("To select a ship, input the number next to your choice:");
-		choice = nextInt(">", 1, possibleShips.length);
-		return choice - 1;
+			System.out.println("To select a ship, input the number next to your choice:");
+			choiceIdx = nextInt(">", 1, possibleShips.length) - 1;
+			chosenShip = possibleShips[choiceIdx];
+			// Describe the ship
+			System.out.println("Name: "+chosenShip.getShipType());
+			System.out.println(chosenShip.getDescription());
+			System.out.println("Do you wish to use ship?\n"
+							+ "[1] Yes\n"
+							+ "[0] No");
+			choiceIdx = nextInt(">", 0, 1);
+			if (choiceIdx == 1) {
+				hasChosen = true;
+			}
+		} while (!hasChosen);
+		return chosenShip;
 		
 	}
 	
@@ -151,8 +142,7 @@ public class CommandLine {
 		
 		// Get ship type
 		Ship[] possibleShips = environment.getPossibleShips();
-		int shipChoice = getValidShipChoice(possibleShips);
-		Ship chosenShip = possibleShips[shipChoice];
+		Ship chosenShip = getValidShipChoice(possibleShips);
 		environment.setShip(chosenShip);
 		
 		environment.startGame();
