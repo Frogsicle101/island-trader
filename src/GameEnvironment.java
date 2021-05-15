@@ -243,7 +243,10 @@ public class GameEnvironment {
 	 * Transitions the game into a sailing state
 	 * @param route The route we're sailing along
 	 */
-	public void setSail(Route route) {
+	public void setSail(Route route, int wages) {
+		removeMoney(wages);
+		route.getOtherIsland(currentIsland);
+		setDestination(route.getOtherIsland(currentIsland));
 		this.route = route;
 		int sailLength = (int)(route.getDistance() / this.getShip().getSpeed());
 		this.arrivalTime = getGameTime() + sailLength;
@@ -268,10 +271,6 @@ public class GameEnvironment {
 	 */
 	public RandomEvent passDay() {
 		this.gameTime++;
-		// Pay crew wages
-		Ship ship = getShip();
-		int wages = (int) (Ship.DAILY_WAGE * ship.getCrew());
-		removeMoney(wages);
 		// Check if we've made it to shore yet
 		// If so, stop sailing
 		if (getGameTime() >= arrivalTime) {

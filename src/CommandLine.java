@@ -379,7 +379,6 @@ public class CommandLine {
 		// List all available routes
 		printDashes();
 		Island currentIsland = environment.getCurrentIsland();
-		Island destination;
 		float shipSpeed = environment.getShip().getSpeed();
 		ArrayList<Route> validRoutes = Route.availableRoutes(environment.getAllRoutes(), currentIsland);
 		int i = 0;
@@ -399,9 +398,18 @@ public class CommandLine {
 		// --------
 		// We have a destination, set sail!
 		Route route = validRoutes.get(choice - 1);
-		destination = route.getOtherIsland(currentIsland);
-		environment.setDestination(destination);
-		environment.setSail(route);
+		
+		
+		Ship ship = environment.getShip();
+		int wages = (int) (Ship.DAILY_WAGE * ship.getCrew() * (route.getDistance() / shipSpeed));
+		if (environment.getMoney() > wages) {
+			System.out.println("You pay your crew %d in wages and set off".formatted(wages));
+			environment.setSail(route, wages);
+		}
+		else {
+			System.out.println("Unfortunately, you can't pay your crew enough to get you there.");
+		}
+		
 	}
 	
 	// ----- Sailing State -----
@@ -485,11 +493,8 @@ public class CommandLine {
 	}
 	
 	private static void s_sailing() {
-		Ship ship = environment.getShip();
 		RandomEvent event = environment.passDay();
-		// Nice things to print
-		int wagesPaid = (int) (Ship.DAILY_WAGE * ship.getCrew());
-		System.out.println("Day %d: Paid %d gold in crew wages".formatted(environment.getGameTime(), wagesPaid));
+		
 		// Handle random events
 		if (event == null)
 			return;
