@@ -169,7 +169,8 @@ public class CommandLine {
 		printDashes();
 		System.out.println("[1] Set sail");
 		System.out.println("[2] Visit the store");
-		System.out.println("[3] View the ledger");
+		System.out.println("[3] View Ship Characteristics");
+		System.out.println("[4] View the ledger");
 		System.out.println("[0] Quit game");
 		System.out.println("Enter your choice");
 		
@@ -183,6 +184,9 @@ public class CommandLine {
 				s_visitStore();
 				break;
 			case 3:
+				s_viewCharacteristics();
+				break;
+			case 4:
 				s_viewLedger();
 				break;
 			case 0:
@@ -192,6 +196,26 @@ public class CommandLine {
 				System.out.println("Invalid Input");
 		}
 				
+	}
+	
+	private static void s_viewCharacteristics() {
+		
+		Ship ship = environment.getShip();
+		
+		printDashes();
+		System.out.println("SHIP CHARACTERISTICS");
+		
+		System.out.println("Name: %s".formatted(ship.getShipType()));
+		System.out.println(ship.getDescription());
+		int num_crew = ship.getCrew();
+		System.out.println("Crew: %d (%d gold per day)".formatted(num_crew, (int)(Ship.DAILY_WAGE * num_crew)));
+		System.out.println("Remaining cargo capacity: %d".formatted(ship.getSpareCapacity()));
+		System.out.println("Upgrades:");
+		for (Item item : ship.getCargo()) {
+			if (item instanceof Upgrade) {
+				System.out.println(item.getName());
+			}
+		}
 	}
 	
 	
