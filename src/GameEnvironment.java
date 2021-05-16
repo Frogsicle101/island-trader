@@ -61,6 +61,30 @@ public class GameEnvironment {
 	}
 	
 	
+	public boolean isValidName(String name) {
+		if (name.length() < 3 || name.length() > 15) {
+			return false;
+		}
+		
+		else if (!name.matches("[a-zA-Z ]*")) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+	
+	public boolean isValidDuration(String durationString) {
+		try {
+			int duration = Integer.parseInt(durationString);
+			return (duration >= 20 && duration <= 50);
+		}
+		catch (NumberFormatException e) {
+			return false;
+		}
+	}
+	
+	
 	public ArrayList<Item> getAllSold() {
 		return allSold;
 	}
