@@ -174,7 +174,7 @@ public class CommandLine {
 		System.out.println("[0] Quit game");
 		System.out.println("Enter your choice");
 		
-		int choice = nextInt("> ", 0, 3);
+		int choice = nextInt("> ", 0, 4);
 		
 		switch (choice) {
 			case 1:
