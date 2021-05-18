@@ -11,6 +11,8 @@ import java.awt.Insets;
 import java.awt.SystemColor;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class OnIsland extends JFrame {
 
@@ -24,6 +26,7 @@ public class OnIsland extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					//TODO: Make this into a unit test?
 					GameEnvironment env = new GameEnvironment();
 					env.setGameLength(20);
 					env.setName("test");
@@ -69,7 +72,7 @@ public class OnIsland extends JFrame {
 		gbl_panel_1.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		panel_1.setLayout(gbl_panel_1);
 		
-		JLabel lblNewLabel = new JLabel("Day " + environment.getGameTime());
+		JLabel lblNewLabel = new JLabel("Day: " + environment.getGameTime());
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.insets = new Insets(0, 0, 0, 5);
 		gbc_lblNewLabel.gridx = 0;
@@ -121,6 +124,12 @@ public class OnIsland extends JFrame {
 		contentPane.add(btnNewButton_1, gbc_btnNewButton_1);
 		
 		JButton btnNewButton_2 = new JButton("View ship characteristics");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ViewShipCharacteristics frame = new ViewShipCharacteristics(environment.getShip());
+				frame.setVisible(true);
+			}
+		});
 		GridBagConstraints gbc_btnNewButton_2 = new GridBagConstraints();
 		gbc_btnNewButton_2.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnNewButton_2.insets = new Insets(0, 0, 5, 0);
