@@ -138,6 +138,12 @@ public class OnIsland extends JFrame {
 		contentPane.add(btnNewButton_2, gbc_btnNewButton_2);
 		
 		JButton btnNewButton_3 = new JButton("View the ledger");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ViewLedger frame = new ViewLedger((Item[])environment.getAllSold().toArray());
+				frame.setVisible(true);
+			}
+		});
 		GridBagConstraints gbc_btnNewButton_3 = new GridBagConstraints();
 		gbc_btnNewButton_3.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnNewButton_3.insets = new Insets(0, 0, 5, 0);
