@@ -12,6 +12,7 @@ import java.awt.SystemColor;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class OnIsland extends JFrame {
@@ -140,7 +141,11 @@ public class OnIsland extends JFrame {
 		JButton btnNewButton_3 = new JButton("View the ledger");
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ViewLedger frame = new ViewLedger((Item[])environment.getAllSold().toArray());
+				// Type casting juggle
+				ArrayList<Item> soldItems = environment.getAllSold();
+				Item[] soldArray = new Item[soldItems.size()];
+				soldArray = soldItems.toArray(soldArray);
+				ViewLedger frame = new ViewLedger(soldArray);
 				frame.setVisible(true);
 			}
 		});

@@ -43,11 +43,11 @@ public class ViewShipCharacteristics extends JFrame {
 		
 		int num_crew = ship.getCrew();
 		
-		String text = "Name: %s".formatted(ship.getShipType()) + "\n" +
-					ship.getDescription() + "\n" + 
-					"Crew: %d (%d gold per day)".formatted(num_crew, (int)(Ship.DAILY_WAGE * num_crew)) + "\n" +
-					"Remaining cargo capacity: %d".formatted(ship.getSpareCapacity()) + "\n" +
-					"Upgrades:\n";
+		String text = "Name: %s\n".formatted(ship.getShipType())
+					+ ship.getDescription() + "\n"
+					+ "Crew: %d (%d gold per day)\n".formatted(num_crew, (int)(Ship.DAILY_WAGE * num_crew))
+					+ "Remaining cargo capacity: %d\n".formatted(ship.getSpareCapacity())
+					+ "Upgrades:\n";
 					
 		for (Item item : ship.getCargo()) {
 			if (item instanceof Upgrade) {
