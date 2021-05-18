@@ -1,3 +1,5 @@
+import java.awt.EventQueue;
+
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -16,17 +18,23 @@ public class GUI {
 	 */
 	public static void main(String[] args) {
 		environment = new GameEnvironment();
-		try {
-			UIManager.setLookAndFeel(
-			        UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-				| UnsupportedLookAndFeelException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		environment.resetGame();
+				
 		
-		GameSetup setupFrame = new GameSetup(environment);
-		setupFrame.setVisible(true);
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+					GameSetup setupFrame = new GameSetup(environment);
+					setupFrame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
+		
+		
 		
 
 	}

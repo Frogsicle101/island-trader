@@ -4,7 +4,7 @@ public class Pratum extends Island {
 
 	public Pratum() {
 		this.name = "Pratum";
-		this.description = "A wealthy farming island, popular with retired farmers. It's also your homeland.\n"
+		this.description = "A wealthy farming island, popular with retired farmers. It's also your homeland. "
 						+ "The food's cheap, the water's safe, and the old folks love their trinkets.";
 		// ----- Generate the store prices -----
 		HashMap<TradeTypes, Float> prices = Store.getDefaultPrices();

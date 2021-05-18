@@ -258,7 +258,10 @@ public class GameSetup extends JFrame{
 				
 				environment.startGame();
 				setVisible(false);
-				//TODO: Probably should open the next window
+				
+				OnIsland frame =  new OnIsland(environment);
+				frame.setVisible(true);
+				
 				dispose();
 				
 				
