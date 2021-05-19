@@ -47,20 +47,27 @@ public class GameEnvironment {
 		
 		//TODO: Maybe add multiple ways of getting between the same islands?
 		allRoutes = new Route[] {
-				new Route(pratum, fordina, 2, new String[]{"none", "low", "low"}),
-				new Route(pratum, officina, 3, new String[]{"low", "none", "low"}),
-				new Route(pratum, tempetas, 3, new String[]{"none", "high", "medium"}),
-				new Route(pratum, terminus, 7, new String[]{"high", "low", "medium"}),
-				new Route(fordina, officina, 5, new String[]{"none", "low", "low"}),
-				new Route(fordina, tempetas, 5, new String[]{"none", "high", "medium"}),
-				new Route(fordina, terminus, 5, new String[]{"high", "low", "medium"}),
-				new Route(officina, tempetas, 2, new String[]{"none", "high", "medium"}),
-				new Route(officina, terminus, 9, new String[]{"high", "low", "medium"}),
-				new Route(tempetas, terminus, 10, new String[]{"high", "high", "high"}),
+				new Route(pratum, 	fordina,  2,  new String[]{"none",  "low",   "low"}),
+				new Route(pratum, 	officina, 3,  new String[]{"low",   "none",  "low"}),
+				new Route(pratum, 	tempetas, 3,  new String[]{"none",  "high",  "medium"}),
+				new Route(pratum, 	terminus, 7,  new String[]{"high",  "low",   "medium"}),
+				new Route(fordina, 	officina, 5,  new String[]{"none",  "low",   "low"}),
+				new Route(fordina, 	tempetas, 5,  new String[]{"none",  "high",  "medium"}),
+				new Route(fordina, 	terminus, 5,  new String[]{"high",  "low",   "medium"}),
+				new Route(officina, tempetas, 2,  new String[]{"none",  "high",  "medium"}),
+				new Route(officina, terminus, 9,  new String[]{"high",  "low",   "medium"}),
+				new Route(tempetas, terminus, 10, new String[]{"high",  "high",  "high"}),
 		};
 	}
 	
-	
+	/**
+	 * Validates the player's name.<br>
+	 * A player name is valid if:<br>
+	 * - It's between 3-15 (inclusive) characters long<br>
+	 * - It's made up of ONLY alphabetic and space characters (no numbers, punctuation etc.)
+	 * @param name The tested name
+	 * @return true if the name's valid, false otherwise
+	 */
 	public boolean isValidName(String name) {
 		if (name.length() < 3 || name.length() > 15) {
 			return false;
@@ -74,6 +81,14 @@ public class GameEnvironment {
 		}
 	}
 	
+	/**
+	 * Validates the player's preferred game length<br>
+	 * The game length is valid if:<br>
+	 * - It's an integer
+	 * - It's between 20-50 (inclusive)
+	 * @param durationString The provided duration
+	 * @return true if the duration's valid, false otherwise
+	 */
 	public boolean isValidDuration(String durationString) {
 		try {
 			int duration = Integer.parseInt(durationString);
@@ -103,7 +118,11 @@ public class GameEnvironment {
 		this.currentIsland = currentIsland;
 	}
 	
-	public Ship[] getPossibleShips() {
+	/**
+	 * Generates an array of every available ship
+	 * @return Array of ships
+	 */
+	public static Ship[] getPossibleShips() {
 		Ship[] ships = {new TallShip(),
 						new WarShip(),
 						new Clipper(),

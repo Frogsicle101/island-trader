@@ -56,8 +56,13 @@ public class CommandLine {
 		return userNum;
 	}
 	
-	// -----
-	
+	// ----- Setup Input Functions -----
+	/**
+	 * Gets a valid (string) name from stdin: <br>
+	 * - Must be between 3-15 characters long (inclusive)<br>
+	 * - Must contain only valid characters (alphabet & spaces)
+	 * @return The valid name
+	 */
 	public static String getValidName() {
 		
 		String name;
@@ -68,7 +73,6 @@ public class CommandLine {
 			name = keyboard.nextLine();
 			validName = true;		// Assume the input is valid
 			
-			
 			if (name.length() < 3 || name.length() > 15) {
 				System.out.println("Name should be between 3 and 15 characters.");
 				validName = false;
@@ -78,15 +82,16 @@ public class CommandLine {
 				System.out.println("Name should not contain numbers or special characters.");
 				validName = false;
 			}
-			
-			
 		} while (!validName);
-		
 		
 		return name;
 	}
 	
-	
+	/**
+	 * Gets a valid game length from stdin:<br>
+	 * - Between 20 and 50 (inclusive)
+	 * @return The valid game length
+	 */
 	public static int getValidDuration() {
 		
 		int duration;
@@ -95,10 +100,14 @@ public class CommandLine {
 		duration = nextInt(">", 20, 50);
 	
 		return duration;
-		
 	}
 	
-	
+	/**
+	 * Lists & describes the available ships to the player, returning their choice.<br>
+	 * All input/output is though stdin/stdout
+	 * @param possibleShips The ships available to choose from
+	 * @return 
+	 */
 	public static Ship getValidShipChoice(Ship[] possibleShips) {
 		int choiceIdx = 0;
 		boolean hasChosen = false;
@@ -126,9 +135,9 @@ public class CommandLine {
 		return chosenShip;
 		
 	}
-	
-	// ----- States -----
-
+	/**
+	 * Main State Function - Gets the player's name, ship, and game length, then starts the game
+	 */
 	private static void s_setUp() {
 		// Get name
 		String name = getValidName();
@@ -150,6 +159,9 @@ public class CommandLine {
 	
 	// ----- Island States -----
 	
+	/**
+	 * Main State Function - Handles the choices a player can make on an island
+	 */
 	private static void s_onIsland() {
 		
 		if (environment.getShip().getDamage() > 0) {
@@ -198,6 +210,9 @@ public class CommandLine {
 				
 	}
 	
+	/**
+	 * Displays the ship's characteristics (name, crew, upgrades, etc...)
+	 */
 	private static void s_viewCharacteristics() {
 		
 		Ship ship = environment.getShip();
@@ -218,7 +233,9 @@ public class CommandLine {
 		}
 	}
 	
-	
+	/**
+	 * Prints info on every item the user has bought
+	 */
 	private static void s_viewLedger() {
 		printDashes();
 		System.out.println("LEDGER");
@@ -233,7 +250,9 @@ public class CommandLine {
 		}
 	}
 	
-
+	/**
+	 * State function - Shows the player's options at a store
+	 */
 	private static void s_visitStore() {
 		Store store = environment.getCurrentIsland().getStore();
 		
@@ -266,7 +285,10 @@ public class CommandLine {
 		}
 	}
 	
-	
+	/**
+	 * State function - Lets the player purchase trade items at the store
+	 * @param store The current store
+	 */
 	private static void s_wantToBuy(Store store) {
 		boolean stillHere = true;
 		
@@ -308,7 +330,10 @@ public class CommandLine {
 		}
 	}
 	
-	
+	/**
+	 * State function - Lets the player buy upgrade items at the store
+	 * @param store The current store
+	 */
 	private static void s_wantToBuyUpgrades(Store store) {
 		boolean stillHere = true;
 		
@@ -350,7 +375,10 @@ public class CommandLine {
 		}
 	}
 	
-	
+	/**
+	 * State function - Lets the player sell their items
+	 * @param store The current store
+	 */
 	private static void s_wantToSell(Store store) {
 		boolean stillHere = true;
 		Ship ship = environment.getShip();
@@ -390,7 +418,9 @@ public class CommandLine {
 		}
 	}
 	
-	
+	/**
+	 * State function - Lets the player choose what island to sail to next
+	 */
 	private static void s_embark() {
 		// -- Breaking condition --
 		// Debt Check: Can't sail if the player's in debt
@@ -516,6 +546,10 @@ public class CommandLine {
 		}
 	}
 	
+	/**
+	 * State function - Represent a single day of the player sailing.<br>
+	 * During a day at sea, random events can occur.
+	 */
 	private static void s_sailing() {
 		RandomEvent event = environment.passDay();
 		
@@ -534,6 +568,22 @@ public class CommandLine {
 		}
 		
 		printDashes();
+	}
+	
+	private static void s_gameOver() {
+		printDashes();
+		System.out.println("Game End");
+		System.out.println("Made it to: Day %d of %d".formatted(environment.getGameTime(), environment.getGameLength()));
+		System.out.println("Total profit: %d gold".formatted(environment.getTotalProfit()));
+		printDashes();
+		System.out.println("Restart game?\n"
+						+ "[1] Restart\n"
+						+ "[0] Quit");
+		int choice = nextInt(">", 0, 1);
+		if (choice == 1)
+			environment.resetGame();
+		else
+			System.exit(0);
 	}
 	
 	/**
@@ -564,9 +614,7 @@ public class CommandLine {
 			case FIGHTING:
 				break;
 			case GAME_OVER:
-				System.out.println("GAME OVER");
-				System.out.println("TODO: Implement a high score table, and transition back into a SETUP state");
-				System.exit(1);
+				s_gameOver();
 				break;
 			}
 			

@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * INCOMPLETE CLASS!!! - 
  * A store is a place to buy and sell items.
  * 
  * Every island has a store, and every store has different
@@ -13,7 +12,7 @@ import java.util.HashMap;
 public class Store {
 	private String shopName;
 	private HashMap<TradeTypes, Float> itemPrices;
-	private ArrayList<Upgrade> upgrades;		// TODO: Work out upgrades
+	private ArrayList<Upgrade> upgrades;		// Every store has a finite upgrade pool
 	
 	private final static Store DEFAULT_STORE = new Store("Default store", new HashMap<TradeTypes, Float>());
 	
@@ -109,11 +108,19 @@ public class Store {
 	}
 	
 	
+	/**
+	 * Adds the given upgrade into the store's upgrade pool
+	 * @param upgrade The upgrade getting added
+	 */
 	public void addUpgrade(Upgrade upgrade) {
 		upgrades.add(upgrade);
 	}
 	
-	
+	/**
+	 * Puts the given upgrade back into the store's upgrade pool, returning the upgrade's value
+	 * @param upgrade The upgrade that's gotten rid of
+	 * @return The upgrade's value
+	 */
 	public int sellUpgrade(Upgrade upgrade) {
 		addUpgrade(upgrade);
 		return getPrice(upgrade);
