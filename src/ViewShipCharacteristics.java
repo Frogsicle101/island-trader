@@ -20,7 +20,7 @@ public class ViewShipCharacteristics extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ViewShipCharacteristics frame = new ViewShipCharacteristics(new TallShip());
+					ViewShipCharacteristics frame = new ViewShipCharacteristics(new WarShip());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -47,11 +47,11 @@ public class ViewShipCharacteristics extends JFrame {
 					+ ship.getDescription() + "\n"
 					+ "Crew: %d (%d gold per day)\n".formatted(num_crew, (int)(Ship.DAILY_WAGE * num_crew))
 					+ "Remaining cargo capacity: %d\n".formatted(ship.getSpareCapacity())
-					+ "Upgrades:\n";
+					+ "Upgrades:";
 					
 		for (Item item : ship.getCargo()) {
 			if (item instanceof Upgrade) {
-				text = text + item.getName();
+				text = text + "\n" + item.getName();
 			}
 		}
 				
