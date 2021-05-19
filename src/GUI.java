@@ -1,7 +1,6 @@
 import java.awt.EventQueue;
 
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  * The main class used to run the GUI of the game.

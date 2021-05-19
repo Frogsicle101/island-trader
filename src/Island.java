@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 /**
  * A class for islands that the player will visit on their journey.
  * 
