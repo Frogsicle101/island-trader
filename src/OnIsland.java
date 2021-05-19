@@ -59,39 +59,39 @@ public class OnIsland extends JFrame {
 		gbl_contentPane.rowWeights = new double[]{1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 				
-		JPanel panel_1 = new JPanel();
-		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
-		gbc_panel_1.insets = new Insets(0, 0, 5, 0);
-		gbc_panel_1.fill = GridBagConstraints.BOTH;
-		gbc_panel_1.gridx = 0;
-		gbc_panel_1.gridy = 0;
-		contentPane.add(panel_1, gbc_panel_1);
-		GridBagLayout gbl_panel_1 = new GridBagLayout();
-		gbl_panel_1.columnWidths = new int[]{0, 0, 0, 0};
-		gbl_panel_1.rowHeights = new int[]{0, 0};
-		gbl_panel_1.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_panel_1.rowWeights = new double[]{0.0, Double.MIN_VALUE};
-		panel_1.setLayout(gbl_panel_1);
+		JPanel headerPanel = new JPanel();
+		GridBagConstraints gbc_headerPanel = new GridBagConstraints();
+		gbc_headerPanel.insets = new Insets(0, 0, 5, 0);
+		gbc_headerPanel.fill = GridBagConstraints.BOTH;
+		gbc_headerPanel.gridx = 0;
+		gbc_headerPanel.gridy = 0;
+		contentPane.add(headerPanel, gbc_headerPanel);
+		GridBagLayout gbl_headerPanel = new GridBagLayout();
+		gbl_headerPanel.columnWidths = new int[]{0, 0, 0, 0};
+		gbl_headerPanel.rowHeights = new int[]{0, 0};
+		gbl_headerPanel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_headerPanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		headerPanel.setLayout(gbl_headerPanel);
 		
 		JLabel lblNewLabel = new JLabel("Day: " + environment.getGameTime());
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.insets = new Insets(0, 0, 0, 5);
 		gbc_lblNewLabel.gridx = 0;
 		gbc_lblNewLabel.gridy = 0;
-		panel_1.add(lblNewLabel, gbc_lblNewLabel);
+		headerPanel.add(lblNewLabel, gbc_lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Gold: " + environment.getMoney());
 		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
 		gbc_lblNewLabel_1.insets = new Insets(0, 0, 0, 5);
 		gbc_lblNewLabel_1.gridx = 1;
 		gbc_lblNewLabel_1.gridy = 0;
-		panel_1.add(lblNewLabel_1, gbc_lblNewLabel_1);
+		headerPanel.add(lblNewLabel_1, gbc_lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("Spare Cargo Capacity: " + environment.getShip().getSpareCapacity());
 		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
 		gbc_lblNewLabel_2.gridx = 2;
 		gbc_lblNewLabel_2.gridy = 0;
-		panel_1.add(lblNewLabel_2, gbc_lblNewLabel_2);
+		headerPanel.add(lblNewLabel_2, gbc_lblNewLabel_2);
 		
 		JTextPane textPane = new JTextPane();
 		GridBagConstraints gbc_textPane = new GridBagConstraints();
@@ -108,38 +108,38 @@ public class OnIsland extends JFrame {
 		textPane.setEditable(false);
 		
 		
-		JButton btnNewButton = new JButton("Set sail");
-		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-		gbc_btnNewButton.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnNewButton.insets = new Insets(10, 0, 5, 0);
-		gbc_btnNewButton.gridx = 0;
-		gbc_btnNewButton.gridy = 3;
-		contentPane.add(btnNewButton, gbc_btnNewButton);
+		JButton setSailBtn = new JButton("Set sail");
+		GridBagConstraints gbc_setSailBtn = new GridBagConstraints();
+		gbc_setSailBtn.fill = GridBagConstraints.HORIZONTAL;
+		gbc_setSailBtn.insets = new Insets(10, 0, 5, 0);
+		gbc_setSailBtn.gridx = 0;
+		gbc_setSailBtn.gridy = 3;
+		contentPane.add(setSailBtn, gbc_setSailBtn);
 		
-		JButton btnNewButton_1 = new JButton("Visit the store");
-		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
-		gbc_btnNewButton_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnNewButton_1.insets = new Insets(0, 0, 5, 0);
-		gbc_btnNewButton_1.gridx = 0;
-		gbc_btnNewButton_1.gridy = 4;
-		contentPane.add(btnNewButton_1, gbc_btnNewButton_1);
+		JButton vistStoreBtn = new JButton("Visit the store");
+		GridBagConstraints gbc_vistStoreBtn = new GridBagConstraints();
+		gbc_vistStoreBtn.fill = GridBagConstraints.HORIZONTAL;
+		gbc_vistStoreBtn.insets = new Insets(0, 0, 5, 0);
+		gbc_vistStoreBtn.gridx = 0;
+		gbc_vistStoreBtn.gridy = 4;
+		contentPane.add(vistStoreBtn, gbc_vistStoreBtn);
 		
-		JButton btnNewButton_2 = new JButton("View ship characteristics");
-		btnNewButton_2.addActionListener(new ActionListener() {
+		JButton viewShipBtn = new JButton("View ship characteristics");
+		viewShipBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ViewShipCharacteristics frame = new ViewShipCharacteristics(environment.getShip());
 				frame.setVisible(true);
 			}
 		});
-		GridBagConstraints gbc_btnNewButton_2 = new GridBagConstraints();
-		gbc_btnNewButton_2.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnNewButton_2.insets = new Insets(0, 0, 5, 0);
-		gbc_btnNewButton_2.gridx = 0;
-		gbc_btnNewButton_2.gridy = 5;
-		contentPane.add(btnNewButton_2, gbc_btnNewButton_2);
+		GridBagConstraints gbc_viewShipBtn = new GridBagConstraints();
+		gbc_viewShipBtn.fill = GridBagConstraints.HORIZONTAL;
+		gbc_viewShipBtn.insets = new Insets(0, 0, 5, 0);
+		gbc_viewShipBtn.gridx = 0;
+		gbc_viewShipBtn.gridy = 5;
+		contentPane.add(viewShipBtn, gbc_viewShipBtn);
 		
-		JButton btnNewButton_3 = new JButton("View the ledger");
-		btnNewButton_3.addActionListener(new ActionListener() {
+		JButton viewLedgerBtn = new JButton("View the ledger");
+		viewLedgerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Type casting juggle
 				ArrayList<Item> soldItems = environment.getAllSold();
@@ -149,18 +149,18 @@ public class OnIsland extends JFrame {
 				frame.setVisible(true);
 			}
 		});
-		GridBagConstraints gbc_btnNewButton_3 = new GridBagConstraints();
-		gbc_btnNewButton_3.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnNewButton_3.insets = new Insets(0, 0, 5, 0);
-		gbc_btnNewButton_3.gridx = 0;
-		gbc_btnNewButton_3.gridy = 6;
-		contentPane.add(btnNewButton_3, gbc_btnNewButton_3);
+		GridBagConstraints gbc_viewLedgerBtn = new GridBagConstraints();
+		gbc_viewLedgerBtn.fill = GridBagConstraints.HORIZONTAL;
+		gbc_viewLedgerBtn.insets = new Insets(0, 0, 5, 0);
+		gbc_viewLedgerBtn.gridx = 0;
+		gbc_viewLedgerBtn.gridy = 6;
+		contentPane.add(viewLedgerBtn, gbc_viewLedgerBtn);
 		
-		JButton btnNewButton_4 = new JButton("Quit");
-		GridBagConstraints gbc_btnNewButton_4 = new GridBagConstraints();
-		gbc_btnNewButton_4.gridx = 0;
-		gbc_btnNewButton_4.gridy = 7;
-		contentPane.add(btnNewButton_4, gbc_btnNewButton_4);
+		JButton quitBtn = new JButton("Quit");
+		GridBagConstraints gbc_quitBtn = new GridBagConstraints();
+		gbc_quitBtn.gridx = 0;
+		gbc_quitBtn.gridy = 7;
+		contentPane.add(quitBtn, gbc_quitBtn);
 	}
 
 }
