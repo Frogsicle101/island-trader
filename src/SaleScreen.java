@@ -187,11 +187,6 @@ public class SaleScreen extends JFrame {
 		
 		
 		
-		
-		
-		
-		
-		
 		JPanel panel = new JPanel();
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.fill = GridBagConstraints.BOTH;
@@ -200,7 +195,7 @@ public class SaleScreen extends JFrame {
 		contentPane.add(panel, gbc_panel);
 		panel.setLayout(new GridLayout(1, 0, 0, 0));
 		
-		JButton btnBuy = new JButton("Buy");
+		JButton btnBuy = new JButton("Upgrades");
 		panel.add(btnBuy);
 		
 		JPanel voidPanel = new JPanel();

@@ -27,6 +27,7 @@ public class Store {
 		this.shopName = shopName;
 		this.upgrades = new ArrayList<Upgrade>();
 		this.upgrades.add(new Cannon());
+		this.upgrades.add(new Sail());
 	}
 
 	public HashMap<TradeTypes, Float> getItemPrices() {

@@ -6,14 +6,21 @@
 public class Clipper extends Ship {
 	public Clipper() {
 		super(
-				2f,		// speed
+				1f,		// speed
 				"Clipper", // shipType
 				"The Clipper is lightning fast, but can't hold much cargo", // Description
 				25,		// crew
-				6,			// cargoCapacity
+				7,			// cargoCapacity
 				3f,			// repairCost
 				65			// startingMoney
 		);
+			try {
+				storeItem(new Sail());
+			} catch (CargoFullException e) {
+				e.printStackTrace();
+				System.out.println("Fatal error in WarShip class constructor");
+				System.exit(1);
+			}
 
 	}
 

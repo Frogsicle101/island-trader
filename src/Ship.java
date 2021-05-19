@@ -63,7 +63,13 @@ public abstract class Ship {
 		return damage;
 	}
 	public float getSpeed() {
-		return speed;
+		int buff = 0;
+		for (Item item: cargo) {
+			if (item instanceof Sail)
+				buff += Sail.SPEED_BUFF;
+		}
+		
+		return speed + buff;
 	}
 	public String getShipType() {
 		return shipType;
