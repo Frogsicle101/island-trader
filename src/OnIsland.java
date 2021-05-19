@@ -31,7 +31,7 @@ public class OnIsland extends JFrame {
 					GameEnvironment env = new GameEnvironment();
 					env.setGameLength(20);
 					env.setName("test");
-					env.setShip(env.getPossibleShips()[0]);
+					env.setShip(GameEnvironment.getPossibleShips()[0]);
 					env.startGame();
 					OnIsland frame = new OnIsland(env);
 					frame.setVisible(true);
@@ -117,6 +117,12 @@ public class OnIsland extends JFrame {
 		contentPane.add(setSailBtn, gbc_setSailBtn);
 		
 		JButton vistStoreBtn = new JButton("Visit the store");
+		vistStoreBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				SaleScreen frame = new SaleScreen(environment);
+				frame.setVisible(true);
+			}
+		});
 		GridBagConstraints gbc_vistStoreBtn = new GridBagConstraints();
 		gbc_vistStoreBtn.fill = GridBagConstraints.HORIZONTAL;
 		gbc_vistStoreBtn.insets = new Insets(0, 0, 5, 0);

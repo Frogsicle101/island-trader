@@ -12,17 +12,26 @@ import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTable;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.GridLayout;
+import javax.swing.BoxLayout;
 
 public class SaleScreen extends JFrame {
 
 	private JPanel contentPane;
-	private JTable table;
+	private JLabel goldLbl;
+	private JLabel capacityLbl;
+	private JButton[] buyButtons = new JButton[TradeGood.ALL_GOODS.length];
+	private JButton[] sellButtons = new JButton[TradeGood.ALL_GOODS.length];
+	
+	
 	private GameEnvironment environment;
 	private Store store;
+	
 
 	
 	public static void main(String[] args) {
@@ -41,6 +50,28 @@ public class SaleScreen extends JFrame {
 				}
 			}
 		});
+	}
+	
+	
+	private void updateDisplay() {
+		int money = environment.getMoney();
+		goldLbl.setText("Gold: " + money);
+		int spareCapacity = environment.getShip().getSpareCapacity();
+		capacityLbl.setText("Spare Cargo Capacity: " + spareCapacity);
+		
+		
+		for (int i = 0; i < buyButtons.length; i++) {
+			TradeGood item = TradeGood.ALL_GOODS[i];
+			if (spareCapacity > 0 && store.getPrice(item) <= money)
+				buyButtons[i].setEnabled(true);
+			else
+				buyButtons[i].setEnabled(false);
+			
+			if (environment.getShip().hasInCargo(item))
+				sellButtons[i].setEnabled(true);
+			else
+				sellButtons[i].setEnabled(false);
+		}
 	}
 	
 	
@@ -64,17 +95,7 @@ public class SaleScreen extends JFrame {
 		contentPane.setLayout(gbl_contentPane);
 		
 		
-		
-		
-		String[][] data = new String[TradeGood.ALL_GOODS.length][3];
-		for (int i = 0; i < data.length; i++) {
-			TradeGood item = TradeGood.ALL_GOODS[i];
-			data[i][0] = item.getName();
-			data[i][1] = String.valueOf(store.getPrice(item));
-			float mult = store.getItemPrices().get(item.getType());
-			data[i][2] = (mult == 1 ? "-" : "x%.2f".formatted(mult));
-		}
-		String[] columnNames = {"Name", "Price", "Multiplier"};
+	
 		
 		JPanel headerPane = new JPanel();
 		GridBagConstraints gbc_headerPane = new GridBagConstraints();
@@ -90,34 +111,86 @@ public class SaleScreen extends JFrame {
 		gbl_headerPane.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		headerPane.setLayout(gbl_headerPane);
 		
-		JLabel lbl_Day = new JLabel("Day: "+environment.getGameTime());
-		GridBagConstraints gbc_lbl_Day = new GridBagConstraints();
-		gbc_lbl_Day.insets = new Insets(0, 0, 0, 5);
-		gbc_lbl_Day.gridx = 0;
-		gbc_lbl_Day.gridy = 0;
-		headerPane.add(lbl_Day, gbc_lbl_Day);
+		JLabel dayLbl = new JLabel("Day: "+ environment.getGameTime());
+		GridBagConstraints gbc_dayLbl = new GridBagConstraints();
+		gbc_dayLbl.insets = new Insets(0, 0, 0, 5);
+		gbc_dayLbl.gridx = 0;
+		gbc_dayLbl.gridy = 0;
+		headerPane.add(dayLbl, gbc_dayLbl);
 		
-		JLabel lblNewLabel_1 = new JLabel("Gold: "+environment.getMoney());
-		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
-		gbc_lblNewLabel_1.insets = new Insets(0, 0, 0, 5);
-		gbc_lblNewLabel_1.gridx = 1;
-		gbc_lblNewLabel_1.gridy = 0;
-		headerPane.add(lblNewLabel_1, gbc_lblNewLabel_1);
+		goldLbl = new JLabel();
+		GridBagConstraints gbc_goldLbl = new GridBagConstraints();
+		gbc_goldLbl.insets = new Insets(0, 0, 0, 5);
+		gbc_goldLbl.gridx = 1;
+		gbc_goldLbl.gridy = 0;
+		headerPane.add(goldLbl, gbc_goldLbl);
 		
-		JLabel lblNewLabel_2 = new JLabel("Spare Cargo Capacity: "+environment.getShip().getSpareCapacity());
-		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
-		gbc_lblNewLabel_2.gridx = 2;
-		gbc_lblNewLabel_2.gridy = 0;
-		headerPane.add(lblNewLabel_2, gbc_lblNewLabel_2);
-		table = new JTable(data, columnNames);
+		capacityLbl = new JLabel();
+		GridBagConstraints gbc_capacityLbl = new GridBagConstraints();
+		gbc_capacityLbl.gridx = 2;
+		gbc_capacityLbl.gridy = 0;
+		headerPane.add(capacityLbl, gbc_capacityLbl);
 		
-		JScrollPane scrollPane = new JScrollPane(table);
+		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
 		gbc_scrollPane.insets = new Insets(0, 0, 5, 0);
 		gbc_scrollPane.gridx = 0;
 		gbc_scrollPane.gridy = 1;
 		contentPane.add(scrollPane, gbc_scrollPane);
+		
+		JPanel pricesPane = new JPanel();
+		scrollPane.setViewportView(pricesPane);
+		pricesPane.setLayout(new GridLayout(0, 4, 0, 0));
+		
+		
+		
+		for (int i = 0; i < TradeGood.ALL_GOODS.length; i++) {
+			TradeGood item = TradeGood.ALL_GOODS[i];
+			JLabel nameLbl = new JLabel(item.getName());
+			pricesPane.add(nameLbl);
+			
+			int price = store.getPrice(item);
+			
+			JLabel priceLbl = new JLabel(String.valueOf(price));
+			pricesPane.add(priceLbl);
+			
+			JButton buyBtn = new JButton("Buy");
+			buyBtn.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					environment.buyItem(item, price);
+					updateDisplay();
+				}
+			});
+			
+			pricesPane.add(buyBtn);
+			buyButtons[i] = buyBtn;
+			
+			JButton sellBtn = new JButton("Sell");
+			sellBtn.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					item.setSalePrice(price); //So the sale price is visible in the ledger
+					environment.addMoney(price);
+					try {
+						environment.getShip().popItem(item.getName());
+					}
+					catch (ItemNotFoundException exception) {
+						JOptionPane.showMessageDialog(null, "Error", exception.getMessage(), JOptionPane.ERROR_MESSAGE);
+					}
+					updateDisplay();
+				}
+			});
+			pricesPane.add(sellBtn);
+			sellButtons[i] = sellBtn;
+		}
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		JPanel panel = new JPanel();
 		GridBagConstraints gbc_panel = new GridBagConstraints();
@@ -134,10 +207,17 @@ public class SaleScreen extends JFrame {
 		panel.add(voidPanel);
 		
 		JButton backBtn = new JButton("Back");
+		backBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 		panel.add(backBtn);
 		
 		
 		
+
+		updateDisplay();
 				
 		
 		

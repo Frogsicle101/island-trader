@@ -121,6 +121,7 @@ public abstract class Ship {
 	}
 	
 	/**
+	 * TODO: Fix this docstring
 	 * Searches the cargo hold by name, deletes it from cargo, and returns it
 	 * @param itemName	The text name of the item
 	 * @return The item in question
@@ -130,6 +131,24 @@ public abstract class Ship {
 		Item wantedItem = cargo.get(cargoIdx);
 		cargo.remove(cargoIdx);
 		return wantedItem;
+	}
+	
+	public Item popItem(String name) throws ItemNotFoundException {
+		for (int i = 0; i < cargo.size(); i++) {
+			if (cargo.get(i).getName().equals(name)) {
+				return popItem(i);
+			}
+		}
+		throw new ItemNotFoundException(name + " is not in cargo");
+		
+	}
+	
+	public boolean hasInCargo(Item searchingFor) {
+		for (Item item : cargo) {
+			if (item.getName().equals(searchingFor.getName()))
+				return true;
+		}
+		return false;
 	}
 	
 	/**
