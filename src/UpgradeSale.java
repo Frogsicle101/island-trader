@@ -15,13 +15,13 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.GridLayout;
 
-public class SaleScreen extends JFrame {
+public class UpgradeSale extends JFrame {
 
 	private JPanel contentPane;
 	private JLabel goldLbl;
 	private JLabel capacityLbl;
-	private JButton[] buyButtons = new JButton[TradeGood.ALL_GOODS.length];
-	private JButton[] sellButtons = new JButton[TradeGood.ALL_GOODS.length];
+	private JButton[] buyButtons = new JButton[2];
+	private JButton[] sellButtons = new JButton[2];
 	
 	
 	private GameEnvironment environment;
@@ -38,7 +38,7 @@ public class SaleScreen extends JFrame {
 					env.setGameLength(25);
 					env.setShip(new WarShip());
 					env.startGame();
-					SaleScreen frame = new SaleScreen(env);
+					UpgradeSale frame = new UpgradeSale(env);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -56,16 +56,17 @@ public class SaleScreen extends JFrame {
 		
 		
 		for (int i = 0; i < buyButtons.length; i++) {
-			TradeGood item = TradeGood.ALL_GOODS[i];
-			if (spareCapacity > 0 && store.getPrice(item) <= money)
+			Upgrade upgrade = Store.getPossibleUpgrades()[i];
+			if (spareCapacity > 0 && store.getPrice(upgrade) <= money)
 				buyButtons[i].setEnabled(true);
 			else
 				buyButtons[i].setEnabled(false);
 			
-			if (environment.getShip().hasInCargo(item))
+			if (environment.getShip().hasInCargo(upgrade))
 				sellButtons[i].setEnabled(true);
 			else
 				sellButtons[i].setEnabled(false);
+			
 		}
 	}
 	
@@ -73,7 +74,7 @@ public class SaleScreen extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public SaleScreen(GameEnvironment environment) {
+	public UpgradeSale(GameEnvironment environment) {
 		this.environment = environment;
 		this.store = environment.getCurrentIsland().getStore();
 		setTitle("Welcome to %s's store!".formatted(store.getShopName()));
@@ -134,48 +135,50 @@ public class SaleScreen extends JFrame {
 		gbc_scrollPane.gridy = 1;
 		contentPane.add(scrollPane, gbc_scrollPane);
 		
-		JPanel pricesPane = new JPanel();
-		scrollPane.setViewportView(pricesPane);
-		pricesPane.setLayout(new GridLayout(0, 4, 0, 0));
+		JPanel upgradesPane = new JPanel();
+		scrollPane.setViewportView(upgradesPane);
+		upgradesPane.setLayout(new GridLayout(0, 4, 0, 0));
 		
 		
-		
-		for (int i = 0; i < TradeGood.ALL_GOODS.length; i++) {
-			TradeGood item = TradeGood.ALL_GOODS[i];
-			JLabel nameLbl = new JLabel(item.getName());
-			pricesPane.add(nameLbl);
+		Store store = environment.getCurrentIsland().getStore();
+		for (int i = 0; i < Store.getPossibleUpgrades().length; i++) {
+			Upgrade upgrade = Store.getPossibleUpgrades()[i];
+			JLabel nameLbl = new JLabel(upgrade.getName());
+			upgradesPane.add(nameLbl);
 			
-			int price = store.getPrice(item);
+			int price = store.getPrice(upgrade);
 			
 			JLabel priceLbl = new JLabel(String.valueOf(price));
-			pricesPane.add(priceLbl);
+			upgradesPane.add(priceLbl);
 			
 			JButton buyBtn = new JButton("Buy");
 			buyBtn.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					environment.buyItem(item, price);
+					environment.buyItem(upgrade, price);
+					store.removeUpgrade(upgrade);
 					updateDisplay();
 				}
 			});
 			
-			pricesPane.add(buyBtn);
+			upgradesPane.add(buyBtn);
 			buyButtons[i] = buyBtn;
 			
 			JButton sellBtn = new JButton("Sell");
 			sellBtn.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					item.setSalePrice(price); //So the sale price is visible in the ledger
+					upgrade.setSalePrice(price); //So the sale price is visible in the ledger
 					environment.addMoney(price);
 					try {
-						environment.getShip().popItem(item.getName());
+						Upgrade sold = (Upgrade)environment.getShip().popItem(upgrade.getName());
+						store.addUpgrade(sold);
 					}
 					catch (ItemNotFoundException exception) {
-						JOptionPane.showMessageDialog(null, "Error", exception.getMessage(), JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, exception.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 					}
 					updateDisplay();
 				}
 			});
-			pricesPane.add(sellBtn);
+			upgradesPane.add(sellBtn);
 			sellButtons[i] = sellBtn;
 		}
 		
@@ -189,15 +192,6 @@ public class SaleScreen extends JFrame {
 		gbc_panel.gridy = 2;
 		contentPane.add(panel, gbc_panel);
 		panel.setLayout(new GridLayout(1, 0, 0, 0));
-		
-		JButton btnBuy = new JButton("Upgrades");
-		btnBuy.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				UpgradeSale frame = new UpgradeSale(environment);
-				frame.setVisible(true);
-			}
-		});
-		panel.add(btnBuy);
 		
 		JPanel voidPanel = new JPanel();
 		panel.add(voidPanel);

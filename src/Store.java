@@ -15,7 +15,9 @@ public class Store {
 	private ArrayList<Upgrade> upgrades;		// Every store has a finite upgrade pool
 	
 	private final static Store DEFAULT_STORE = new Store("Default store", new HashMap<TradeTypes, Float>());
+	private final static Upgrade[] POSSIBLE_UPGRADES = new Upgrade[] {new Cannon(), new Sail()};
 	
+
 	/**
 	 * Creates a new island that values each trade type accordingly
 	 * @param itemPrices A mapping of TradeType: ValueMultiplier
@@ -37,6 +39,14 @@ public class Store {
 	public String getShopName() {
 		return shopName;
 	}
+	
+	/**
+	 * @return the possibleUpgrades
+	 */
+	public static Upgrade[] getPossibleUpgrades() {
+		return POSSIBLE_UPGRADES;
+	}
+
 	
 	public ArrayList<Upgrade> getUpgrades() {
 		return upgrades;
@@ -126,4 +136,14 @@ public class Store {
 		addUpgrade(upgrade);
 		return getPrice(upgrade);
 	}
+	
+	public void removeUpgrade(Upgrade toBeBought) {
+		for (int i = 0; i < upgrades.size(); i++) {
+			if (upgrades.get(i).getName().equals(toBeBought.getName())) {
+				upgrades.remove(i);
+				break;
+			}
+		}
+	}
 }
+
