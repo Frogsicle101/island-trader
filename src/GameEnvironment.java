@@ -297,6 +297,14 @@ public class GameEnvironment {
 	}
 	
 	/**
+	 * @return the route
+	 */
+	public Route getRoute() {
+		return route;
+	}
+
+
+	/**
 	 * Deducts the player's money after taking damage
 	 * @return The cost of repairing the ship
 	 */

@@ -58,7 +58,7 @@ public class GameSetup extends JFrame{
 	
 	private void updateShipDisplay() {
 		
-		Ship[] possibleShips = environment.getPossibleShips();
+		Ship[] possibleShips = GameEnvironment.getPossibleShips();
 		selectedShip = possibleShips[0];
 		
 		JRadioButton[] buttonList = {tallShipBtn, warShipBtn, clipperBtn, bargeBtn};
@@ -259,8 +259,7 @@ public class GameSetup extends JFrame{
 				environment.startGame();
 				setVisible(false);
 				
-				OnIsland frame =  new OnIsland(environment);
-				frame.setVisible(true);
+				GUI.openNextFrame();
 				
 				dispose();
 				

@@ -1,5 +1,6 @@
 import java.awt.EventQueue;
 
+import javax.swing.JFrame;
 import javax.swing.UIManager;
 
 /**
@@ -24,18 +25,36 @@ public class GUI {
 			public void run() {
 				try {
 					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-					GameSetup setupFrame = new GameSetup(environment);
-					setupFrame.setVisible(true);
+					openNextFrame();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
 		
-		
-		
-		
 
+	}
+	
+	public static void openNextFrame() {
+		JFrame frame = new JFrame(); //TODO: Fix this by throwing an exception or something if not in any of the states
+		switch (environment.getState()) {
+			case SETUP:
+				frame = new GameSetup(environment);
+				break;
+			case ON_ISLAND:
+				frame = new OnIsland(environment);
+				break;
+			case SAILING:
+				frame = new Sailing(environment);
+				break;
+			case FIGHTING:
+				break;
+			case GAME_OVER:
+				break;
+			default:
+				break;
+			}
+		frame.setVisible(true);
 	}
 
 }

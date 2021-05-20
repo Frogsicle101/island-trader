@@ -1,6 +1,7 @@
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.GridBagLayout;
@@ -48,6 +49,8 @@ public class OnIsland extends JFrame {
 		this.environment = environment;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
+		setTitle(this.environment.getCurrentIsland().getName());
+		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -108,6 +111,13 @@ public class OnIsland extends JFrame {
 		
 		
 		JButton setSailBtn = new JButton("Set sail");
+		setSailBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Embark frame = new Embark(environment);
+				frame.setVisible(true);
+				dispose();
+			}
+		});
 		GridBagConstraints gbc_setSailBtn = new GridBagConstraints();
 		gbc_setSailBtn.fill = GridBagConstraints.HORIZONTAL;
 		gbc_setSailBtn.insets = new Insets(10, 0, 5, 0);
@@ -163,6 +173,7 @@ public class OnIsland extends JFrame {
 		
 		JButton quitBtn = new JButton("Quit");
 		GridBagConstraints gbc_quitBtn = new GridBagConstraints();
+		gbc_quitBtn.fill = GridBagConstraints.HORIZONTAL;
 		gbc_quitBtn.gridx = 0;
 		gbc_quitBtn.gridy = 7;
 		contentPane.add(quitBtn, gbc_quitBtn);
