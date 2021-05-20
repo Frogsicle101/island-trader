@@ -222,7 +222,11 @@ public class GameEnvironment {
 	public void setDestination(Island destination) {
 		this.destination = destination;
 	}
-
+	
+	public int getArrivalTime() {
+		return this.arrivalTime;
+	}
+	
 	public GameState getState() {
 		return state;
 	}
@@ -299,7 +303,6 @@ public class GameEnvironment {
 	 */
 	public void setSail(Route route, int wages) {
 		removeMoney(wages);
-		route.getOtherIsland(currentIsland);
 		setDestination(route.getOtherIsland(currentIsland));
 		this.route = route;
 		int sailLength = (int)(route.getDistance() / this.getShip().getSpeed());
@@ -368,7 +371,13 @@ public class GameEnvironment {
 			state = GameState.GAME_OVER;
 			return false;
 		}
-		
 	}
+	
+	// !! DEBUGGER FUNCTIONS !!
+	public void setState(GameState state) {
+		this.state = state;
+	}
+
+
 
 }

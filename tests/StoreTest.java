@@ -34,7 +34,7 @@ class StoreTest {
 	 * Store prices should be correctly displayed/reduced/untouched
 	 */
 	@Test
-	void correctPricesTest() {
+	public void correctPricesTest() {
 		// Should be double the price
 		int foodPrice = store.getPrice(food);
 		assertEquals(foodPrice, 20);
@@ -50,7 +50,7 @@ class StoreTest {
 	 * A purchased item should have all its values filled out
 	 */
 	@Test
-	void correctlyBoughtItem() {
+	public void correctlyBoughtItem() {
 		TradeGood boughtFood = store.buyItem(food);
 		// Base price shouldn't have changed
 		assertEquals(boughtFood.getBaseValue(), 10);
@@ -66,7 +66,7 @@ class StoreTest {
 	 * Upgrades should be correctly removed from the store's pool
 	 */
 	@Test
-	void canRemoveUpgrade() {
+	public void canRemoveUpgrade() {
 		// How many cannons exist originally
 		int numCannonsOrig = 0;
 		for (Upgrade upgrade : store.getUpgrades()) {
