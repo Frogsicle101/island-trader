@@ -279,6 +279,18 @@ public class GameEnvironment {
 		currentIsland = allIslands[0];
 		return true;
 	}
+	
+	public void embark() {
+		state = GameState.EMBARKING;
+	}
+	
+	/**
+	 * Transitions back into ON_ISLAND
+	 * Used when backing out of going somewhere
+	 */
+	public void disembark() {
+		state = GameState.ON_ISLAND;
+	}
 
 
 	/**

@@ -33,6 +33,7 @@ public class OnIsland extends JFrame {
 					env.setName("test");
 					env.setShip(GameEnvironment.getPossibleShips()[0]);
 					env.startGame();
+					GUI.environment = env;
 					OnIsland frame = new OnIsland(env);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -113,8 +114,8 @@ public class OnIsland extends JFrame {
 		JButton setSailBtn = new JButton("Set sail");
 		setSailBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Embark frame = new Embark(environment);
-				frame.setVisible(true);
+				environment.embark();
+				GUI.openNextFrame();
 				dispose();
 			}
 		});

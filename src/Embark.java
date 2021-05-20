@@ -56,6 +56,8 @@ public class Embark extends JFrame {
 		JButton btnNewButton = new JButton("Back");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				environment.disembark();
+				GUI.openNextFrame();
 				dispose();
 			}
 		});
@@ -129,7 +131,7 @@ public class Embark extends JFrame {
 			loopGoBtn.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					String message = "You pay your crew %d in wages and set off".formatted(wages);
-					JOptionPane.showMessageDialog(null, message, "", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(contentPane, message, "", JOptionPane.INFORMATION_MESSAGE);
 					environment.setSail(route, wages);
 					
 					GUI.openNextFrame();

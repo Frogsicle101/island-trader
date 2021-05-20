@@ -5,6 +5,7 @@
 public enum GameState {
 	SETUP,
 	ON_ISLAND,
+	EMBARKING,
 	SAILING,
 	FIGHTING,
 	GAME_OVER

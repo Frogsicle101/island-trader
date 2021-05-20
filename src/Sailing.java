@@ -6,10 +6,14 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
@@ -21,6 +25,8 @@ public class Sailing extends JFrame {
 	private JLabel dayLbl;
 	private JProgressBar progressBar;
 	private Timer timer;
+	
+	private GameEnvironment environment;
 
 	/**
 	 * Launch the application.
@@ -44,11 +50,86 @@ public class Sailing extends JFrame {
 			}
 		});
 	}
+	
+	private void processEvent(RandomEvent event) {
+		if (event instanceof Weather) {
+			float damage = ((Weather)event).getDamage();
+			String message = "You took %f damage in a storm!".formatted(damage); //TODO: Change weather damage so it's not such a weird float
+			environment.getShip().damageShip(damage);
+			JOptionPane.showMessageDialog(contentPane, message, "Weather Event!", JOptionPane.INFORMATION_MESSAGE);
+		} else if (event instanceof Rescue) {
+			Rescue rescue = (Rescue)event;
+			String message = "Rescued %d sailors.".formatted(rescue.getNumSailors()) + "\n" +
+							"They thank you with %d gold.".formatted(rescue.getReward());
+			JOptionPane.showMessageDialog(contentPane, message, "Shipwrecked Sailors!", JOptionPane.INFORMATION_MESSAGE);
+			environment.addMoney(rescue.getReward());
+		} else if (event instanceof PirateAttack) {
+			processPirateAttack((PirateAttack) event);
+		} else {
+			System.out.println("Error: Can't handle RandomEvent of type " + event.getClass().getTypeName());
+		}
+	}
+	
+	private void processPirateAttack(PirateAttack pirate) {
+		Ship ship = environment.getShip();
+		int bonus = ship.getCombatBonus();
+		String initial_message = "Pirates board your ship\n"
+				+ "Roll the die to see if you can fight them off";
+		JOptionPane.showOptionDialog(contentPane,
+                initial_message,
+                "Pirate Attack!",
+                JOptionPane.OK_OPTION,
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                new Object[] {"Roll"},
+                null);
+		
+		
+		String message = "";
+		int roll = new Random().nextInt(6) + 1; // Between 1-6 inclusive
+		message += "Rolled a %d (+%d)\n".formatted(roll, bonus);
+		PirateOutcome outcome = pirate.outcome(roll + bonus);
+		// Determine the outcome
+		switch (outcome) {
+		case WIN:
+			message += "Success! The pirate ship sinks without you taking a scratch";
+			break;
+		case DAMAGED:
+			float damage = pirate.getDamageDealt();
+			message += "The pirates have been repelled, however "+damage+" damage has been taken";
+			ship.damageShip(damage);
+			break;
+		case LOSS:
+			message += "The pirates board your ship and take all your cargo!\n";
+			// Catalog all the stolen items
+			ArrayList<Item> lostCargo = ship.getCargo();
+			message += "Cargo lost:\n";
+			int valueLost = 0;
+			for (Item item : lostCargo) {
+				valueLost += item.getPurchasedPrice();
+				message += "- %s | %d gold\n".formatted(item.getName(), item.getPurchasedPrice());
+			}
+			message += "Lost "+valueLost+" gold worth of items\n";
+			// Did you have enough cargo to satisfy the pirates?
+			boolean satisfied = environment.piratesTakeCargo();
+			if (satisfied) {
+				message += "They sail away with all your cargo";
+			} else {
+				message += "The pirates aren't satisfied with the measly contents of your cargo hold!\n" + 
+							"Out of anger, they make you and your entire crew walk the plank.";
+			}
+			break;
+		}
+		JOptionPane.showMessageDialog(contentPane, message, "Pirate Attack!", JOptionPane.INFORMATION_MESSAGE);
+		
+	}
+	
 
 	/**
 	 * Create the frame.
 	 */
 	public Sailing(GameEnvironment environment) {
+		this.environment = environment;
 		Route route = environment.getRoute();
 		int distance = route.getDistance();
 		float shipSpeed = environment.getShip().getSpeed();
@@ -104,7 +185,12 @@ public class Sailing extends JFrame {
 					dispose();
 				}
 				
-				environment.passDay();
+				RandomEvent event = environment.passDay();
+				if (event != null) {
+					timer.stop(); //Stop the timer while the random event runs
+					processEvent(event);
+					timer.start();
+				}
 				progressBar.setValue(environment.getGameTime() - startTime);
 				dayLbl.setText("Day: " + environment.getGameTime());
 				

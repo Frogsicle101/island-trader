@@ -44,6 +44,9 @@ public class GUI {
 			case ON_ISLAND:
 				frame = new OnIsland(environment);
 				break;
+			case EMBARKING:
+				frame = new Embark(environment);
+				break;
 			case SAILING:
 				frame = new Sailing(environment);
 				break;
