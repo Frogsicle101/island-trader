@@ -53,7 +53,7 @@ public class Store {
 	}
 	
 	/**
-	 * Gets the default store, an islandless store with no item preferences
+	 * Gets the default store, a store with no item preferences
 	 * @return The default store
 	 */
 	public static Store getDefaultStore() {
