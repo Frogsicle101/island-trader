@@ -78,6 +78,7 @@ public class GameOverScreen extends JFrame {
 		btnRestart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				env.resetGame();
+				GUI.openNextFrame();
 				dispose();
 			}
 		});

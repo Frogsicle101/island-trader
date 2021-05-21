@@ -66,6 +66,10 @@ public class Sailing extends JFrame {
 		});
 	}
 	
+	/**
+	 * Handles the currently drawn random event
+	 * @param event This day's random event
+	 */
 	private void processEvent(RandomEvent event) {
 		if (event instanceof Weather) {
 			float damage = ((Weather)event).getDamage();
@@ -208,6 +212,10 @@ public class Sailing extends JFrame {
 				if (event != null) {
 					timer.stop(); //Stop the timer while the random event runs
 					processEvent(event);
+					// Random events can cause a game over (pirates...)
+					if (environment.getState() == GameState.GAME_OVER) {
+						return;
+					}
 					timer.start();
 				}
 				progressBar.setValue(environment.getGameTime() - startTime);
