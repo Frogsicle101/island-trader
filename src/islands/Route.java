@@ -20,8 +20,12 @@ public class Route {
 	private String[] randomEventRisk;		// Category of risk, low medium high
 	
 	/**
+	 * @param island1 One island this route connects
+	 * @param island2 Another island this route connects
 	 * @param distance How long the route is
-	 * @param randomEvents The list of random events
+	 * @param randomEventRisk A 3-len array of random event risks for:<br>
+	 * {PirateAttack, Weather, Rescue} respectively.<br>
+	 * The risk can either be "none", "low", "medium", or "high"
 	 */
 	public Route(Island island1, Island island2, int distance, String[] randomEventRisk) {
 		this.islands = new Island[]{island1, island2};
@@ -31,7 +35,7 @@ public class Route {
 	
 	/**
 	 * Filter function.<br>
-	 * Takes a list of routes & an island, returns given routes that contain the island.
+	 * Takes a list of routes &amp; an island, returns given routes that contain the island.
 	 * @param allRoutes List of all routes you want to check. Recommend just checking every route
 	 * @param currIsland Island that's getting checked for
 	 * @return An array of every route that connects to/from the given island
@@ -84,7 +88,7 @@ public class Route {
 	
 	/**
 	 * Since routes are two-way, gets the other island this connects to.
-	 * e.g. Routes connect Cheese <-> Bread, if your island is Bread, returns Cheese, and vice versa. 
+	 * e.g. Routes connect Cheese &lt;-&gt; Bread, if your island is Bread, returns Cheese, and vice versa. 
 	 * @param thisIsland Your island
 	 * @return The other island
 	 */

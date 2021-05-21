@@ -9,6 +9,7 @@ package items;
  */
 public class Sail extends Upgrade {
 	
+	// The speed bonus given from a single Sail
 	public static final int SPEED_BUFF = 1;
 	
 	/**

@@ -5,7 +5,7 @@ import items.Cannon;
 /**
  * The war ship is a combat ready ship, good at dealing with pirates.<br>
  * It has below-average speed, and comes pre-equipped with cannons, however
- * its cargo hold is small, it's expensive to repair, and 
+ * its cargo hold is small, it's expensive to maintain, and it starts with little money
  * 
  * @author Andrew Hall
  *

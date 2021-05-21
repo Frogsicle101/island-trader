@@ -146,6 +146,10 @@ public class Store {
 		return getPrice(upgrade);
 	}
 	
+	/**
+	 * Takes an upgrade, and removes the first upgrade of its type in the upgrade pool
+	 * @param toBeBought
+	 */
 	public void removeUpgrade(Upgrade toBeBought) {
 		for (int i = 0; i < upgrades.size(); i++) {
 			if (upgrades.get(i).getName().equals(toBeBought.getName())) {

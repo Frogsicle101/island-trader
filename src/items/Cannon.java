@@ -10,6 +10,7 @@ package items;
  */
 public class Cannon extends Upgrade {
 	
+	// How much a single cannon adds to a combat roll
 	public static final int FIGHT_BUFF = 1;
 	
 	/**

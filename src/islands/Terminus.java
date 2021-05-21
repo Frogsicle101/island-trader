@@ -3,6 +3,12 @@ import java.util.HashMap;
 
 import items.TradeTypes;
 
+/**
+ * Terminus is an isolated pirate haven.<br>
+ * Food, tools, and materials are expensive. But the stolen luxury and artifacts are cheap.
+ * @author Andrew
+ *
+ */
 public class Terminus extends Island {
 
 	public Terminus() {

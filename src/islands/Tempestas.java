@@ -2,7 +2,12 @@ package islands;
 import java.util.HashMap;
 
 import items.TradeTypes;
-
+/**
+ * Tempestas is a stormy island.<br>
+ * Has cheap food, and above retail price for tools, artifacts, and luxury goods.
+ * @author Andrew
+ *
+ */
 public class Tempestas extends Island {
 
 	public Tempestas() {
@@ -24,5 +29,5 @@ public class Tempestas extends Island {
 		this.store = store;
 		
 	}
-
+	
 }

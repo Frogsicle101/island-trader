@@ -145,7 +145,7 @@ public abstract class Ship {
 	
 	/**
 	 * Searches the cargo hold by name, deletes it from cargo, and returns it
-	 * @param itemName	The text name of the item
+	 * @param name	The text name of the item
 	 * @return The item in question
 	 * @throws ItemNotFoundException If the given itemName doesn't match anything in cargo
 	 */
@@ -159,6 +159,11 @@ public abstract class Ship {
 		
 	}
 	
+	/**
+	 * Checks if the ship has any cargo with the same name
+	 * @param searchingFor The item that you want to find
+	 * @return Was it in the cargo
+	 */
 	public boolean hasInCargo(Item searchingFor) {
 		for (Item item : cargo) {
 			if (item.getName().equals(searchingFor.getName()))

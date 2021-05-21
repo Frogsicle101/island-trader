@@ -7,7 +7,7 @@ package items;
  * @author Andrew Hall
  */
 public class TradeGood extends Item {
-	
+	// An array of every trade item
 	public static final TradeGood[] ALL_GOODS = getAllGoods();
 	protected TradeTypes type;
 	

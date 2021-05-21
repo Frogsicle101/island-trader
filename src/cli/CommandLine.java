@@ -72,7 +72,7 @@ public class CommandLine {
 	/**
 	 * Gets a valid (string) name from stdin: <br>
 	 * - Must be between 3-15 characters long (inclusive)<br>
-	 * - Must contain only valid characters (alphabet & spaces)
+	 * - Must contain only valid characters (alphabet &amp; spaces)
 	 * @return The valid name
 	 */
 	public static String getValidName() {
@@ -115,10 +115,10 @@ public class CommandLine {
 	}
 	
 	/**
-	 * Lists & describes the available ships to the player, returning their choice.<br>
+	 * Lists &amp; describes the available ships to the player, returning their choice.<br>
 	 * All input/output is though stdin/stdout
 	 * @param possibleShips The ships available to choose from
-	 * @return 
+	 * @return The ship that the player chose
 	 */
 	public static Ship getValidShipChoice(Ship[] possibleShips) {
 		int choiceIdx = 0;

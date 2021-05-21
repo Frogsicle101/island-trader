@@ -11,7 +11,7 @@ import items.Item;
 /**
  * The main controller of the game.
  * All interactions with the game should be through this class.
- * @author Andrew Hall & fma107
+ * @author Andrew Hall and fma107
  */
 public class GameEnvironment {
 	// Settings - Variables the user changes
@@ -210,8 +210,8 @@ public class GameEnvironment {
 	
 	/**
 	 * Adds an item to the player cargo hold and keeps track of it in the ledger
-	 * @param item
-	 * @param price
+	 * @param item The item to add
+	 * @param price How much was paid for this item
 	 */
 	public void buyItem(Item item, int price) {
 		
@@ -255,7 +255,7 @@ public class GameEnvironment {
 	}
 
 	/**
-	 * Resets the game's variables & state back to the set-up phase
+	 * Resets the game's variables &amp; state back to the set-up phase
 	 */
 	public void resetGame() {
 		state = GameState.SETUP;

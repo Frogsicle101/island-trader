@@ -1,5 +1,5 @@
 /**
- * All the ships are here
+ * Contains all the ships
  * @author Andrew
  */
 package ships;
