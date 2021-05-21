@@ -50,6 +50,8 @@ public class GameSetup extends JFrame{
 	
 	
 	private GameEnvironment environment;
+	private JPanel errorPanel;
+	private JLabel errorLbl;
 	
 
 	/**
@@ -60,9 +62,10 @@ public class GameSetup extends JFrame{
 		initialize();
 	}
 	
-	
+	/**
+	 * Updates the text box describing the player's chosen ship
+	 */
 	private void updateShipDisplay() {
-		
 		Ship[] possibleShips = GameEnvironment.getPossibleShips();
 		selectedShip = possibleShips[0];
 		
@@ -80,28 +83,27 @@ public class GameSetup extends JFrame{
 	}
 	
 	
-	private void updateGoButton() {
-		
+	/**
+	 * Updates the error label, which tells the user why they can't start yet,<br>
+	 * as well as greying out the Go! button
+	 */
+	private void updateGoButtonAndErrorLabel() {
 		boolean nameValid = environment.isValidName(nameTxt.getText());
 		boolean durationValid = environment.isValidDuration(durationTxt.getText());
-		
-		
-		
+		String message = "";
 		if (nameValid && durationValid) {
 			goBtn.setEnabled(true);
-			goBtn.setToolTipText(null);
 		} else {
 			goBtn.setEnabled(false);
-			String message = "";
 			if (!nameValid)
-				message = message + "Name must be between 3 and 15 chars. ";
+				message += "Name must be between 3 and 15 chars.<br>";
 			if (!durationValid) {
-				message = message + "Duration must be between 20 and 50.";
+				message += "Duration must be between 20 and 50.";
 			}
-			goBtn.setToolTipText(message);
-			
 		}
 		
+		message = "<html>" + message + "</html>";
+		errorLbl.setText(message);
 	}
 
 	/**
@@ -115,13 +117,13 @@ public class GameSetup extends JFrame{
 		gridBagLayout.columnWidths = new int[]{0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{1.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
 		getContentPane().setLayout(gridBagLayout);
 		
 		namePanel = new JPanel();
 		GridBagConstraints gbc_namePanel = new GridBagConstraints();
 		gbc_namePanel.anchor = GridBagConstraints.WEST;
-		gbc_namePanel.insets = new Insets(10, 10, 0, 10);
+		gbc_namePanel.insets = new Insets(10, 10, 5, 10);
 		gbc_namePanel.fill = GridBagConstraints.BOTH;
 		gbc_namePanel.gridx = 0;
 		gbc_namePanel.gridy = 0;
@@ -145,7 +147,7 @@ public class GameSetup extends JFrame{
 		nameTxt = new JTextField();
 		nameTxt.addCaretListener(new CaretListener() {
 			public void caretUpdate(CaretEvent e) {
-				updateGoButton();
+				updateGoButtonAndErrorLabel();
 			}
 		});
 		
@@ -162,7 +164,7 @@ public class GameSetup extends JFrame{
 		durationPanel = new JPanel();
 		GridBagConstraints gbc_durationPanel = new GridBagConstraints();
 		gbc_durationPanel.anchor = GridBagConstraints.WEST;
-		gbc_durationPanel.insets = new Insets(10, 10, 0, 10);
+		gbc_durationPanel.insets = new Insets(10, 10, 5, 10);
 		gbc_durationPanel.fill = GridBagConstraints.BOTH;
 		gbc_durationPanel.gridx = 0;
 		gbc_durationPanel.gridy = 1;
@@ -185,7 +187,7 @@ public class GameSetup extends JFrame{
 		durationTxt = new JTextField();
 		durationTxt.addCaretListener(new CaretListener() {
 			public void caretUpdate(CaretEvent e) {
-				updateGoButton();
+				updateGoButtonAndErrorLabel();
 			}
 		});
 		GridBagConstraints gbc_durationTxt = new GridBagConstraints();
@@ -254,6 +256,12 @@ public class GameSetup extends JFrame{
 		getContentPane().add(shipDisplay, gbc_shipDisplay);
 		
 		
+		GridBagConstraints gbc_goBtn = new GridBagConstraints();
+		gbc_goBtn.insets = new Insets(10, 10, 10, 10);
+		gbc_goBtn.fill = GridBagConstraints.HORIZONTAL;
+		gbc_goBtn.gridx = 1;
+		gbc_goBtn.gridy = 3;
+		
 		goBtn = new JButton("Go!");
 		goBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -267,18 +275,25 @@ public class GameSetup extends JFrame{
 				GUI.openNextFrame();
 				
 				dispose();
-				
-				
 			}
 		});
-		goBtn.setEnabled(false);
-		updateGoButton();
-		GridBagConstraints gbc_goBtn = new GridBagConstraints();
-		gbc_goBtn.insets = new Insets(10, 10, 10, 10);
-		gbc_goBtn.fill = GridBagConstraints.HORIZONTAL;
-		gbc_goBtn.gridx = 1;
-		gbc_goBtn.gridy = 3;
+		
+		errorPanel = new JPanel();
+		GridBagConstraints gbc_errorPanel = new GridBagConstraints();
+		gbc_errorPanel.insets = new Insets(0, 0, 5, 5);
+		gbc_errorPanel.fill = GridBagConstraints.BOTH;
+		gbc_errorPanel.gridx = 0;
+		gbc_errorPanel.gridy = 3;
+		getContentPane().add(errorPanel, gbc_errorPanel);
+		errorPanel.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		errorLbl = new JLabel("Message<br>Message");
+		errorLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		errorLbl.setForeground(Color.RED);
+		errorPanel.add(errorLbl);
 		getContentPane().add(goBtn, gbc_goBtn);
+		goBtn.setEnabled(false);
+		updateGoButtonAndErrorLabel();
 		
 		ToolTipManager.sharedInstance().setInitialDelay(0);
 		
