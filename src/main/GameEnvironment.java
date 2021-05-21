@@ -291,16 +291,28 @@ public class GameEnvironment {
 		return true;
 	}
 	
+	/**
+	 * Transitions into an EMBARKING state<br>
+	 * Used to enter the "pick route" screen at port
+	 */
 	public void embark() {
 		state = GameState.EMBARKING;
 	}
 	
 	/**
-	 * Transitions back into ON_ISLAND
+	 * Transitions back into ON_ISLAND<br>
 	 * Used when backing out of going somewhere
 	 */
 	public void disembark() {
 		state = GameState.ON_ISLAND;
+	}
+	
+	/**
+	 * Transitions into a GAME_OVER state<br>
+	 * Used when... well it's self-explanatory
+	 */
+	public void gameOver() {
+		state = GameState.GAME_OVER;
 	}
 
 

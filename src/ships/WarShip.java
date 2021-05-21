@@ -16,8 +16,9 @@ public class WarShip extends Ship {
 		super(
 				0.8f,		// speed
 				"War Ship", // shipType
-				"This Navy relic is expensive to maintain, slow, and comes with a tiny cargo hold. But its "+N_CANNONS+" cannons will keep pirates at bay.",
-				100,		// crew
+				"This Navy relic is slow, and comes with a tiny cargo hold.\n\n"
+				+ "Its "+N_CANNONS+" cannons will keep you safe, but you're stuck in port until you sell one.",
+				60,			// crew
 				5,			// cargoCapacity
 				5f,			// repairCost
 				10			// startingMoney

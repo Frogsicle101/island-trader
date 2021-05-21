@@ -56,6 +56,7 @@ public class GUI {
 			case FIGHTING:
 				break;
 			case GAME_OVER:
+				frame = new GameOverScreen(environment);
 				break;
 			default:
 				break;

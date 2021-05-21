@@ -1,3 +1,8 @@
+/**
+ * !! KNOWN BUGS !!
+ * How do you destroy the timer? I stop it but it keeps ticking even after the window's disposed of
+ */
+
 package gui;
 
 import java.awt.BorderLayout;
@@ -97,7 +102,7 @@ public class Sailing extends JFrame {
 		
 		String message = "";
 		int roll = new Random().nextInt(6) + 1; // Between 1-6 inclusive
-		message += "Rolled a %d (+%d)\n".formatted(roll, bonus);
+		message += "Rolled a %d (%d + %d bonus)\n".formatted(roll+bonus, roll, bonus);
 		PirateOutcome outcome = pirate.outcome(roll + bonus);
 		// Determine the outcome
 		switch (outcome) {
@@ -125,8 +130,12 @@ public class Sailing extends JFrame {
 			if (satisfied) {
 				message += "They sail away with all your cargo";
 			} else {
+				// Game over
 				message += "The pirates aren't satisfied with the measly contents of your cargo hold!\n" + 
 							"Out of anger, they make you and your entire crew walk the plank.";
+				timer.stop();
+				GUI.openNextFrame();
+				dispose();
 			}
 			break;
 		}
@@ -210,7 +219,7 @@ public class Sailing extends JFrame {
 		};
 		
 		
-		timer = new Timer(1000, timerListener);
+		timer = new Timer(600, timerListener);
 		timer.setInitialDelay(2000);
 		timer.start();
 		

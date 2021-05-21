@@ -16,6 +16,8 @@ import java.awt.Insets;
 import java.awt.SystemColor;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
@@ -53,6 +55,7 @@ public class OnIsland extends JFrame {
 	 */
 	public OnIsland(GameEnvironment environment) {
 		this.environment = environment;
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		setTitle(this.environment.getCurrentIsland().getName());
@@ -66,7 +69,7 @@ public class OnIsland extends JFrame {
 		gbl_contentPane.columnWeights = new double[]{1.0, Double.MIN_VALUE};
 		gbl_contentPane.rowWeights = new double[]{1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
-				
+		
 		JPanel headerPanel = new JPanel();
 		GridBagConstraints gbc_headerPanel = new GridBagConstraints();
 		gbc_headerPanel.insets = new Insets(0, 0, 5, 0);
@@ -183,6 +186,17 @@ public class OnIsland extends JFrame {
 		gbc_quitBtn.gridx = 0;
 		gbc_quitBtn.gridy = 7;
 		contentPane.add(quitBtn, gbc_quitBtn);
+		
+
+		if (environment.getShip().getDamage() > 0f) {
+			float damage = environment.getShip().getDamage();
+			int cost = environment.repairDamage();
+			JOptionPane.showMessageDialog(contentPane,
+										"During the voyage, your ship took %.2f damage\nYou pay %d gold to repair your ship".formatted(damage, cost),
+										"Paying off damages",
+										JOptionPane.INFORMATION_MESSAGE
+			);
+		}
 	}
 
 }
