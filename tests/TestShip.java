@@ -7,10 +7,9 @@ class TestShip extends Ship {
 			  "Words",	// description,
 			  10,		// crew,
 			  10,		// cargoCapacity,
-			  5f,		// repairCost,
+			  1f,		// repairCost,
 			  0			// startingMoney
 		);
-		// TODO Auto-generated constructor stub
 	}
 	
 }

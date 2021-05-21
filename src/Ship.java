@@ -116,22 +116,22 @@ public abstract class Ship {
 	}
 	
 	/**
-	 * Adds an item to your ship's cargo. Note that it can be used for either trade goods, or upgrades.
+	 * Adds an item to your ship's cargo. Note that it can be used for either trade goods, or upgrades.<br>
+	 * Note: The item is copied before adding, so don't worry about copying yourself
 	 * @param item	Item to add
 	 * @throws CargoFullException If adding an item would exceed the cargo capacity
 	 */
 	public void storeItem(Item item) throws CargoFullException {
 		if (getSpareCapacity() <= 0)
 			throw new CargoFullException("Item "+item.toString()+" can't fit in the cargo hold");
-		cargo.add(item);
+		cargo.add(item.copy());
 	}
 	
 	/**
-	 * TODO: Fix this docstring
-	 * Searches the cargo hold by name, deletes it from cargo, and returns it
-	 * @param itemName	The text name of the item
-	 * @return The item in question
-	 * @throws IndexOutOfBoundsException	If the given itemName doesn't match anything in cargo
+	 * Removes the cargo at the given position and returns it
+	 * @param cargoIdx Position of cargo (0 means first)
+	 * @return The removed item
+	 * @throws IndexOutOfBoundsException
 	 */
 	public Item popItem(int cargoIdx) throws IndexOutOfBoundsException {
 		Item wantedItem = cargo.get(cargoIdx);
@@ -139,6 +139,12 @@ public abstract class Ship {
 		return wantedItem;
 	}
 	
+	/**
+	 * Searches the cargo hold by name, deletes it from cargo, and returns it
+	 * @param itemName	The text name of the item
+	 * @return The item in question
+	 * @throws ItemNotFoundException If the given itemName doesn't match anything in cargo
+	 */
 	public Item popItem(String name) throws ItemNotFoundException {
 		for (int i = 0; i < cargo.size(); i++) {
 			if (cargo.get(i).getName().equals(name)) {

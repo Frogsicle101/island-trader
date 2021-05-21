@@ -268,16 +268,16 @@ class GameEnvTest {
 		env.addMoney(50);
 		env.repairDamage();	// Just to be sure it's a baseline
 		Ship ship = env.getShip();
-		float repairCost = ship.getRepairCost();
+		int repairCost = (int)ship.getRepairCost();
 		// Deal 1 point of damage
 		ship.damageShip(1f);
 		// Repair said damage
 		int claimedRepairCost = env.repairDamage();
 		// Was the correct amount charged?
-		// (Test ship cost 5 gold per damage point)
-		assertEquals(claimedRepairCost, 5);
+		// (Test ship costs 1 gold per damage point)
+		assertEquals(claimedRepairCost, repairCost);
 		// Was the money removed from the player?
-		assertEquals(env.getMoney(), 50-5);
+		assertEquals(env.getMoney(), 50-repairCost);
 	}
 	
 	/**

@@ -3,7 +3,7 @@
  * @author Andrew Hall
  *
  */
-public class ItemNotFoundException extends Exception {
+public class ItemNotFoundException extends RuntimeException {
 	private static final long serialVersionUID = 6060712775625310787L;
 
 	public ItemNotFoundException() {}
