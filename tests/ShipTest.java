@@ -4,6 +4,15 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import exceptions.CargoFullException;
+import exceptions.ItemNotFoundException;
+import items.Cannon;
+import items.Item;
+import items.Sail;
+import items.TradeGood;
+import items.TradeTypes;
+import ships.Ship;
+
 class ShipTest {
 	Ship ship;
 	// Items we'll be adding

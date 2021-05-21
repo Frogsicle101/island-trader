@@ -1,3 +1,4 @@
+import ships.Ship;
 
 class TestShip extends Ship {
 

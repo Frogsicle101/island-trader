@@ -1,14 +1,20 @@
 import static org.junit.Assert.*;
-//import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import islands.Island;
+import islands.Route;
+import islands.Store;
+import items.Item;
+import items.TradeGood;
+import items.TradeTypes;
+import main.GameEnvironment;
+import main.GameState;
+import ships.Ship;
 
 class GameEnvTest {
 	GameEnvironment env;
@@ -176,7 +182,7 @@ class GameEnvTest {
 		assertFalse(env.startGame());
 		assertEquals(env.getState(), GameState.SETUP);
 		// 3: Game should start once all the fields are entered
-		env.setShip(new Barge());
+		env.setShip(new TestShip());
 		assertTrue(env.startGame());
 		assertEquals(env.getState(), GameState.ON_ISLAND);
 	}

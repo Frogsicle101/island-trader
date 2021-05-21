@@ -6,6 +6,12 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import islands.Store;
+import items.Cannon;
+import items.TradeGood;
+import items.TradeTypes;
+import items.Upgrade;
+
 class StoreTest {
 	
 	int baseValue = 10;
