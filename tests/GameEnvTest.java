@@ -58,15 +58,15 @@ class GameEnvTest {
 	@Test
 	public void routesBetweenEveryIsland() {
 		// Setup
-		Island[] all_islands = env.getAllIslands();
-		Route[] all_routes = env.getAllRoutes();
+		Island[] allIslands = env.getAllIslands();
+		Route[] allRoutes = env.getAllRoutes();
 		HashSet<String> islandNames = new HashSet<>();
-		for (Island island : all_islands) {
+		for (Island island : allIslands) {
 			islandNames.add(island.getName());
 		}
 		// Count how many other islands an island can reach
-		for (Island island : all_islands) {
-			ArrayList<Route> connRoutes = Route.availableRoutes(all_routes, island);
+		for (Island island : allIslands) {
+			ArrayList<Route> connRoutes = Route.availableRoutes(allRoutes, island);
 			// Set building is easy in python I miss python :(
 			// Get all the islands connected to the current island (+ itself)...
 			HashSet<String> setAllIslands = new HashSet<>();
