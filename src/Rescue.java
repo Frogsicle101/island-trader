@@ -10,11 +10,14 @@ import java.util.Random;
  */
 public class Rescue extends RandomEvent {
 	private int numSailors;
-	private final int REWARD_PER_SAILOR  = 2;
+	public static final int REWARD_PER_SAILOR  = 2;
+	public static final int MIN_NUM_SAILORS = 2;
+	public static final int MAX_NUM_SAILORS = 15;
 	
 	public Rescue(float probability) {
 		super(probability);
-		numSailors = new Random().nextInt(10) + 2;	// Minimum of 2 sailors saved 
+		int nSavedWithoutMin = MAX_NUM_SAILORS - MIN_NUM_SAILORS + 1;			// +1 because nextInt is exclusive
+		numSailors = new Random().nextInt(nSavedWithoutMin) + MIN_NUM_SAILORS;	// Minimum of 2 sailors saved 
 	}
 	
 	public int getNumSailors() {
