@@ -101,7 +101,7 @@ public class Embark extends JFrame {
 		JPanel voidPanel = new JPanel();
 		panel.add(voidPanel);
 		
-				
+		// Fill in the routes
 		Island currentIsland = environment.getCurrentIsland();
 		float shipSpeed = environment.getShip().getSpeed();
 		ArrayList<Route> validRoutes = Route.availableRoutes(environment.getAllRoutes(), currentIsland);
@@ -111,11 +111,9 @@ public class Embark extends JFrame {
 			JLabel loopDestLbl = new JLabel(name);
 			panel.add(loopDestLbl);
 			
-			
 			int days = (int) (route.getDistance() / shipSpeed);
 			JLabel loopTimeLbl = new JLabel(String.valueOf(days));
 			panel.add(loopTimeLbl);
-			
 			
 			String[] risks = route.getRisk();
 			for (int j = 0; j < risks.length; j++) {
@@ -123,14 +121,15 @@ public class Embark extends JFrame {
 				panel.add(riskLbl);
 			}
 			
-			
-			
-			JButton loopGoBtn = new JButton("Go!");
-			
 			Ship ship = environment.getShip();
 			int wages = (int) (Ship.DAILY_WAGE * ship.getCrew() * (route.getDistance() / shipSpeed));
-			
-			if (environment.getMoney() < wages) {
+			JButton loopGoBtn = new JButton("Goyo! ("+wages+" gold)");
+			// Would taking this route take longer than you have left (in game duration)?
+			if (environment.getGameTime() + days >= environment.getGameLength()) {
+				loopGoBtn.setEnabled(false);
+				loopGoBtn.setToolTipText("The game will end while on this voyage");
+			}
+			else if (environment.getMoney() < wages) {
 				loopGoBtn.setEnabled(false);
 				loopGoBtn.setToolTipText("Unfortunately, you can't pay your crew enough to get you there.");
 			}
@@ -143,13 +142,15 @@ public class Embark extends JFrame {
 					
 					GUI.openNextFrame();
 					dispose();
-					
 				}
 			});
 			panel.add(loopGoBtn);
-			
-			
 		}
+		
+		/**
+		 * Pre-departure checks:
+		 * - If no route exists
+		 */
 		
 		
 		
