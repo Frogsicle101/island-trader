@@ -19,7 +19,7 @@ class GameEnvTest {
 	void gotoTestIsland() {
 		env.setGameLength(20);
 		env.setName("Test");
-		env.setShip(env.getPossibleShips()[0]);
+		env.setShip(new TestShip());
 		env.startGame();
 		Island testIsland = new Island(Store.getDefaultStore(), "Test", "Test");
 		env.setCurrentIsland(testIsland);
@@ -187,9 +187,9 @@ class GameEnvTest {
 	@Test
 	public void canSetSail() {
 		// Setup
+		gotoTestIsland();
 		int tripLength = 10;
-		Ship fastShip = new Clipper();
-		float shipSpeed = fastShip.getSpeed();
+		float shipSpeed = env.getShip().getSpeed();
 		int travelTime = (int)(tripLength / shipSpeed);
 		int wages = 50;
 		Island orig = new Island(Store.getDefaultStore(), "orig", "where we came");
@@ -217,6 +217,7 @@ class GameEnvTest {
 	@Test
 	public void playerArrivesOnTime() {
 		// Setup
+		gotoTestIsland();
 		int departureDay = env.getGameTime();
 		Island orig = new Island(Store.getDefaultStore(), "orig", "where we came");
 		Island dest = new Island(Store.getDefaultStore(), "dest", "where we're going");
@@ -238,6 +239,7 @@ class GameEnvTest {
 	@Test
 	public void sailingArrivesAtDestination() {
 		// Setup
+		gotoTestIsland();
 		int departureDay = env.getGameTime();
 		Island orig = new Island(Store.getDefaultStore(), "orig", "where we came");
 		Island dest = new Island(Store.getDefaultStore(), "dest", "where we're going");
@@ -256,11 +258,71 @@ class GameEnvTest {
 		assertEquals(env.getCurrentIsland(), dest);
 	}
 	
+	/**
+	 * Checks that damaging and repairing a ship works correctly
+	 */
+	@Test
+	public void isDamageDealtAndRepairedCorrectly() {
+		gotoTestIsland();
+		// Gotta have money to repair
+		env.addMoney(50);
+		env.repairDamage();	// Just to be sure it's a baseline
+		Ship ship = env.getShip();
+		float repairCost = ship.getRepairCost();
+		// Deal 1 point of damage
+		ship.damageShip(1f);
+		// Repair said damage
+		int claimedRepairCost = env.repairDamage();
+		// Was the correct amount charged?
+		// (Test ship cost 5 gold per damage point)
+		assertEquals(claimedRepairCost, 5);
+		// Was the money removed from the player?
+		assertEquals(env.getMoney(), 50-5);
+	}
+	
+	/**
+	 * Tests that the pirates will take your cargo, and leave you alone
+	 * if they take enough
+	 */
+	@Test
+	public void canThePiratesBeSatisfied() {
+		gotoTestIsland();
+		env.setState(GameState.SAILING);
+		Ship ship = env.getShip();
+		// Pirates are satisfied if they take at least 2 pieces of cargo
+		ship.getCargo().add(TradeGood.ALL_GOODS[0].copy().makeBought(10, "Test"));
+		ship.getCargo().add(TradeGood.ALL_GOODS[0].copy().makeBought(10, "Test"));
+		// Now oh no you're being boarded!
+		boolean piratesSatisfied = env.piratesTakeCargo();
+		// Side test - Do they actually take all your cargo
+		assertTrue("Pirates should've cleared out your cargo",
+					ship.getCargo().size() == 0);
+		// You had enough cargo, they should leave you alone now
+		assertTrue(piratesSatisfied);
+		// You should still be sailing
+		assertEquals(env.getState(), GameState.SAILING);
+	}
+	
 	public static void main(String[] args) {
 		GameEnvTest self = new GameEnvTest();
 		self.setUp();
 		//self.something
 	}
-	
+}
 
+
+class TestShip extends Ship {
+
+	public TestShip() {
+		super(1f, 		// speed
+			  "Test",	// shipType,
+			  "Words",	// description,
+			  10,		// crew,
+			  10,		// cargoCapacity,
+			  5f,		// repairCost,
+			  0			// startingMoney
+		);
+		// TODO Auto-generated constructor stub
+	}
+	
 }
