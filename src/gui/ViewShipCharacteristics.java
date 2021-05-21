@@ -13,10 +13,12 @@ import ships.WarShip;
 
 import javax.swing.JTextPane;
 import javax.swing.JButton;
+import javax.swing.JDialog;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class ViewShipCharacteristics extends JFrame {
+public class ViewShipCharacteristics extends JDialog {
 
 	private JPanel contentPane;
 
@@ -41,7 +43,7 @@ public class ViewShipCharacteristics extends JFrame {
 	 */
 	public ViewShipCharacteristics(Ship ship) {
 		setTitle("Ship Characteristics");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

@@ -24,7 +24,8 @@ import java.awt.event.ActionEvent;
 
 public class GameOverScreen extends JFrame {
 
-	
+	private static final long serialVersionUID = -4251156707658833557L;
+
 	/**
 	 * Launch the application.
 	 */

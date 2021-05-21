@@ -153,6 +153,7 @@ public class OnIsland extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				ViewShipCharacteristics frame = new ViewShipCharacteristics(environment.getShip());
 				frame.setVisible(true);
+//				setEnabled(false);
 			}
 		});
 		GridBagConstraints gbc_viewShipBtn = new GridBagConstraints();
@@ -181,6 +182,14 @@ public class OnIsland extends JFrame {
 		contentPane.add(viewLedgerBtn, gbc_viewLedgerBtn);
 		
 		JButton quitBtn = new JButton("Quit");
+		quitBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to quit?", "Farewell", JOptionPane.YES_NO_OPTION);
+				if (option == JOptionPane.YES_OPTION) {
+					dispose();
+				}
+			}
+		});
 		GridBagConstraints gbc_quitBtn = new GridBagConstraints();
 		gbc_quitBtn.fill = GridBagConstraints.HORIZONTAL;
 		gbc_quitBtn.gridx = 0;
