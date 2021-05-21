@@ -290,8 +290,9 @@ class GameEnvTest {
 		env.setState(GameState.SAILING);
 		Ship ship = env.getShip();
 		// Pirates are satisfied if they take at least 2 pieces of cargo
-		ship.getCargo().add(TradeGood.ALL_GOODS[0].copy().makeBought(10, "Test"));
-		ship.getCargo().add(TradeGood.ALL_GOODS[0].copy().makeBought(10, "Test"));
+		Item toStore = TradeGood.ALL_GOODS[0].copy().makeBought(10, "Test");
+		ship.storeItem(toStore);
+		ship.storeItem(toStore);
 		// Now oh no you're being boarded!
 		boolean piratesSatisfied = env.piratesTakeCargo();
 		// Side test - Do they actually take all your cargo

@@ -42,9 +42,14 @@ class ShipTest {
 	 */
 	@Test
 	void handlesDamageCorrectly() {
+		int repairCost = (int)ship.getRepairCost();
+		float dealtDamage = 1f;
 		// Firstly, make sure damage is dealt in the first place
-		ship.damageShip(1f);
-		assertEquals(ship.getDamage(), 1f);
+		ship.damageShip(dealtDamage);
+		assertEquals(ship.getDamage(), dealtDamage);
+		// Does damage stack?
+		ship.damageShip(dealtDamage);
+		assertEquals(ship.getDamage(), 2*dealtDamage);
 		// Secondly, make sure it won't accept negative damage
 		boolean canHandleNegatives = false;
 		try {
@@ -55,6 +60,11 @@ class ShipTest {
 		if (!canHandleNegatives) {
 			fail("Ships shouldn't be able to take negative damage");
 		}
+		// Thirdly, make sure it can repair damage
+		int cost = ship.repairShip();
+		assertEquals(ship.getDamage(), 0);
+		// ... and the cost is right (damage was dealt twice
+		assertEquals(cost, (int)(2*repairCost));
 	}
 	
 	/**
@@ -169,4 +179,8 @@ class ShipTest {
 		ship.removeAllCargo();
 		assertEquals(ship.getSpareCapacity(), initCapacity);
 	}
+	
+	/**
+	 * Checks if the ship can be repaired
+	 */
 }
