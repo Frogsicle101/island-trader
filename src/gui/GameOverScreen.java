@@ -52,6 +52,7 @@ public class GameOverScreen extends JFrame {
 	 * Create the application.
 	 */
 	public GameOverScreen(GameEnvironment env) {
+		JFrame self = this;
 		setBounds(100, 100, 400, 300);
 		setMinimumSize(new Dimension(400, 300));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -92,7 +93,7 @@ public class GameOverScreen extends JFrame {
 				ArrayList<Item> soldItems = env.getAllSold();
 				Item[] soldArray = new Item[soldItems.size()];
 				soldArray = soldItems.toArray(soldArray);
-				ViewLedger frame = new ViewLedger(soldArray);
+				ViewLedger frame = new ViewLedger(soldArray, self);
 				frame.setVisible(true);
 			}
 		});

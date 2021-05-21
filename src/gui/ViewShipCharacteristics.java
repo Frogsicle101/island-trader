@@ -1,5 +1,6 @@
 package gui;
 import java.awt.BorderLayout;
+import java.awt.Dialog;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -14,6 +15,7 @@ import ships.WarShip;
 import javax.swing.JTextPane;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -29,7 +31,7 @@ public class ViewShipCharacteristics extends JDialog {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ViewShipCharacteristics frame = new ViewShipCharacteristics(new WarShip());
+					ViewShipCharacteristics frame = new ViewShipCharacteristics(new WarShip(), new JFrame("Sup"));
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -41,10 +43,11 @@ public class ViewShipCharacteristics extends JDialog {
 	/**
 	 * Create the frame.
 	 */
-	public ViewShipCharacteristics(Ship ship) {
+	public ViewShipCharacteristics(Ship ship, JFrame parent) {
+		super(parent, "", Dialog.ModalityType.DOCUMENT_MODAL);
 		setTitle("Ship Characteristics");
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(150, 150, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));

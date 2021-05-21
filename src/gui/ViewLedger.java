@@ -1,10 +1,12 @@
 package gui;
 import java.awt.BorderLayout;
+import java.awt.Dialog;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -15,7 +17,9 @@ import items.TradeGood;
 
 import javax.swing.JTable;
 
-public class ViewLedger extends JFrame {
+public class ViewLedger extends JDialog {
+
+	private static final long serialVersionUID = 7835393291078337369L;
 
 	private JPanel contentPane;
 	private JTable table;
@@ -25,7 +29,7 @@ public class ViewLedger extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ViewLedger frame = new ViewLedger(TradeGood.ALL_GOODS);
+					ViewLedger frame = new ViewLedger(TradeGood.ALL_GOODS, new JFrame("Test"));
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -38,10 +42,11 @@ public class ViewLedger extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ViewLedger(Item[] allSold) {
+	public ViewLedger(Item[] allSold, JFrame parent) {
+		super(parent, "", Dialog.ModalityType.DOCUMENT_MODAL);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setTitle("Ledger");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(150, 150, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -74,14 +79,6 @@ public class ViewLedger extends JFrame {
 		
 		JScrollPane scrollPane = new JScrollPane(table);
 		contentPane.add(scrollPane, BorderLayout.CENTER);
-		
-		
-		
-				
-		
-		
-		
-		
 	}
 
 }

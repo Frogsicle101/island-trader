@@ -55,6 +55,7 @@ public class OnIsland extends JFrame {
 	 */
 	public OnIsland(GameEnvironment environment) {
 		this.environment = environment;
+		JFrame self = this;
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -147,13 +148,11 @@ public class OnIsland extends JFrame {
 		gbc_vistStoreBtn.gridx = 0;
 		gbc_vistStoreBtn.gridy = 4;
 		contentPane.add(vistStoreBtn, gbc_vistStoreBtn);
-		
 		JButton viewShipBtn = new JButton("View ship characteristics");
 		viewShipBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ViewShipCharacteristics frame = new ViewShipCharacteristics(environment.getShip());
+				ViewShipCharacteristics frame = new ViewShipCharacteristics(environment.getShip(), self);
 				frame.setVisible(true);
-//				setEnabled(false);
 			}
 		});
 		GridBagConstraints gbc_viewShipBtn = new GridBagConstraints();
@@ -170,7 +169,7 @@ public class OnIsland extends JFrame {
 				ArrayList<Item> soldItems = environment.getAllSold();
 				Item[] soldArray = new Item[soldItems.size()];
 				soldArray = soldItems.toArray(soldArray);
-				ViewLedger frame = new ViewLedger(soldArray);
+				ViewLedger frame = new ViewLedger(soldArray, self);
 				frame.setVisible(true);
 			}
 		});

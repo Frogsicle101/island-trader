@@ -228,7 +228,7 @@ public class Sailing extends JFrame {
 		
 		
 		timer = new Timer(600, timerListener);
-		timer.setInitialDelay(2000);
+		timer.setInitialDelay(1000);
 		timer.start();
 		
 		
