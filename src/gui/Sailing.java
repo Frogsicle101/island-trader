@@ -106,7 +106,7 @@ public class Sailing extends JFrame {
 			break;
 		case DAMAGED:
 			float damage = pirate.getDamageDealt();
-			message += "The pirates have been repelled, however "+damage+" damage has been taken";
+			message += "The pirates have been repelled, however %.2f damage has been taken".formatted(damage);
 			ship.damageShip(damage);
 			break;
 		case LOSS:

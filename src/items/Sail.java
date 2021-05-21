@@ -27,7 +27,6 @@ public class Sail extends Upgrade {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Sail copy() {
-		// TODO Auto-generated method stub
 		return new Sail(name, baseValue, purchasedPrice, purchasedFrom);
 	}
 

@@ -28,7 +28,6 @@ public class Cannon extends Upgrade {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Cannon copy() {
-		// TODO Auto-generated method stub
 		return new Cannon(name, baseValue, purchasedPrice, purchasedFrom);
 	}
 
