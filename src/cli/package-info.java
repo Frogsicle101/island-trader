@@ -1,5 +1,6 @@
 /**
- * Contains the command line version of this game
+ * Contains the command line version of this game.
+
  * @author Andrew
  */
 package cli;
