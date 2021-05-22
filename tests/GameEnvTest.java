@@ -262,6 +262,7 @@ class GameEnvTest {
 		env.passDay();
 		assertEquals(env.getState(), GameState.ON_ISLAND);
 		assertEquals(env.getCurrentIsland(), dest);
+		assertEquals(env.getGameTime(), departureDay+2);
 	}
 	
 	/**

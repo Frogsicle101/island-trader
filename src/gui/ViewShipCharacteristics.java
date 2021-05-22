@@ -16,13 +16,14 @@ import ships.WarShip;
 import javax.swing.JTextPane;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class ViewShipCharacteristics extends JDialog {
 
+	private static final long serialVersionUID = 4514232810997273643L;
+	
 	private JPanel contentPane;
 
 	/**

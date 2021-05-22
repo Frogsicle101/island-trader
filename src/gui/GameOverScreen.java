@@ -1,7 +1,6 @@
 package gui;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -22,6 +21,17 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
+/**
+ * This screen is displayed whenever the player can no longer progress, like walking the plank,
+ * or being unable to sail.<br>
+ * Note that also "winning" the game, like making it to the game duration,
+ * also counts as winning.<br>
+ * Displays: The player's name, ship, day reached, and total profit<br>
+ * Lets you: Make a new game, see all your purchases, and quit.
+ *  
+ * @author Andrew
+ *
+ */
 public class GameOverScreen extends JFrame {
 
 	private static final long serialVersionUID = -4251156707658833557L;

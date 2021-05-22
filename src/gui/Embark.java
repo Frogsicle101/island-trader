@@ -13,7 +13,6 @@ import items.Item;
 import ships.Ship;
 import main.GameEnvironment;
 
-import java.awt.GridBagLayout;
 import javax.swing.JButton;
 import java.awt.GridLayout;
 import java.util.ArrayList;
@@ -26,6 +25,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class Embark extends JFrame {
+
+	private static final long serialVersionUID = 3925205876529262794L;
 
 	private JPanel contentPane;
 	private boolean canAffordRoutes = false;;

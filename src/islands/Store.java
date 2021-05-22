@@ -2,7 +2,6 @@ package islands;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import exceptions.ItemNotFoundException;
 import items.Cannon;
 import items.Item;
 import items.Sail;
@@ -80,21 +79,6 @@ public class Store {
 			prices.put(type, 1f);
 		}
 		return prices;
-	}
-	
-	/**
-	 * Gets the item with that name as defined in TradeGood.ALL_GOODS
-	 * @param name The item's name to search for
-	 * @return The requested item
-	 * @throws ItemNotFoundException The given name doesn't match any items
-	 */
-	private TradeGood getItem(String name) throws ItemNotFoundException {
-		for (TradeGood item: TradeGood.ALL_GOODS) {
-			if (item.getName().equals(name)) {
-				return item;
-			}
-		}
-		throw new ItemNotFoundException();
 	}
 	
 	/**

@@ -34,6 +34,8 @@ import javax.swing.event.ChangeEvent;
 
 public class GameSetup extends JFrame{
 
+	private static final long serialVersionUID = 8699950641526204242L;
+	
 	private JPanel namePanel;
 	private JLabel nameLbl;
 	private JTextField nameTxt;

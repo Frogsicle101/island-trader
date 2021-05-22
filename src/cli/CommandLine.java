@@ -1,8 +1,4 @@
 package cli;
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.Random;
-import java.util.Scanner;
 
 import events.*;
 import exceptions.InvalidState;
@@ -12,6 +8,10 @@ import islands.Store;
 import items.Item;
 import items.TradeGood;
 import items.Upgrade;
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.Random;
+import java.util.Scanner;
 import main.GameEnvironment;
 import ships.Ship;
 

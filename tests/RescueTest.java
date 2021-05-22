@@ -1,6 +1,5 @@
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -34,7 +33,7 @@ class RescueTest {
 	@Test
 	void rewardAmountIsCorrect() {
 		int numSailors = res.getNumSailors();
-		int expectedReward = res.REWARD_PER_SAILOR * numSailors;
+		int expectedReward = Rescue.REWARD_PER_SAILOR * numSailors;
 		assertEquals(res.getReward(), expectedReward);
 	}
 
