@@ -12,11 +12,12 @@ public class Weather extends RandomEvent {
 	
 	
 	private float damage;
-	private final float DAMAGE_SCALE = 1.0f;
+	public static final float MIN_DAMAGE = 0.5f;
+	public static final float MAX_DAMAGE = 3.0f;
 	
 	public Weather(float probability) {
 		super(probability);
-		damage = new Random().nextFloat() * DAMAGE_SCALE;
+		damage = new Random().nextFloat() * (MAX_DAMAGE - MIN_DAMAGE) + MIN_DAMAGE;
 	}
 	
 	public float getDamage() {

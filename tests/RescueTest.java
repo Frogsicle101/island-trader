@@ -23,7 +23,7 @@ class RescueTest {
 		int N_TESTS = 100;
 		int MIN = Rescue.MIN_NUM_SAILORS;
 		int MAX = Rescue.MAX_NUM_SAILORS;
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < N_TESTS; i++) {
 			int numSailors = new Rescue(1f).getNumSailors();
 			// Make sure it's between the minimum and maximum
 			assertTrue(numSailors >= MIN && numSailors <= MAX,
