@@ -178,7 +178,7 @@ public class SaleScreen extends JFrame {
 						environment.getShip().popItem(item.getName());
 					}
 					catch (ItemNotFoundException exception) {
-						JOptionPane.showMessageDialog(null, "Error", exception.getMessage(), JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, exception.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 					}
 					updateDisplay();
 				}
