@@ -324,7 +324,7 @@ public class GameEnvironment {
 		removeMoney(wages);
 		setDestination(route.getOtherIsland(currentIsland));
 		this.route = route;
-		int sailLength = (int)(route.getDistance() / this.getShip().getSpeed());
+		int sailLength = (int)Math.ceil(route.getDistance() / this.getShip().getSpeed());
 		this.arrivalTime = getGameTime() + sailLength;
 		
 		this.state = GameState.SAILING;

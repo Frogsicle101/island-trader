@@ -2,7 +2,6 @@ package gui;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -24,8 +23,11 @@ import java.awt.event.ActionEvent;
 
 public class OnIsland extends JFrame {
 
+	private static final long serialVersionUID = -2570954685247136260L;
+	
 	private JPanel contentPane;
 	private GameEnvironment environment;
+	private JLabel lblDay, lblGold, lblCapacity;
 
 	/**
 	 * Launch the application.
@@ -57,6 +59,17 @@ public class OnIsland extends JFrame {
 		this.environment = environment;
 		JFrame self = this;
 		
+		if (environment.getShip().getDamage() > 0f) {
+			float damage = environment.getShip().getDamage();
+			int cost = environment.repairDamage();
+			JOptionPane.showMessageDialog(contentPane,
+										"During the voyage, your ship took %.2f damage\nYou pay %d gold to repair your ship".formatted(damage, cost),
+										"Paying off damages",
+										JOptionPane.INFORMATION_MESSAGE
+			);
+		}
+		
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		setTitle(this.environment.getCurrentIsland().getName());
@@ -85,39 +98,39 @@ public class OnIsland extends JFrame {
 		gbl_headerPanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		headerPanel.setLayout(gbl_headerPanel);
 		
-		JLabel lblNewLabel = new JLabel("Day: " + environment.getGameTime());
-		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
-		gbc_lblNewLabel.insets = new Insets(0, 0, 0, 5);
-		gbc_lblNewLabel.gridx = 0;
-		gbc_lblNewLabel.gridy = 0;
-		headerPanel.add(lblNewLabel, gbc_lblNewLabel);
+		lblDay = new JLabel("<<DAY>>");
+		GridBagConstraints gbc_lblDay = new GridBagConstraints();
+		gbc_lblDay.insets = new Insets(0, 0, 0, 5);
+		gbc_lblDay.gridx = 0;
+		gbc_lblDay.gridy = 0;
+		headerPanel.add(lblDay, gbc_lblDay);
 		
-		JLabel lblNewLabel_1 = new JLabel("Gold: " + environment.getMoney());
-		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
-		gbc_lblNewLabel_1.insets = new Insets(0, 0, 0, 5);
-		gbc_lblNewLabel_1.gridx = 1;
-		gbc_lblNewLabel_1.gridy = 0;
-		headerPanel.add(lblNewLabel_1, gbc_lblNewLabel_1);
+		lblGold = new JLabel("<<GOLD>>");
+		GridBagConstraints gbc_lblGold = new GridBagConstraints();
+		gbc_lblGold.insets = new Insets(0, 0, 0, 5);
+		gbc_lblGold.gridx = 1;
+		gbc_lblGold.gridy = 0;
+		headerPanel.add(lblGold, gbc_lblGold);
 		
-		JLabel lblNewLabel_2 = new JLabel("Spare Cargo Capacity: " + environment.getShip().getSpareCapacity());
-		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
-		gbc_lblNewLabel_2.gridx = 2;
-		gbc_lblNewLabel_2.gridy = 0;
-		headerPanel.add(lblNewLabel_2, gbc_lblNewLabel_2);
+		lblCapacity = new JLabel("<<SPARE CAPACITY>>");
+		GridBagConstraints gbc_lblCapacity = new GridBagConstraints();
+		gbc_lblCapacity.gridx = 2;
+		gbc_lblCapacity.gridy = 0;
+		headerPanel.add(lblCapacity, gbc_lblCapacity);
 		
-		JTextPane textPane = new JTextPane();
-		GridBagConstraints gbc_textPane = new GridBagConstraints();
-		gbc_textPane.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textPane.insets = new Insets(0, 0, 5, 0);
-		gbc_textPane.gridx = 0;
-		gbc_textPane.gridy = 1;
-		contentPane.add(textPane, gbc_textPane);
+		JTextPane describeIslandPane = new JTextPane();
+		GridBagConstraints gbc_describeIslandPane = new GridBagConstraints();
+		gbc_describeIslandPane.fill = GridBagConstraints.HORIZONTAL;
+		gbc_describeIslandPane.insets = new Insets(0, 0, 5, 0);
+		gbc_describeIslandPane.gridx = 0;
+		gbc_describeIslandPane.gridy = 1;
+		contentPane.add(describeIslandPane, gbc_describeIslandPane);
 		String message = "Current location: " + environment.getCurrentIsland().getName() + "\n" + 
 				environment.getCurrentIsland().getDescription();
-		textPane.setText(message);
+		describeIslandPane.setText(message);
 		
-		textPane.setBackground(SystemColor.menu);
-		textPane.setEditable(false);
+		describeIslandPane.setBackground(SystemColor.menu);
+		describeIslandPane.setEditable(false);
 		
 		
 		JButton setSailBtn = new JButton("Set sail");
@@ -138,7 +151,7 @@ public class OnIsland extends JFrame {
 		JButton vistStoreBtn = new JButton("Visit the store");
 		vistStoreBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				SaleScreen frame = new SaleScreen(environment);
+				SaleScreen frame = new SaleScreen(environment, self);
 				frame.setVisible(true);
 			}
 		});
@@ -195,16 +208,17 @@ public class OnIsland extends JFrame {
 		gbc_quitBtn.gridy = 7;
 		contentPane.add(quitBtn, gbc_quitBtn);
 		
-
-		if (environment.getShip().getDamage() > 0f) {
-			float damage = environment.getShip().getDamage();
-			int cost = environment.repairDamage();
-			JOptionPane.showMessageDialog(contentPane,
-										"During the voyage, your ship took %.2f damage\nYou pay %d gold to repair your ship".formatted(damage, cost),
-										"Paying off damages",
-										JOptionPane.INFORMATION_MESSAGE
-			);
-		}
+		updateStats();
+	}
+	
+	/**
+	 * Updates the day, gold, and ship capacity.<br>
+	 * Used by child windows to change the display as needed
+	 */
+	public void updateStats() {
+		lblDay.setText("Day: %d of %d".formatted(environment.getGameTime(), environment.getGameLength()));
+		lblGold.setText("Gold: "+environment.getMoney());
+		lblCapacity.setText("Spare Cargo Capacity: " + environment.getShip().getSpareCapacity());
 	}
 
 }

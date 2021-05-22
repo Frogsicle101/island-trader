@@ -26,6 +26,10 @@ import ships.Ship;
 import main.GameEnvironment;
 
 import javax.swing.event.CaretEvent;
+import javax.swing.JSlider;
+import java.awt.BorderLayout;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 
 public class GameSetup extends JFrame{
@@ -35,7 +39,6 @@ public class GameSetup extends JFrame{
 	private JTextField nameTxt;
 	private JPanel durationPanel;
 	private JLabel durationLbl;
-	private JTextField durationTxt;
 	private JPanel shipPanel;
 	private ButtonGroup shipButtons;
 	private JRadioButton bargeBtn;
@@ -52,6 +55,8 @@ public class GameSetup extends JFrame{
 	private GameEnvironment environment;
 	private JPanel errorPanel;
 	private JLabel errorLbl;
+	private JPanel sliderPanel;
+	private JSlider durationSlider;
 	
 
 	/**
@@ -88,22 +93,30 @@ public class GameSetup extends JFrame{
 	 * as well as greying out the Go! button
 	 */
 	private void updateGoButtonAndErrorLabel() {
-		boolean nameValid = environment.isValidName(nameTxt.getText());
-		boolean durationValid = environment.isValidDuration(durationTxt.getText());
+		String name = nameTxt.getText();
+		boolean nameValid = environment.isValidName(name);
 		String message = "";
-		if (nameValid && durationValid) {
+		if (nameValid) {
 			goBtn.setEnabled(true);
 		} else {
 			goBtn.setEnabled(false);
 			if (!nameValid)
-				message += "Name must be between 3 and 15 chars.<br>";
-			if (!durationValid) {
-				message += "Duration must be between 20 and 50.";
-			}
+				if (name.length() > 0 && !name.matches("[a-zA-Z ]"))
+					message += "Name must contain letters and spaces only<br>";
+				else
+					message += "Name must be between 3 and 15 chars.<br>";
 		}
 		
 		message = "<html>" + message + "</html>";
 		errorLbl.setText(message);
+	}
+	
+	/**
+	 * Updates the game duration label with the slider's value
+	 */
+	private void updateDuration() {
+		int duration = durationSlider.getValue();
+		durationLbl.setText("Game Duration: "+duration);
 	}
 
 	/**
@@ -170,13 +183,13 @@ public class GameSetup extends JFrame{
 		gbc_durationPanel.gridy = 1;
 		getContentPane().add(durationPanel, gbc_durationPanel);
 		GridBagLayout gbl_durationPanel = new GridBagLayout();
-		gbl_durationPanel.columnWidths = new int[]{114, 86, 0};
+		gbl_durationPanel.columnWidths = new int[]{103, 100, 0};
 		gbl_durationPanel.rowHeights = new int[]{20, 0};
-		gbl_durationPanel.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		gbl_durationPanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_durationPanel.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+		gbl_durationPanel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		durationPanel.setLayout(gbl_durationPanel);
 		
-		durationLbl = new JLabel("Game Duration [20-50]:");
+		durationLbl = new JLabel("Game Duration:");
 		GridBagConstraints gbc_durationLbl = new GridBagConstraints();
 		gbc_durationLbl.anchor = GridBagConstraints.WEST;
 		gbc_durationLbl.insets = new Insets(0, 0, 0, 5);
@@ -184,18 +197,27 @@ public class GameSetup extends JFrame{
 		gbc_durationLbl.gridy = 0;
 		durationPanel.add(durationLbl, gbc_durationLbl);
 		
-		durationTxt = new JTextField();
-		durationTxt.addCaretListener(new CaretListener() {
-			public void caretUpdate(CaretEvent e) {
-				updateGoButtonAndErrorLabel();
+		sliderPanel = new JPanel();
+		GridBagConstraints gbc_sliderPanel = new GridBagConstraints();
+		gbc_sliderPanel.fill = GridBagConstraints.BOTH;
+		gbc_sliderPanel.gridx = 1;
+		gbc_sliderPanel.gridy = 0;
+		durationPanel.add(sliderPanel, gbc_sliderPanel);
+		sliderPanel.setLayout(new BorderLayout(0, 0));
+		
+		durationSlider = new JSlider();
+		durationSlider.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				updateDuration();
 			}
 		});
-		GridBagConstraints gbc_durationTxt = new GridBagConstraints();
-		gbc_durationTxt.anchor = GridBagConstraints.NORTHWEST;
-		gbc_durationTxt.gridx = 1;
-		gbc_durationTxt.gridy = 0;
-		durationPanel.add(durationTxt, gbc_durationTxt);
-		durationTxt.setColumns(10);
+		durationSlider.setPaintTicks(true);
+		durationSlider.setPaintLabels(true);
+		durationSlider.setMinorTickSpacing(5);
+		durationSlider.setMinimum(20);
+		durationSlider.setMaximum(50);
+		durationSlider.setMajorTickSpacing(15);
+		sliderPanel.add(durationSlider);
 		
 		shipPanel = new JPanel();
 		GridBagConstraints gbc_shipPanel = new GridBagConstraints();
@@ -266,7 +288,7 @@ public class GameSetup extends JFrame{
 		goBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				environment.setName(nameTxt.getText());
-				environment.setGameLength(Integer.parseInt(durationTxt.getText()));
+				environment.setGameLength(durationSlider.getValue());
 				environment.setShip(selectedShip);
 				
 				environment.startGame();

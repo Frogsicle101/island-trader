@@ -1,9 +1,13 @@
 package gui;
+import java.awt.Container;
+import java.awt.Dialog;
 import java.awt.EventQueue;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -23,7 +27,13 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.GridLayout;
 
-public class SaleScreen extends JFrame {
+/**
+ * 
+ * @author fma107
+ */
+public class SaleScreen extends JDialog {
+
+	private static final long serialVersionUID = -3815222942497164787L;
 
 	private JPanel contentPane;
 	private JLabel goldLbl;
@@ -34,7 +44,7 @@ public class SaleScreen extends JFrame {
 	
 	private GameEnvironment environment;
 	private Store store;
-	
+	private Container parent;
 
 	
 	public static void main(String[] args) {
@@ -46,7 +56,7 @@ public class SaleScreen extends JFrame {
 					env.setGameLength(25);
 					env.setShip(new WarShip());
 					env.startGame();
-					SaleScreen frame = new SaleScreen(env);
+					SaleScreen frame = new SaleScreen(env, new OnIsland(env));
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -56,7 +66,7 @@ public class SaleScreen extends JFrame {
 	}
 	
 	
-	private void updateDisplay() {
+	public void updateDisplay() {
 		int money = environment.getMoney();
 		goldLbl.setText("Gold: " + money);
 		int spareCapacity = environment.getShip().getSpareCapacity();
@@ -75,18 +85,26 @@ public class SaleScreen extends JFrame {
 			else
 				sellButtons[i].setEnabled(false);
 		}
+		if (parent instanceof OnIsland) {
+			((OnIsland) parent).updateStats();
+		}
 	}
 	
 	
 	/**
 	 * Create the frame.
 	 */
-	public SaleScreen(GameEnvironment environment) {
+	public SaleScreen(GameEnvironment environment, Container parent) {
+		super((Frame)parent);
+		this.parent = parent;
 		this.environment = environment;
 		this.store = environment.getCurrentIsland().getStore();
+		SaleScreen self = this;
 		setTitle("Welcome to %s's store!".formatted(store.getShopName()));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setModalityType(Dialog.ModalityType.DOCUMENT_MODAL);
 		setBounds(100, 100, 497, 326);
+
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -201,7 +219,7 @@ public class SaleScreen extends JFrame {
 		JButton btnBuy = new JButton("Upgrades");
 		btnBuy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				UpgradeSale frame = new UpgradeSale(environment);
+				UpgradeSale frame = new UpgradeSale(environment, self);
 				frame.setVisible(true);
 			}
 		});

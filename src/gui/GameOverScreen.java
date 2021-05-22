@@ -53,8 +53,7 @@ public class GameOverScreen extends JFrame {
 	 */
 	public GameOverScreen(GameEnvironment env) {
 		JFrame self = this;
-		setBounds(100, 100, 400, 300);
-		setMinimumSize(new Dimension(400, 300));
+		setBounds(100, 100, 500, 200);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
@@ -119,7 +118,7 @@ public class GameOverScreen extends JFrame {
 		return "<b>Name:</b> <i>%s</i><br />".formatted(escape(env.getName()))
 			+ "<b>Ship:</b> <i>%s</i>".formatted(env.getShip().getShipType())
 			+ "<p>Made it to day <b>%d</b> of <b>%d</b></p>".formatted(env.getGameTime(), env.getGameLength())
-			+ "<p><b>Total Profit:</b> %d</p>".formatted(env.getTotalProfit());
+			+ "<p><b>Total Profit: </b>%d gold</p>".formatted(env.getTotalProfit());
 	}
 	
 	private String escape(String input) {

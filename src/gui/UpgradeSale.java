@@ -1,9 +1,12 @@
 package gui;
+import java.awt.Container;
+import java.awt.Dialog;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -23,7 +26,9 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.GridLayout;
 
-public class UpgradeSale extends JFrame {
+public class UpgradeSale extends JDialog {
+
+	private static final long serialVersionUID = 3737048707841933830L;
 
 	private JPanel contentPane;
 	private JLabel goldLbl;
@@ -34,6 +39,7 @@ public class UpgradeSale extends JFrame {
 	
 	private GameEnvironment environment;
 	private Store store;
+	private Container parent;
 	
 
 	
@@ -46,7 +52,7 @@ public class UpgradeSale extends JFrame {
 					env.setGameLength(25);
 					env.setShip(new WarShip());
 					env.startGame();
-					UpgradeSale frame = new UpgradeSale(env);
+					UpgradeSale frame = new UpgradeSale(env, new SaleScreen(env, new OnIsland(env)));
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -74,19 +80,24 @@ public class UpgradeSale extends JFrame {
 				sellButtons[i].setEnabled(true);
 			else
 				sellButtons[i].setEnabled(false);
-			
 		}
+		
+		if (parent instanceof SaleScreen)
+			((SaleScreen)parent).updateDisplay();
 	}
 	
 	
 	/**
 	 * Create the frame.
 	 */
-	public UpgradeSale(GameEnvironment environment) {
+	public UpgradeSale(GameEnvironment environment, JDialog parent) {
+		super(parent);
+		this.parent = parent;
+		setModalityType(Dialog.ModalityType.DOCUMENT_MODAL);
 		this.environment = environment;
 		this.store = environment.getCurrentIsland().getStore();
 		setTitle("Welcome to %s's store!".formatted(store.getShopName()));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 497, 326);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

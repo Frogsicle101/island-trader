@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 
 import items.Item;
 import items.Upgrade;
+import main.GameEnvironment;
 import ships.Ship;
 import ships.WarShip;
 
@@ -31,7 +32,12 @@ public class ViewShipCharacteristics extends JDialog {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ViewShipCharacteristics frame = new ViewShipCharacteristics(new WarShip(), new JFrame("Sup"));
+					GameEnvironment env = new GameEnvironment();
+					env.setName("Jim");
+					env.setGameLength(25);
+					env.setShip(new WarShip());
+					env.startGame();
+					ViewShipCharacteristics frame = new ViewShipCharacteristics(new WarShip(), new JFrame("Test"));
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -44,7 +50,8 @@ public class ViewShipCharacteristics extends JDialog {
 	 * Create the frame.
 	 */
 	public ViewShipCharacteristics(Ship ship, JFrame parent) {
-		super(parent, "", Dialog.ModalityType.DOCUMENT_MODAL);
+		super(parent);
+		setModalityType(Dialog.ModalityType.DOCUMENT_MODAL);
 		setTitle("Ship Characteristics");
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setBounds(150, 150, 450, 300);

@@ -113,7 +113,7 @@ public class Embark extends JFrame {
 			panel.add(loopDestLbl);
 			
 			// Time
-			int days = (int) (route.getDistance() / shipSpeed);
+			int days = (int) Math.ceil(route.getDistance() / shipSpeed);
 			JLabel loopTimeLbl = new JLabel(days + " days");
 			panel.add(loopTimeLbl);
 			
@@ -133,7 +133,7 @@ public class Embark extends JFrame {
 			JButton loopGoBtn = new JButton("Go!");
 			// Is there something that makes this voyage impossible?
 			// Would taking this route take longer than you have left (in game duration)?
-			if (environment.getGameTime() + days >= environment.getGameLength()) {
+			if (environment.getGameTime() + days > environment.getGameLength()) {
 				loopGoBtn.setEnabled(false);
 				loopGoBtn.setToolTipText("The game will end while on this voyage");
 			} else {
@@ -150,7 +150,7 @@ public class Embark extends JFrame {
 			loopGoBtn.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					String message = "You pay your crew %d in wages and set off".formatted(wages);
-					JOptionPane.showMessageDialog(contentPane, message, "", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(contentPane, message, "Setting sail...", JOptionPane.INFORMATION_MESSAGE);
 					environment.setSail(route, wages);
 					
 					GUI.openNextFrame();
@@ -171,7 +171,7 @@ public class Embark extends JFrame {
 				String message = "";
 				// The game time will run out while sailing
 				if (!enoughTimeForRoutes) {
-					message = "Every route will end after your retirement date.\n<br>"
+					message = "Every route will end after your retirement date.\n"
 							+ "You sell all your remaining cargo and settle down on "+environment.getCurrentIsland().getName();
 					// Sell all the player's cargo
 					Store store = environment.getCurrentIsland().getStore();
@@ -181,7 +181,7 @@ public class Embark extends JFrame {
 						environment.addMoney(price);
 					}
 					// then it's game over
-					JOptionPane.showMessageDialog(contentPane, message, "", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(contentPane, message, "Retirement", JOptionPane.INFORMATION_MESSAGE);
 					environment.gameOver();
 					
 				}
@@ -189,11 +189,11 @@ public class Embark extends JFrame {
 				else if (!canAffordRoutes) {
 					if (environment.getShip().getCargo().size() > 0) {
 						message = "You can't afford to pay your men on any voyage. Sell some cargo.";
-						JOptionPane.showMessageDialog(contentPane, message, "", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(contentPane, message, "Not Enough Gold", JOptionPane.WARNING_MESSAGE);
 						environment.disembark();
 					} else { // Cargo hold's empty - GAME OVER
-						message = "You can't afford any route, and you have nothing to sell.\n<br>Game Over";
-						JOptionPane.showMessageDialog(contentPane, message, "", JOptionPane.INFORMATION_MESSAGE);
+						message = "You can't afford any route, and you have nothing to sell.\nGame Over";
+						JOptionPane.showMessageDialog(contentPane, message, "Game Over", JOptionPane.ERROR_MESSAGE);
 						environment.gameOver();
 					}
 				} else {
