@@ -14,6 +14,7 @@ import javax.swing.border.EmptyBorder;
 
 import exceptions.ItemNotFoundException;
 import islands.Store;
+import items.Item;
 import items.TradeGood;
 import ships.WarShip;
 import main.GameEnvironment;
@@ -189,11 +190,11 @@ public class SaleScreen extends JDialog {
 			
 			JButton sellBtn = new JButton("Sell");
 			sellBtn.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					item.setSalePrice(price); //So the sale price is visible in the ledger
+				public void actionPerformed(ActionEvent e) { 
 					environment.addMoney(price);
 					try {
-						environment.getShip().popItem(item.getName());
+						Item soldItem = environment.getShip().popItem(item.getName());
+						soldItem.setSalePrice(price); //So the sale price is visible in the ledger
 					}
 					catch (ItemNotFoundException exception) {
 						JOptionPane.showMessageDialog(null, exception.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

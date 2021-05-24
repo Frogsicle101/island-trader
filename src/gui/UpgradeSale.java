@@ -191,10 +191,11 @@ public class UpgradeSale extends JDialog {
 			JButton sellBtn = new JButton("Sell");
 			sellBtn.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					upgrade.setSalePrice(price); //So the sale price is visible in the ledger
+					
 					environment.addMoney(price);
 					try {
 						Upgrade sold = (Upgrade)environment.getShip().popItem(upgrade.getName());
+						sold.setSalePrice(price);  //So the sale price is visible in the ledger
 						store.addUpgrade(sold);
 					}
 					catch (ItemNotFoundException exception) {

@@ -128,7 +128,7 @@ public abstract class Ship {
 	public void storeItem(Item item) throws CargoFullException {
 		if (getSpareCapacity() <= 0)
 			throw new CargoFullException("Item "+item.toString()+" can't fit in the cargo hold");
-		cargo.add(item.copy());
+		cargo.add(item);
 	}
 	
 	/**
