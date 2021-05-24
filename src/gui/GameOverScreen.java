@@ -25,12 +25,11 @@ import java.awt.event.ActionEvent;
  * This screen is displayed whenever the player can no longer progress, like walking the plank,
  * or being unable to sail.<br>
  * Note that also "winning" the game, like making it to the game duration,
- * also counts as winning.<br>
+ * also counts as a game over.<br>
  * Displays: The player's name, ship, day reached, and total profit<br>
  * Lets you: Make a new game, see all your purchases, and quit.
  *  
  * @author Andrew
- *
  */
 public class GameOverScreen extends JFrame {
 
@@ -68,7 +67,7 @@ public class GameOverScreen extends JFrame {
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		// GAME OVER
-		JLabel lblGameOver = new JLabel("Game Over");
+		JLabel lblGameOver = new JLabel("End of Game Stats");
 		lblGameOver.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblGameOver.setHorizontalAlignment(SwingConstants.CENTER);
 		getContentPane().add(lblGameOver, BorderLayout.NORTH);

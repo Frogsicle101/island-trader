@@ -32,7 +32,12 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 
 
-public class GameSetup extends JFrame{
+/**
+ * The first menu a player sees. Lets them set their name, game duration, and ship of choice.
+
+ * @author fma107
+ */
+public class GameSetup extends JFrame {
 
 	private static final long serialVersionUID = 8699950641526204242L;
 	

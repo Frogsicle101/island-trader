@@ -25,6 +25,13 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.GridLayout;
 
+
+/**
+ * Popup window - Displays a menu for buying/selling upgrade items
+
+ * @author fma107
+ *
+ */
 public class UpgradeSale extends JDialog {
 
 	private static final long serialVersionUID = 3737048707841933830L;
@@ -51,7 +58,7 @@ public class UpgradeSale extends JDialog {
 					env.setGameLength(25);
 					env.setShip(new WarShip());
 					env.startGame();
-					UpgradeSale frame = new UpgradeSale(env, new SaleScreen(env, new OnIsland(env)));
+					UpgradeSale frame = new UpgradeSale(env, null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
