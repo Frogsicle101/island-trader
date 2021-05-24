@@ -86,7 +86,7 @@ public class Sailing extends JFrame {
 		} else if (event instanceof PirateAttack) {
 			processPirateAttack((PirateAttack) event);
 		} else {
-			System.out.println("Error: Can't handle RandomEvent of type " + event.getClass().getTypeName());
+			System.err.println("Error: Can't handle RandomEvent of type " + event.getClass().getTypeName());
 		}
 	}
 	

@@ -22,7 +22,7 @@ public class Clipper extends Ship {
 				storeItem(new Sail());
 			} catch (CargoFullException e) {
 				e.printStackTrace();
-				System.out.println("Fatal error in WarShip class constructor");
+				System.err.println("Clipper construction error: Clipper can't store that many sails");
 				System.exit(1);
 			}
 

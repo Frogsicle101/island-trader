@@ -28,7 +28,7 @@ public class WarShip extends Ship {
 				storeItem(new Cannon());
 			} catch (CargoFullException e) {
 				e.printStackTrace();
-				System.out.println("Error: WarShip constructor's adding more cannons than the ship can hold");
+				System.err.println("Error: WarShip constructor's adding more cannons than the ship can hold");
 				System.exit(1);
 			}
 

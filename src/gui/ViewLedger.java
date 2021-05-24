@@ -51,9 +51,6 @@ public class ViewLedger extends JDialog {
 	 */
 	public ViewLedger(Item[] allSold, JFrame parent) {
 		super(parent, "", Dialog.ModalityType.DOCUMENT_MODAL);
-		for (Item i : allSold) {
-			System.out.println(i.getSalePrice());
-		}
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setTitle("Ledger");
 		setBounds(150, 150, 450, 300);
