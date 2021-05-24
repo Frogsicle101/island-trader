@@ -27,7 +27,8 @@ import java.awt.Insets;
 import java.awt.GridLayout;
 
 /**
- * 
+ * Popup menu - Displays a menu for buying/selling trade goods
+
  * @author fma107
  */
 public class SaleScreen extends JDialog {

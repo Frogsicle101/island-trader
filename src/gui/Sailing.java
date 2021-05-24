@@ -1,8 +1,3 @@
-/**
- * !! KNOWN BUGS !!
- * How do you destroy the timer? I stop it but it keeps ticking even after the window's disposed of
- */
-
 package gui;
 
 import java.awt.EventQueue;
@@ -32,6 +27,12 @@ import java.util.Random;
 import javax.swing.Timer;
 import javax.swing.JProgressBar;
 
+/**
+ * Represents time passing as the player sails between islands.<br>
+ * Also handles random events that can occur while on the high seas.
+
+ * @author fma107
+ */
 public class Sailing extends JFrame {
 
 	private static final long serialVersionUID = 8388817628888674039L;

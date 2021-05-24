@@ -20,6 +20,11 @@ import javax.swing.JDialog;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * Popup window - Shows the stats of the player's ship
+    
+ * @author fma107
+ */
 public class ViewShipCharacteristics extends JDialog {
 
 	private static final long serialVersionUID = 4514232810997273643L;
@@ -71,7 +76,7 @@ public class ViewShipCharacteristics extends JDialog {
 					
 		for (Item item : ship.getCargo()) {
 			if (item instanceof Upgrade) {
-				text = text + "\n" + item.getName();
+				text += "\n" + item.getName();
 			}
 		}
 				

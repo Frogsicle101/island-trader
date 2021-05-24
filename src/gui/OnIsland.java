@@ -21,6 +21,13 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
+/**
+ * Represents the player at an island.<br>
+ * From here the player can: Sail to a new island, buy/sell cargo, see their ship's stats, and
+ * view all their transactions.
+
+ * @author fma107
+ */
 public class OnIsland extends JFrame {
 
 	private static final long serialVersionUID = -2570954685247136260L;

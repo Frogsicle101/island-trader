@@ -17,6 +17,13 @@ import items.TradeGood;
 
 import javax.swing.JTable;
 
+
+/**
+ * Popup window - Displays every item bought by the player.<br>
+ * Displays every item's purchase price, purchased at, and sale price (if applicable)
+
+ * @author fma107
+ */
 public class ViewLedger extends JDialog {
 
 	private static final long serialVersionUID = 7835393291078337369L;
@@ -53,7 +60,6 @@ public class ViewLedger extends JDialog {
 		setContentPane(contentPane);
 		
 		
-		
 		JButton backBtn = new JButton("Back");
 		backBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -61,8 +67,6 @@ public class ViewLedger extends JDialog {
 			}
 		});
 		contentPane.add(backBtn, BorderLayout.SOUTH);
-		
-		
 		
 		
 		String[][] data = new String[allSold.length][4];

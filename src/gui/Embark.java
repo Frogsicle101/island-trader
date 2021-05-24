@@ -24,6 +24,15 @@ import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * Represent being "at the port", choosing what island to sail to next.<br>
+ * Also displays information about every route (risks, cost, length...).<br>
+ * <br>
+ * Note: The player CAN game-over here, if there's no way of them leaving the island
+ * (being unable to afford any route, or if there's not enough time to reach the destination)
+
+ * @author fma107 and Andrew
+ */
 public class Embark extends JFrame {
 
 	private static final long serialVersionUID = 3925205876529262794L;
