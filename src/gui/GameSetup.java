@@ -138,7 +138,7 @@ public class GameSetup extends JFrame{
 		namePanel = new JPanel();
 		GridBagConstraints gbc_namePanel = new GridBagConstraints();
 		gbc_namePanel.anchor = GridBagConstraints.WEST;
-		gbc_namePanel.insets = new Insets(10, 10, 5, 10);
+		gbc_namePanel.insets = new Insets(5, 10, 5, 10);
 		gbc_namePanel.fill = GridBagConstraints.BOTH;
 		gbc_namePanel.gridx = 0;
 		gbc_namePanel.gridy = 0;
@@ -304,7 +304,7 @@ public class GameSetup extends JFrame{
 		
 		errorPanel = new JPanel();
 		GridBagConstraints gbc_errorPanel = new GridBagConstraints();
-		gbc_errorPanel.insets = new Insets(0, 0, 5, 5);
+		gbc_errorPanel.insets = new Insets(0, 5, 5, 5);
 		gbc_errorPanel.fill = GridBagConstraints.BOTH;
 		gbc_errorPanel.gridx = 0;
 		gbc_errorPanel.gridy = 3;

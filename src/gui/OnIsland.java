@@ -10,6 +10,8 @@ import main.GameEnvironment;
 
 import java.awt.GridBagLayout;
 import javax.swing.JTextPane;
+import javax.swing.UIManager;
+
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.SystemColor;
@@ -36,7 +38,7 @@ public class OnIsland extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					//TODO: Make this into a unit test?
+					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 					GameEnvironment env = new GameEnvironment();
 					env.setGameLength(20);
 					env.setName("test");
@@ -79,15 +81,16 @@ public class OnIsland extends JFrame {
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
 		gbl_contentPane.columnWidths = new int[]{0, 0};
-		gbl_contentPane.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_contentPane.rowHeights = new int[]{30, 0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_contentPane.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_contentPane.rowWeights = new double[]{1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 		
 		JPanel headerPanel = new JPanel();
 		GridBagConstraints gbc_headerPanel = new GridBagConstraints();
+		gbc_headerPanel.anchor = GridBagConstraints.NORTH;
 		gbc_headerPanel.insets = new Insets(0, 0, 5, 0);
-		gbc_headerPanel.fill = GridBagConstraints.BOTH;
+		gbc_headerPanel.fill = GridBagConstraints.HORIZONTAL;
 		gbc_headerPanel.gridx = 0;
 		gbc_headerPanel.gridy = 0;
 		contentPane.add(headerPanel, gbc_headerPanel);
@@ -95,11 +98,12 @@ public class OnIsland extends JFrame {
 		gbl_headerPanel.columnWidths = new int[]{0, 0, 0, 0};
 		gbl_headerPanel.rowHeights = new int[]{0, 0};
 		gbl_headerPanel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_headerPanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_headerPanel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		headerPanel.setLayout(gbl_headerPanel);
 		
 		lblDay = new JLabel("<<DAY>>");
 		GridBagConstraints gbc_lblDay = new GridBagConstraints();
+		gbc_lblDay.fill = GridBagConstraints.VERTICAL;
 		gbc_lblDay.insets = new Insets(0, 0, 0, 5);
 		gbc_lblDay.gridx = 0;
 		gbc_lblDay.gridy = 0;
@@ -107,6 +111,7 @@ public class OnIsland extends JFrame {
 		
 		lblGold = new JLabel("<<GOLD>>");
 		GridBagConstraints gbc_lblGold = new GridBagConstraints();
+		gbc_lblGold.fill = GridBagConstraints.VERTICAL;
 		gbc_lblGold.insets = new Insets(0, 0, 0, 5);
 		gbc_lblGold.gridx = 1;
 		gbc_lblGold.gridy = 0;
@@ -114,6 +119,7 @@ public class OnIsland extends JFrame {
 		
 		lblCapacity = new JLabel("<<SPARE CAPACITY>>");
 		GridBagConstraints gbc_lblCapacity = new GridBagConstraints();
+		gbc_lblCapacity.fill = GridBagConstraints.VERTICAL;
 		gbc_lblCapacity.gridx = 2;
 		gbc_lblCapacity.gridy = 0;
 		headerPanel.add(lblCapacity, gbc_lblCapacity);
