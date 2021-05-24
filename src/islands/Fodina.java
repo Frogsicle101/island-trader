@@ -3,6 +3,12 @@ import java.util.HashMap;
 
 import items.TradeTypes;
 
+/**
+ * Fodina is a mining island<br>
+ * Has expensive food and tools, but cheap luxury and materials
+ * @author Andrew
+ *
+ */
 
 public class Fodina extends Island {
 

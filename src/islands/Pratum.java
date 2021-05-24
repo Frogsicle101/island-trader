@@ -3,6 +3,14 @@ import java.util.HashMap;
 
 import items.TradeTypes;
 
+/**
+ * Pratium is the starting island<br>
+ * Has cheap food and materials, but luxuries and artifacts are more valuable
+ * @author Andrew
+ *
+ */
+
+
 public class Pratum extends Island {
 
 	public Pratum() {

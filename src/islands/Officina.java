@@ -3,6 +3,14 @@ import java.util.HashMap;
 
 import items.TradeTypes;
 
+/**
+ * Officina is a manufactory<br>
+ * Has cheap artifacts and tools, and materials are expensive
+ * @author Andrew
+ *
+ */
+
+
 public class Officina extends Island {
 
 	public Officina() {
