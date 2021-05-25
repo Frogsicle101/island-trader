@@ -8,7 +8,7 @@ import main.GameEnvironment;
 
 /**
  * The main class used to run the GUI of the game.
- * @author fm107
+ * @author fma107
  *
  */
 public class GUI {
